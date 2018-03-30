@@ -4,6 +4,7 @@ public abstract class Hidato {
     private int id;
     private TipoAdjacencia adjacencia;
 
+
     public void setId(int id){
         this.id = id;
     }
