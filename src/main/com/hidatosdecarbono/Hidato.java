@@ -44,6 +44,7 @@ public abstract class Hidato {
         }
     }
 
+
     public abstract boolean tieneSolucion();
 
 }
