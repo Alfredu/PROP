@@ -1,9 +1,14 @@
 package com.hidatosdecarbono;
 
+import javax.jws.soap.SOAPBinding;
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        System.out.println("Hidatos De Carbono");
+
+        UserInterface interficie = new UserInterface();
+
+        interficie.run();
     }
 }

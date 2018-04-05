@@ -27,20 +27,20 @@ public abstract class Hidato {
     }
 
     public void nuevaCelda(TipoCelda tipo, int valor, int fila, int columna) throws IllegalArgumentException{
-        if(tipo.equals(TipoCelda.FIJA)){
-            tablero[fila][columna] = new Celda(tipo,valor);
+        try{
+            tablero[fila][columna] = new Celda(tipo, valor);
         }
-        else{
-            throw new IllegalArgumentException("La celda no puede tener valor");
+        catch (IllegalArgumentException e){
+            throw e;
         }
     }
 
     public void nuevaCelda(TipoCelda tipo, int fila, int columna) throws IllegalArgumentException{
-        if(tipo.equals(TipoCelda.FIJA)){
-            throw new IllegalArgumentException("Una celda fija tiene que tener valor");
-        }
-        else{
+        try{
             tablero[fila][columna] = new Celda(tipo);
+        }
+        catch (IllegalArgumentException e){
+            throw e;
         }
     }
 
