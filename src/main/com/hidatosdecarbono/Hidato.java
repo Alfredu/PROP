@@ -14,6 +14,14 @@ public abstract class Hidato {
         return id;
     }
 
+    public int getFiles(){
+        return tablero.length;
+    }
+
+    public int getColumnes(){
+        return tablero[0].length;
+    }
+
     void setAdjacencia(TipoAdjacencia adjacencia) {
         this.adjacencia = adjacencia;
     }
@@ -26,7 +34,7 @@ public abstract class Hidato {
         tablero = new Celda[fila][col];
     }
 
-    public void nuevaCelda(TipoCelda tipo, int valor, int fila, int columna) throws IllegalArgumentException{
+    public void nuevaCelda(TipoCelda tipo, int fila, int columna, int valor) throws IllegalArgumentException{
         try{
             tablero[fila][columna] = new Celda(tipo, valor);
         }
@@ -44,6 +52,9 @@ public abstract class Hidato {
         }
     }
 
+    public Celda getCelda(int fila, int col){
+        return tablero[fila][col];
+    }
 
     public abstract boolean tieneSolucion();
 
