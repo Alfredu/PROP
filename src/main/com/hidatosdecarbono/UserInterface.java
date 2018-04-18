@@ -1,7 +1,5 @@
 package com.hidatosdecarbono;
 
-import org.omg.CORBA.TIMEOUT;
-
 import java.util.Scanner;
 
 public class UserInterface {
@@ -39,9 +37,9 @@ public class UserInterface {
         System.out.println("Entre el tipo de adyacencia, donde L = lados y LV = lado y vertice");
         String adjacencia = reader.next();
 
-        TipoAdjacencia adj = TipoAdjacencia.LADO;
-        if (adjacencia.equals("L")) adj = TipoAdjacencia.LADO;
-        else if (adjacencia.equals("LV")) adj = TipoAdjacencia.LADOYVERTICE;
+        TipoAdyacencia adj = TipoAdyacencia.LADO;
+        if (adjacencia.equals("L")) adj = TipoAdyacencia.LADO;
+        else if (adjacencia.equals("LV")) adj = TipoAdyacencia.LADOYVERTICE;
         else {
             System.out.println("Error en la introducción de la adyacencia, reintentar? (Y/N)");
             String opt = reader.next();
@@ -60,7 +58,7 @@ public class UserInterface {
         System.out.println("Una celda viene representada por el tipo de celda (- invisible, # agujero, ? variable) y por su valor si es fija");
 
         if (forma.equals("Q")) {
-            HidatoQuadrado test = new HidatoQuadrado(fila, col, adj);
+            HidatoCuadrado test = new HidatoCuadrado(fila, col, adj);
             afegirCeles(test);
             printHidato(test);
         }
@@ -85,7 +83,7 @@ public class UserInterface {
     private void afegirCeles(Hidato h) {
         Scanner reader = new Scanner(System.in);
         int files = h.getFiles();
-        int columnes = h.getColumnes();
+        int columnes = h.getNumColumnas();
 
         for (int i = 0; i < files; i++) {
             for (int j = 0; j < columnes; j++) {
@@ -103,7 +101,7 @@ public class UserInterface {
 
     private void printHidato(Hidato h){
         int files = h.getFiles();
-        int columnes = h.getColumnes();
+        int columnes = h.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
