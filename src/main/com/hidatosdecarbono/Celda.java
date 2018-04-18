@@ -17,10 +17,6 @@ public class Celda {
         else throw new IllegalArgumentException("La celda no necesita valor");
     }
 
-    public boolean hasValor(){
-        return (valor != -1);
-    }
-
     public int getValor(){
         return valor;
     }

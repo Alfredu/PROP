@@ -124,7 +124,7 @@ public class UserInterface {
         if(c.getTipo().equals(TipoCelda.AGUJERO)) return "#";
         else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "-";
         else if(c.getTipo().equals(TipoCelda.VARIABLE)){
-            if(c.hasValor()) return String.valueOf(c.getValor());
+            if(c.tieneValor()) return String.valueOf(c.getValor());
             else return "?";
         }
         else return String.valueOf(c.getValor());
