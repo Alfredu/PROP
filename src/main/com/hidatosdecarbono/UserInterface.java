@@ -82,7 +82,7 @@ public class UserInterface {
 
     private void afegirCeles(Hidato h) {
         Scanner reader = new Scanner(System.in);
-        int files = h.getFiles();
+        int files = h.getNumFilas();
         int columnes = h.getNumColumnas();
 
         for (int i = 0; i < files; i++) {
@@ -100,7 +100,7 @@ public class UserInterface {
     }
 
     private void printHidato(Hidato h){
-        int files = h.getFiles();
+        int files = h.getNumFilas();
         int columnes = h.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String celes = "";
