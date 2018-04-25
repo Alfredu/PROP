@@ -6,6 +6,7 @@ public abstract class Hidato {
     private Celda[][] tablero;
 
 
+
     /**
      * @author Eloi Roca
      * @param id Un integer que contiene el id
@@ -83,5 +84,7 @@ public abstract class Hidato {
     }
 
     public abstract boolean tieneSolucion();
+
+    public abstract void creaGrafo();
 
 }
