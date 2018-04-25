@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class CreadorHidatosCTRL {
 
-    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdjacencia tipoAdj, ArrayList <String> celdas){
+    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas){
         if(tipoHidato == TipoHidato.CUADRADO){
-            HidatoQuadrado hq = new HidatoQuadrado(numFilas, numColumnas, tipoAdj);
+            HidatoCuadrado hq = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
             añadirCeldasHidato(hq,celdas);
             printHidato(hq);
         }
@@ -20,8 +20,8 @@ public class CreadorHidatosCTRL {
     }*/
 
     private void añadirCeldasHidato(Hidato h, ArrayList <String> celdas) {
-        int files = h.getFiles();
-        int columnes = h.getColumnes();
+        int files = h.getNumFilas();
+        int columnes = h.getNumColumnas();
         for (int i = 0; i < files; i++) {
             for (int j = 0; j < columnes; j++) {
                 String celda = celdas.get(0);
@@ -45,8 +45,8 @@ public class CreadorHidatosCTRL {
     }
 
     private void printHidato(Hidato h){
-        int files = h.getFiles();
-        int columnes = h.getColumnes();
+        int files = h.getNumFilas();
+        int columnes = h.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
@@ -62,7 +62,7 @@ public class CreadorHidatosCTRL {
         if(c.getTipo().equals(TipoCelda.AGUJERO)) return "#";
         else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "-";
         else if(c.getTipo().equals(TipoCelda.VARIABLE)){
-            if(c.hasValor()) return String.valueOf(c.getValor());
+            if(c.tieneValor()) return String.valueOf(c.getValor());
             else return "?";
         }
         else return String.valueOf(c.getValor());

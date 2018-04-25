@@ -1,5 +1,5 @@
 package com.hidatosdecarbono;
 
-public enum TipoAdjacencia {
+public enum TipoAdyacencia {
     LADO, LADOYVERTICE
 }

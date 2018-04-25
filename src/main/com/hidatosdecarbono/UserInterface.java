@@ -38,9 +38,9 @@ public class UserInterface {
         System.out.println("Entre el tipo de adyacencia, donde L = lados y LV = lado y vertice");
         String adjacencia = reader.next();
 
-        TipoAdjacencia adj = TipoAdjacencia.LADO;
-        if (adjacencia.equals("L")) adj = TipoAdjacencia.LADO;
-        else if (adjacencia.equals("LV")) adj = TipoAdjacencia.LADOYVERTICE;
+        TipoAdyacencia adj = TipoAdyacencia.LADO;
+        if (adjacencia.equals("L")) adj = TipoAdyacencia.LADO;
+        else if (adjacencia.equals("LV")) adj = TipoAdyacencia.LADOYVERTICE;
         else {
             System.out.println("Error en la introducción de la adyacencia, reintentar? (Y/N)");
             String opt = reader.next();
@@ -66,7 +66,7 @@ public class UserInterface {
             leerCeldas(test);
             printHidato(test);*/
         }
-        else if (forma.equals("T")) {
+        /*else if (forma.equals("T")) {
             HidatoTriangular test = new HidatoTriangular(numFilas, numColumnas, adj);
             leerCeldas(test);
             printHidato(test);
@@ -80,7 +80,7 @@ public class UserInterface {
                 System.out.println(e.getMessage());
             }
 
-        }
+        }*/
 
     }
 
@@ -96,8 +96,8 @@ public class UserInterface {
     }
 
     private void printHidato(Hidato h){
-        int files = h.getFiles();
-        int columnes = h.getColumnes();
+        int files = h.getNumFilas();
+        int columnes = h.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
@@ -120,7 +120,7 @@ public class UserInterface {
         if(c.getTipo().equals(TipoCelda.AGUJERO)) return "#";
         else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "-";
         else if(c.getTipo().equals(TipoCelda.VARIABLE)){
-            if(c.hasValor()) return String.valueOf(c.getValor());
+            if(c.tieneValor()) return String.valueOf(c.getValor());
             else return "?";
         }
         else return String.valueOf(c.getValor());

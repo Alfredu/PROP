@@ -1,8 +1,8 @@
 package com.hidatosdecarbono;
 
-public class HidatoTriangular extends Hidato {
+public class HidatoCuadrado extends Hidato {
 
-    public HidatoTriangular(int numFilas, int numColumnas, TipoAdyacencia adjacencia){
+    public HidatoCuadrado(int numFilas, int numColumnas, TipoAdyacencia adjacencia){
         this.setTablero(numFilas,numColumnas);
         this.setAdyacencia(adjacencia);
     }
