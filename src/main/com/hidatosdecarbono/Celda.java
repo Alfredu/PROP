@@ -1,7 +1,7 @@
 package com.hidatosdecarbono;
 
 public class Celda {
-    private int valor = -1;
+    private int valor;
     private TipoCelda tipo;
 
     Celda(){}
@@ -51,7 +51,7 @@ public class Celda {
     }
 
     public boolean tieneValor(){
-        return (valor != -1);
+        return (valor != 0);
     }
 
     public boolean esValida(){

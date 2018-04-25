@@ -9,6 +9,7 @@ public class CreadorHidatosCTRL {
             HidatoCuadrado hq = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
             añadirCeldasHidato(hq,celdas);
             printHidato(hq);
+            hq.creaGrafo();
         }
         return true; //TODO: return true si tiene solucion
     }
@@ -23,24 +24,24 @@ public class CreadorHidatosCTRL {
         int files = h.getNumFilas();
         int columnes = h.getNumColumnas();
         for (int i = 0; i < files; i++) {
+            String fila = celdas.get(i);
             for (int j = 0; j < columnes; j++) {
-                String celda = celdas.get(0);
-                celdas.remove(0);
-                TipoCelda tipus = stringToCelda(celda);
+                char celda = fila.charAt(j);
+                TipoCelda tipus = charToCelda(celda);
                 if(!tipus.equals(TipoCelda.FIJA)){
                     h.nuevaCelda(tipus,i,j);
                 }
                 else{
-                    h.nuevaCelda(tipus,i,j,Integer.parseInt(celda));
+                    h.nuevaCelda(tipus,i,j,Character.getNumericValue(celda));
                 }
             }
         }
     }
 
-    private TipoCelda stringToCelda(String s){
-        if(s.equals("#")) return TipoCelda.AGUJERO;
-        else if(s.equals("-")) return TipoCelda.INVISIBLE;
-        else if(s.equals("?")) return TipoCelda.VARIABLE;
+    private TipoCelda charToCelda(char c){
+        if(c == '#') return TipoCelda.AGUJERO;
+        else if(c =='-') return TipoCelda.INVISIBLE;
+        else if(c =='?') return TipoCelda.VARIABLE;
         else return TipoCelda.FIJA;
     }
 

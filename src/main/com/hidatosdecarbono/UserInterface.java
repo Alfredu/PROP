@@ -32,7 +32,7 @@ public class UserInterface {
         System.out.println("Entre el numero de columnas:");
         int numColumnas = reader.nextInt();
 
-        System.out.println("Entre el tipo de hidato, donde Q = quadrado, T = triangular, H = hexagonal");
+        System.out.println("Entre el tipo de hidato, donde C = Cuadrado, T = triangular, H = hexagonal");
         String forma = reader.next();
 
         System.out.println("Entre el tipo de adyacencia, donde L = lados y LV = lado y vertice");
@@ -48,7 +48,7 @@ public class UserInterface {
             else return;
         }
 
-        if (!forma.equals("Q") && !forma.equals("T") && !forma.equals("H")) {
+        if (!forma.equals("C") && !forma.equals("T") && !forma.equals("H")) {
             System.out.println("Error en la introducción de la forma, reintentar? (Y/N)");
             String opt = reader.next();
             if (opt.equals("Y") || opt.equals("y")) afegirHidato();
@@ -58,8 +58,8 @@ public class UserInterface {
         System.out.println("Hidato creado, introduzca el valor de cada celda (se llenan las columnas de cada numFilas y se procede con la numFilas siguente");
         System.out.println("Una celda viene representada por el tipo de celda (- invisible, # agujero, ? variable) y por su valor si es fija");
 
-        if (forma.equals("Q")) {
-            ArrayList <String> celdas = leerCeldas(numFilas,numColumnas);
+        if (forma.equals("C")) {
+            ArrayList <String> celdas = leerCeldas(numFilas);
             CreadorHidatosCTRL creadorHidatosCTRL = new CreadorHidatosCTRL();
             creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.CUADRADO,numFilas,numColumnas,adj,celdas);
             /*HidatoQuadrado test = new HidatoQuadrado(numFilas, numColumnas, adj);
@@ -84,13 +84,11 @@ public class UserInterface {
 
     }
 
-    private ArrayList<String> leerCeldas(int files,int columnes) {
+    private ArrayList<String> leerCeldas(int files) {
         Scanner reader = new Scanner(System.in);
         ArrayList <String> celdas = new ArrayList<>();
         for (int i = 0; i < files; i++) {
-            for (int j = 0; j < columnes; j++) {
                celdas.add(reader.next());
-            }
         }
         return celdas;
     }

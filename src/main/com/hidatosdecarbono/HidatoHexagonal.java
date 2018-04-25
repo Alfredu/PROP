@@ -11,7 +11,7 @@ public class HidatoHexagonal extends Hidato{
     }
 
     @Override
-    public ArrayList<Celda> getAdyacentes(int i, int j) {
+    public ArrayList<Node> getAdyacentes(int i, int j) {
         return null;
     }
 
@@ -22,6 +22,11 @@ public class HidatoHexagonal extends Hidato{
 
     @Override
     public void creaGrafo() {
+
+    }
+
+    @Override
+    public void creaNodos() {
 
     }
 }

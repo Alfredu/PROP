@@ -65,6 +65,7 @@ public abstract class Hidato {
      */
     void setTablero(int numFilas, int numColumnas){
         tablero = new Celda[numFilas][numColumnas];
+        solucion = new Celda[numFilas][numColumnas];
     }
 
     public void nuevaCelda(TipoCelda tipo, int fila, int columna, int valor) throws IllegalArgumentException{
@@ -101,10 +102,12 @@ public abstract class Hidato {
         }
     }
 
-    public abstract ArrayList<Celda> getAdyacentes(int i, int j);
+    public abstract ArrayList<Node> getAdyacentes(int i, int j);
 
     public abstract boolean tieneSolucion();
 
     public abstract void creaGrafo();
+
+    public abstract void creaNodos();
 
 }

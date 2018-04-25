@@ -9,10 +9,10 @@ public class Node {
 
     public Node(){}
 
-    public Node(int id, Celda celda, ArrayList<Node> adyacentes){
+    public Node(int id, Celda celda){
         this.id = id;
         this.celda = celda;
-        this.adyacentes = adyacentes;
+        adyacentes = new ArrayList<Node>();
     }
 
     public ArrayList<Node> getAdyacentes() {
@@ -27,13 +27,14 @@ public class Node {
         return id;
     }
 
-    public void addAdyacencia(Node node){
-        adyacentes.add(node);
+    public void addListaAdyacencias(ArrayList<Node> adyacentes){
+        this.adyacentes = adyacentes;
     }
 
-    public boolean esVacio(){
-        return (id == 0);
+    public boolean noEsVacio(){
+        return (id != 0);
     }
+
 
 
 }
