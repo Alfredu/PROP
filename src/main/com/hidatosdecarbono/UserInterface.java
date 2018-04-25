@@ -1,7 +1,6 @@
 package com.hidatosdecarbono;
 
-import org.omg.CORBA.TIMEOUT;
-
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -28,10 +27,10 @@ public class UserInterface {
         Scanner reader = new Scanner(System.in);
 
         System.out.println("Entre el numero de filas:");
-        int fila = reader.nextInt();
+        int numFilas = reader.nextInt();
 
         System.out.println("Entre el numero de columnas:");
-        int col = reader.nextInt();
+        int numColumnas = reader.nextInt();
 
         System.out.println("Entre el tipo de hidato, donde Q = quadrado, T = triangular, H = hexagonal");
         String forma = reader.next();
@@ -56,49 +55,44 @@ public class UserInterface {
             else return;
         }
 
-        System.out.println("Hidato creado, introduzca el valor de cada celda (se llenan las columnas de cada fila y se procede con la fila siguente");
+        System.out.println("Hidato creado, introduzca el valor de cada celda (se llenan las columnas de cada numFilas y se procede con la numFilas siguente");
         System.out.println("Una celda viene representada por el tipo de celda (- invisible, # agujero, ? variable) y por su valor si es fija");
 
         if (forma.equals("Q")) {
-            HidatoQuadrado test = new HidatoQuadrado(fila, col, adj);
-            afegirCeles(test);
-            printHidato(test);
+            ArrayList <String> celdas = leerCeldas(numFilas,numColumnas);
+            CreadorHidatosCTRL creadorHidatosCTRL = new CreadorHidatosCTRL();
+            creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.CUADRADO,numFilas,numColumnas,adj,celdas);
+            /*HidatoQuadrado test = new HidatoQuadrado(numFilas, numColumnas, adj);
+            leerCeldas(test);
+            printHidato(test);*/
         }
-        else if (forma.equals("T")) {
-            HidatoTriangular test = new HidatoTriangular(fila, col, adj);
-            afegirCeles(test);
+        /*else if (forma.equals("T")) {
+            HidatoTriangular test = new HidatoTriangular(numFilas, numColumnas, adj);
+            leerCeldas(test);
             printHidato(test);
         }
         else if (forma.equals("H")) {
             try {
-                HidatoHexagonal test = new HidatoHexagonal(fila, col, adj);
-                afegirCeles(test);
+                HidatoHexagonal test = new HidatoHexagonal(numFilas, numColumnas, adj);
+                leerCeldas(test);
                 printHidato(test);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
 
-        }
+        }*/
 
     }
 
-    private void afegirCeles(Hidato h) {
+    private ArrayList<String> leerCeldas(int files,int columnes) {
         Scanner reader = new Scanner(System.in);
-        int files = h.getFiles();
-        int columnes = h.getColumnes();
-
+        ArrayList <String> celdas = new ArrayList<>();
         for (int i = 0; i < files; i++) {
             for (int j = 0; j < columnes; j++) {
-                String cela = reader.next();
-                TipoCelda tipus = stringToCelda(cela);
-                if(!tipus.equals(TipoCelda.FIJA)){
-                    h.nuevaCelda(tipus,i,j);
-                }
-                else{
-                    h.nuevaCelda(tipus,i,j,Integer.parseInt(cela));
-                }
+               celdas.add(reader.next());
             }
         }
+        return celdas;
     }
 
     private void printHidato(Hidato h){
