@@ -66,7 +66,7 @@ public class UserInterface {
             leerCeldas(test);
             printHidato(test);*/
         }
-        /*else if (forma.equals("T")) {
+        else if (forma.equals("T")) {
             HidatoTriangular test = new HidatoTriangular(numFilas, numColumnas, adj);
             leerCeldas(test);
             printHidato(test);
@@ -80,7 +80,7 @@ public class UserInterface {
                 System.out.println(e.getMessage());
             }
 
-        }*/
+        }
 
     }
 
