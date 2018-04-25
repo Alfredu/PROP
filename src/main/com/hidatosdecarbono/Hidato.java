@@ -8,7 +8,7 @@ public abstract class Hidato {
 
 
     /**
-     * @author Eloi Roca
+     *
      * @param id Un integer que contiene el id
      *           del Hidato
      */
@@ -17,7 +17,7 @@ public abstract class Hidato {
     }
 
     /**
-     * @author Eloi Roca
+     *
      * @return Un integer que contiene el id del hidato
      */
     public int getId() {
@@ -25,7 +25,7 @@ public abstract class Hidato {
     }
 
     /**
-     * @author Eloi Roca
+     *
      * @return Un integer que contiene el numero de filas del hidato
      */
     public int getNumFilas(){
@@ -33,7 +33,7 @@ public abstract class Hidato {
     }
 
     /**
-     * @author Eloi Roca
+     *
      * @return Un integer que contiene el numero de columnas del hidato
      */
     public int getNumColumnas(){
@@ -41,7 +41,7 @@ public abstract class Hidato {
     }
 
     /**
-     * @author Eloi Roca
+     *
      * @param adyacencia Una enumeracion con el tipo de adyacencia que se quiere usar en el hidato
      */
     void setAdyacencia(TipoAdyacencia adyacencia) {
@@ -49,7 +49,7 @@ public abstract class Hidato {
     }
 
     /**
-     * @author Eloi Roca
+     *
      * @return Una enumeracion con el tipo de adyacencia que usa el hidato
      */
     public TipoAdyacencia getAdyacencia() {
@@ -57,6 +57,11 @@ public abstract class Hidato {
     }
 
 
+    /**
+     *
+     * @param numFilas Un integer con el numero de filas del tablero
+     * @param numColumnas Un integer con el numero de columnas del tablero
+     */
     void setTablero(int numFilas, int numColumnas){
         tablero = new Celda[numFilas][numColumnas];
     }
