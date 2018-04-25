@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import java.util.ArrayList;
+
 public class HidatoHexagonal extends Hidato{
 
     public HidatoHexagonal(int numFila, int numColumnas, TipoAdyacencia tipo) throws IllegalArgumentException{
@@ -9,7 +11,17 @@ public class HidatoHexagonal extends Hidato{
     }
 
     @Override
+    public ArrayList<Celda> getAdyacentes(int i, int j) {
+        return null;
+    }
+
+    @Override
     public boolean tieneSolucion() {
         return false;
+    }
+
+    @Override
+    public void creaGrafo() {
+
     }
 }

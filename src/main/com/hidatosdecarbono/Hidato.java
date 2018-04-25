@@ -1,11 +1,12 @@
 package com.hidatosdecarbono;
 
+import java.util.ArrayList;
+
 public abstract class Hidato {
     private int id;
     private TipoAdyacencia adyacencia;
     private Celda[][] tablero;
-
-
+    private Celda[][] solucion;
 
     /**
      *
@@ -84,9 +85,23 @@ public abstract class Hidato {
         }
     }
 
-    public Celda getCelda(int fila, int col){
+    public Celda getCeldaTablero(int fila, int col){
         return tablero[fila][col];
     }
+
+    public Celda getCeldaSolucion(int fila, int col){
+        return solucion[fila][col];
+    }
+
+    public void copiaTablero(){
+        for(int i = 0; i < tablero.length; i++){
+            for(int j = 0; j < tablero[i].length; j++){
+                solucion[i][j] = tablero[i][j].copiaCelda();
+            }
+        }
+    }
+
+    public abstract ArrayList<Celda> getAdyacentes(int i, int j);
 
     public abstract boolean tieneSolucion();
 

@@ -101,7 +101,7 @@ public class UserInterface {
         for (int i = 0; i < files; i++) {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
-                Celda c = h.getCelda(i, j);
+                Celda c = h.getCeldaTablero(i, j);
                 celes = celes.concat(celdaToString(c));
                 celes = celes.concat(" ");
             }

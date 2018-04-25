@@ -7,6 +7,8 @@ public class Node {
     private Celda celda;
     private ArrayList<Node> adyacentes;
 
+    public Node(){}
+
     public Node(int id, Celda celda, ArrayList<Node> adyacentes){
         this.id = id;
         this.celda = celda;
@@ -27,6 +29,10 @@ public class Node {
 
     public void addAdyacencia(Node node){
         adyacentes.add(node);
+    }
+
+    public boolean esVacio(){
+        return (id == 0);
     }
 
 

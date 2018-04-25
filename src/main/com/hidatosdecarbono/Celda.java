@@ -4,13 +4,15 @@ public class Celda {
     private int valor = -1;
     private TipoCelda tipo;
 
+    Celda(){}
+
     Celda(TipoCelda type) throws IllegalArgumentException{
         if (type.equals(TipoCelda.FIJA)) throw new IllegalArgumentException("Una celda fija necesita valor");
         else this.tipo = type;
     }
 
     Celda(TipoCelda type, int valor) throws IllegalArgumentException{
-        if(type.equals(TipoCelda.FIJA)) {
+        if(type.equals(TipoCelda.FIJA) || type.equals(TipoCelda.VARIABLE)) {
             this.valor = valor;
             this.tipo = type;
         }
@@ -41,15 +43,26 @@ public class Celda {
      * @throws IllegalArgumentException Si el tipo de la celda no era variable
      */
     public void setValor(int v) throws IllegalArgumentException{
-        if(tipo.equals(TipoCelda.VARIABLE)){
-            valor = v;
-        }
-        else throw new IllegalArgumentException("Celda no variable");
+        valor = v;
     }
 
+    public void setTipo(TipoCelda tipo) {
+        this.tipo = tipo;
+    }
 
     public boolean tieneValor(){
         return (valor != -1);
+    }
+
+    public boolean esValida(){
+        return (tipo.equals(TipoCelda.FIJA) || tipo.equals(TipoCelda.VARIABLE));
+    }
+
+    public Celda copiaCelda(){
+        Celda c = new Celda();
+        c.setTipo(this.tipo);
+        c.setValor(this.valor);
+        return c;
     }
 
 }

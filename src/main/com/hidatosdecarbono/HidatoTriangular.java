@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import java.util.ArrayList;
+
 public class HidatoTriangular extends Hidato {
 
     public HidatoTriangular(int numFilas, int numColumnas, TipoAdyacencia adjacencia){
@@ -8,7 +10,17 @@ public class HidatoTriangular extends Hidato {
     }
 
     @Override
+    public ArrayList<Celda> getAdyacentes(int i, int j) {
+        return null;
+    }
+
+    @Override
     public boolean tieneSolucion() {
         return false;
+    }
+
+    @Override
+    public void creaGrafo() {
+
     }
 }

@@ -38,4 +38,24 @@ class CeldaTest {
         assertTrue(c.tieneValor());
     }
 
+    @Test
+    void copiaCeldaFunciona(){
+        Celda c = new Celda(TipoCelda.FIJA, 6);
+        Celda copia = c.copiaCelda();
+        copia.setValor(10);
+        assertEquals(10, copia.getValor());
+        assertEquals(6, c.getValor());
+    }
+
+    @Test
+    void esValidaDevuelveTrueSoloEnCeldasFijasOVariables(){
+        Celda fija = new Celda(TipoCelda.FIJA, 6);
+        Celda variable = new Celda(TipoCelda.VARIABLE, 4);
+        Celda agujero = new Celda(TipoCelda.AGUJERO);
+
+        assertTrue(fija.esValida());
+        assertTrue(variable.esValida());
+        assertTrue(!agujero.esValida());
+    }
+
 }
