@@ -12,6 +12,12 @@ public class HidatoCuadrado extends Hidato {
         this.setAdyacencia(adjacencia);
     }
 
+    /**
+     * Devuelve una lista con todas las adyacencias de una casilla de posicion i,j (TODO Eloi aixo es correcte?)
+     * @param i
+     * @param j
+     * @return
+     */
     @Override
     public ArrayList<Node> getAdyacentes(int i, int j){
         TipoAdyacencia adyacencia = this.getAdyacencia();
