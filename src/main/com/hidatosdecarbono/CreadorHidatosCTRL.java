@@ -9,7 +9,10 @@ public class CreadorHidatosCTRL {
             HidatoCuadrado hq = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
             añadirCeldasHidato(hq,celdas);
             printHidato(hq);
-            hq.creaGrafo();
+
+            if(hq.tieneSolucion()) {
+                printSolucion(hq);
+            }
         }
         return true; //TODO: return true si tiene solucion
     }
@@ -52,6 +55,20 @@ public class CreadorHidatosCTRL {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
                 Celda c = h.getCeldaTablero(i, j);
+                celes = celes.concat(celdaToString(c));
+                celes = celes.concat(" ");
+            }
+            System.out.println(celes);
+        }
+    }
+
+    private void printSolucion(Hidato h){
+        int files = h.getNumFilas();
+        int columnes = h.getNumColumnas();
+        for (int i = 0; i < files; i++) {
+            String celes = "";
+            for (int j = 0; j < columnes; j++) {
+                Celda c = h.getCeldaTableroSolucion(i, j);
                 celes = celes.concat(celdaToString(c));
                 celes = celes.concat(" ");
             }

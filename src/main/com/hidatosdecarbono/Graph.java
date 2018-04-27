@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -47,8 +49,10 @@ public class Graph {
      * @return
      */
     private boolean hacerMovimiento(Node node, int i, int n, boolean[] visitados){
-        Celda celdaNodo = node.getCelda();
+
         if(visitados[node.getId()]) return false;
+
+        Celda celdaNodo = node.getCelda();
         int ultimoValor = celdaNodo.getValor();
         visitados[node.getId()] = true;
 
@@ -67,7 +71,6 @@ public class Graph {
             //Si found vale true sabemos que nodoEncontrado tiene valor.
             //Este null es para saltarnos el error del compilador.
 
-
             //buscar si i+1 ja esta colocat
             Node nodoEncontrado = null;
             for(Node nodo : node.getAdyacentes()){
@@ -82,7 +85,7 @@ public class Graph {
                 if(res) return true;
             }
 
-            //si no, intentar colocarlo a tots els adjacents
+            //si no, intentar colocarlo a tots els adjacents buits
             else {
                 for (Node nodo : node.getAdyacentes()) {
                     if(nodo.getCelda().esVacia()) {

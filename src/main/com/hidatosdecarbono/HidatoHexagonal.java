@@ -15,18 +15,5 @@ public class HidatoHexagonal extends Hidato{
         return null;
     }
 
-    @Override
-    public boolean tieneSolucion() {
-        return false;
-    }
 
-    @Override
-    public void creaGrafo() {
-
-    }
-
-    @Override
-    public void creaNodos() {
-
-    }
 }

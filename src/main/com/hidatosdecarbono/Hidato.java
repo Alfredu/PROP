@@ -7,6 +7,8 @@ public abstract class Hidato {
     private TipoAdyacencia adyacencia;
     private Celda[][] tablero;
     private Celda[][] solucion;
+    private Node[][] nodo;
+    private Graph grafo;
 
     /**
      *
@@ -66,6 +68,8 @@ public abstract class Hidato {
     void setTablero(int numFilas, int numColumnas){
         tablero = new Celda[numFilas][numColumnas];
         solucion = new Celda[numFilas][numColumnas];
+        nodo = new Node[numFilas][numColumnas];
+        grafo = new Graph();
     }
 
     public void nuevaCelda(TipoCelda tipo, int fila, int columna, int valor) throws IllegalArgumentException{
@@ -90,24 +94,65 @@ public abstract class Hidato {
         return tablero[fila][col];
     }
 
-    public Celda getCeldaSolucion(int fila, int col){
+    public Celda getCeldaTableroSolucion(int fila, int col){
         return solucion[fila][col];
     }
 
-    public void copiaTablero(){
+    public Node getNodo(int i, int j){
+        return nodo[i][j];
+    }
+
+    public void copiaTablero(Celda[][] newTablero){
         for(int i = 0; i < tablero.length; i++){
             for(int j = 0; j < tablero[i].length; j++){
-                solucion[i][j] = tablero[i][j].copiaCelda();
+                newTablero[i][j] = tablero[i][j].copiaCelda();
             }
         }
     }
 
     public abstract ArrayList<Node> getAdyacentes(int i, int j);
 
-    public abstract boolean tieneSolucion();
+    public boolean tieneSolucion(){
+        copiaTablero(solucion);
+        creaNodos(nodo);
+        creaGrafo(grafo);
+        return grafo.esSolucionable();
+    }
 
-    public abstract void creaGrafo();
+    public void creaGrafo(Graph grafoSolucion) {
+        int nFilas = this.getNumFilas();
+        int nCols = this.getNumColumnas();
 
-    public abstract void creaNodos();
+        for(int i = 0; i < nFilas; i++) {
+            for (int j = 0; j < nCols; j++) {
+                if(nodo[i][j].noEsVacio()){
+                    nodo[i][j].addListaAdyacencias(getAdyacentes(i,j));
+                    grafoSolucion.addNode(nodo[i][j]);
+                }
+            }
+        }
+    }
+
+    public void creaNodos(Node[][] tableroNodos) {
+        int id = 2;
+        int nFilas = this.getNumFilas();
+        int nCols = this.getNumColumnas();
+
+        for(int i = 0; i < nFilas; i++){
+            for (int j = 0; j < nCols; j++){
+                Celda actual = this.getCeldaTableroSolucion(i,j);
+                if(actual.esValida()){
+                    if (actual.getValor() == 1){
+                        tableroNodos[i][j] = new Node(1,actual);
+                    }
+                    else{
+                        tableroNodos[i][j] = new Node(id,actual);
+                        id++;
+                    }
+                }
+                else tableroNodos[i][j] = new Node();
+            }
+        }
+    }
 
 }
