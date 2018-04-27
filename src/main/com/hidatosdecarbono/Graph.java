@@ -85,8 +85,10 @@ public class Graph {
             //si no, intentar colocarlo a tots els adjacents
             else {
                 for (Node nodo : node.getAdyacentes()) {
-                    boolean res = hacerMovimiento(nodo, i + 1, n, visitados);
-                    if (res) return true;
+                    if(nodo.getCelda().esVacia()) {
+                        boolean res = hacerMovimiento(nodo, i + 1, n, visitados);
+                        if (res) return true;
+                    }
                 }
             }
         }
