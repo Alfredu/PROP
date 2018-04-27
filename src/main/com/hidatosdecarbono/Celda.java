@@ -40,10 +40,14 @@ public class Celda {
     /**
      *
      * @param v Un integer con el valor a añadir a la celda.
-     * @throws IllegalArgumentException Si el tipo de la celda no era variable
+     *
      */
-    public void setValor(int v) throws IllegalArgumentException{
+    public void setValor(int v){
         valor = v;
+    }
+
+    public boolean esVacia(){
+        return (this.tipo.equals(TipoCelda.VARIABLE) && this.valor == 0);
     }
 
     public void setTipo(TipoCelda tipo) {

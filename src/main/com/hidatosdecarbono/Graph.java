@@ -14,19 +14,6 @@ public class Graph {
         graph.put(node.getId(),node);
     }
 
-    /**
-     * Devuelve el numero de casillas para rellenar en el grafo.
-     * @return
-     */
-    private int getNumeroCasillasVacias(){
-        int numeroCasillasVacias = 0;
-        for(Node node: graph.values()){
-            if(node.getCelda().getTipo() == TipoCelda.VARIABLE && !node.getCelda().tieneValor()){
-                numeroCasillasVacias++;
-            }
-        }
-        return numeroCasillasVacias;
-    }
     /* Para debugar el grafo*/
     public void muestraGrafo() {
         for (int i = 1; i < graph.size() + 1; i++) {
@@ -44,25 +31,67 @@ public class Graph {
     }
 
     public boolean esSolucionable(){
-        int n = getNumeroCasillasVacias();
+        int n = graph.values().size();
         Node primerNodo = graph.get(1);
         int i=1;
-        for (Node nodo : primerNodo.getAdyacentes()) {
-            return hacerMovimiento(nodo, i, n);
-        }
-        return false;
+        //Para hacer mas facil la correspondencia valor<->posicion vector porque valor empieza a 1.
+        boolean[] visitados = new boolean[n+1];
+        return hacerMovimiento(primerNodo, i, n, visitados);
     }
 
-    private boolean esMovimientoCorrecto(Node nodo, int valor){
-        for(Node adyacencia : nodo.getAdyacentes()){
-            int valorCeldaAdyacente = adyacencia.getCelda().getValor();
-            if((valor+1) == valorCeldaAdyacente || (valor-1) == valorCeldaAdyacente){
-                return true;
+    /**
+     *
+     * @param node
+     * @param i
+     * @param n
+     * @return
+     */
+    private boolean hacerMovimiento(Node node, int i, int n, boolean[] visitados){
+        Celda celdaNodo = node.getCelda();
+        if(visitados[node.getId()]) return false;
+        int ultimoValor = celdaNodo.getValor();
+        visitados[node.getId()] = true;
+
+        if(i==n && (celdaNodo.esVacia())){
+            celdaNodo.setValor(i);
+            return true;
+        }
+        else if (i==n && celdaNodo.getValor() == i){
+            return true;
+        }
+        //chicha
+        else{
+            //si estic buit em poso valor
+            if(celdaNodo.esVacia()) celdaNodo.setValor(i);
+            boolean found = false;
+            //Si found vale true sabemos que nodoEncontrado tiene valor.
+            //Este null es para saltarnos el error del compilador.
+
+
+            //buscar si i+1 ja esta colocat
+            Node nodoEncontrado = null;
+            for(Node nodo : node.getAdyacentes()){
+                if(nodo.getCelda().getValor() == i+1){
+                    found = true;
+                    nodoEncontrado = nodo;
+                    break;
+                }
+            }
+            if(found){
+                boolean res = hacerMovimiento(nodoEncontrado, i+1, n, visitados);
+                if(res) return true;
+            }
+
+            //si no, intentar colocarlo a tots els adjacents
+            else {
+                for (Node nodo : node.getAdyacentes()) {
+                    boolean res = hacerMovimiento(nodo, i + 1, n, visitados);
+                    if (res) return true;
+                }
             }
         }
-        return false;
-    }
-    private boolean hacerMovimiento(Node node, int i, int n){
+        visitados[node.getId()] = false;
+        celdaNodo.setValor(ultimoValor);
         return false;
     }
 }
