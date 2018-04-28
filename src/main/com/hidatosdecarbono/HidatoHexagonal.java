@@ -12,6 +12,11 @@ public class HidatoHexagonal extends Hidato{
 
     @Override
     public ArrayList<Node> getAdyacentes(int i, int j) {
+        TipoAdyacencia adyacencia = this.getAdyacencia();
+        ArrayList<Node> lista = new ArrayList<Node>();
+        int nFilas = this.getNumFilas();
+        int nCols = this.getNumColumnas();
+
         return null;
     }
 

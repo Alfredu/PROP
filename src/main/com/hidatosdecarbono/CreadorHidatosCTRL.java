@@ -4,6 +4,15 @@ import java.util.ArrayList;
 
 public class CreadorHidatosCTRL {
 
+    /**
+     *
+     * @param tipoHidato
+     * @param numFilas
+     * @param numColumnas
+     * @param tipoAdj
+     * @param celdas
+     * @return
+     */
     public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas){
         if(tipoHidato == TipoHidato.CUADRADO){
             HidatoCuadrado hq = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
