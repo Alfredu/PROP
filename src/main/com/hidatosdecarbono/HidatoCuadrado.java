@@ -19,23 +19,23 @@ public class HidatoCuadrado extends Hidato {
      * @return
      */
     @Override
-    public ArrayList<Node> getAdyacentes(int i, int j){
+    public ArrayList<Node> getAdyacentes(int i, int j, Node nodo[][]){
         TipoAdyacencia adyacencia = this.getAdyacencia();
         ArrayList<Node> lista = new ArrayList<Node>();
         int nFilas = this.getNumFilas();
         int nCols = this.getNumColumnas();
 
 
-        if(i > 0 && this.getNodo(i-1,j).noEsVacio()) lista.add(this.getNodo(i-1,j));
-        if(i < nFilas-1 && this.getNodo(i+1,j).noEsVacio()) lista.add(this.getNodo(i+1,j));
-        if(j > 0 && this.getNodo(i,j-1).noEsVacio()) lista.add(this.getNodo(i,j-1));
-        if(j < nCols-1 && this.getNodo(i,j+1).noEsVacio()) lista.add(this.getNodo(i,j+1));
+        if(i > 0 && nodo[i-1][j].noEsVacio()) lista.add(nodo[i-1][j]);
+        if(i < nFilas-1 && nodo[i+1][j].noEsVacio()) lista.add(nodo[i+1][j]);
+        if(j > 0 && nodo[i][j-1].noEsVacio()) lista.add(nodo[i][j-1]);
+        if(j < nCols-1 && nodo[i][j+1].noEsVacio()) lista.add(nodo[i][j+1]);
 
         if(adyacencia.equals(TipoAdyacencia.LADOYVERTICE)){
-            if(i > 0 && j > 0 && this.getNodo(i-1,j-1).noEsVacio()) lista.add(this.getNodo(i-1,j-1));
-            if(i < nFilas-1 && j > 0 && this.getNodo(i+1,j-1).noEsVacio()) lista.add(this.getNodo(i+1,j-1));
-            if(i > 0 && j < nCols-1 && this.getNodo(i-1,j+1).noEsVacio()) lista.add(this.getNodo(i-1,j+1));
-            if(i < nFilas-1 && j < nCols-1 && this.getNodo(i+1,j+1).noEsVacio()) lista.add(this.getNodo(i+1,j+1));
+            if(i > 0 && j > 0 && nodo[i-1][j-1].noEsVacio()) lista.add(nodo[i-1][j-1]);
+            if(i < nFilas-1 && j > 0 && nodo[i+1][j-1].noEsVacio()) lista.add(nodo[i+1][j-1]);
+            if(i > 0 && j < nCols-1 && nodo[i-1][j+1].noEsVacio()) lista.add(nodo[i-1][j+1]);
+            if(i < nFilas-1 && j < nCols-1 && nodo[i+1][j+1].noEsVacio()) lista.add(nodo[i+1][j+1]);
         }
 
         return lista;

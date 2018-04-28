@@ -16,6 +16,10 @@ public class Graph {
         graph.put(node.getId(),node);
     }
 
+    public int size(){
+        return graph.size();
+    }
+
     /* Para debugar el grafo*/
     public void muestraGrafo() {
         for (int i = 1; i < graph.size() + 1; i++) {
@@ -97,6 +101,21 @@ public class Graph {
         }
         visitados[node.getId()] = false;
         celdaNodo.setValor(ultimoValor);
+        return false;
+    }
+
+    public boolean sonAdyacentes(Node n1, Node n2){
+        Node comprovar = graph.get(n1.getId());
+        for (Node nodo : comprovar.getAdyacentes()){
+            if (nodo.getId() == n2.getId()) return true;
+        }
+        return false;
+    }
+
+    public boolean checkValorAdyacente(Node n1, int n){
+        for (Node nodo : n1.getAdyacentes()) {
+            if(nodo.getCelda().getValor() == n) return true;
+        }
         return false;
     }
 }

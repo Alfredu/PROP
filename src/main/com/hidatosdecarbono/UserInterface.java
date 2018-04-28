@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
+    private DomainFactory domini = new DomainFactory();
 
     void run() {
         System.out.println("Demo hidato");
@@ -58,13 +59,39 @@ public class UserInterface {
         System.out.println("Hidato creado, introduzca el valor de cada celda (se llenan las columnas de cada numFilas y se procede con la numFilas siguente");
         System.out.println("Una celda viene representada por el tipo de celda (- invisible, # agujero, ? variable) y por su valor si es fija");
 
+        ArrayList <String> celdas = leerCeldas(numFilas);
+        CreadorHidatosCTRL creadorHidatosCTRL = domini.getControladorCreador();
+        boolean tieneSolucion = false;
         if (forma.equals("C")) {
-            ArrayList <String> celdas = leerCeldas(numFilas);
-            CreadorHidatosCTRL creadorHidatosCTRL = new CreadorHidatosCTRL();
-            creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.CUADRADO,numFilas,numColumnas,adj,celdas);
-            /*HidatoQuadrado test = new HidatoQuadrado(numFilas, numColumnas, adj);
-            leerCeldas(test);
-            printHidato(test);*/
+            tieneSolucion = creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.CUADRADO, numFilas, numColumnas, adj, celdas);
+            creadorHidatosCTRL.printHidato();
+        }
+
+        if (tieneSolucion){
+            System.out.println("Hidato amb solucio, visualitzar hidato? (Y/N)");
+            String opt = reader.next();
+            if(opt.equals("Y") || opt.equals("y")){
+                creadorHidatosCTRL.printSolucion();
+            }
+            System.out.println("Quiere jugar o klk? (Y/N)");
+            opt = reader.next();
+            if(opt.equals("Y") || opt.equals("y")){
+                JugarHidatosCTRL jugarHidatosCTRL = domini.getControladorJugar("Creado");
+                Boolean end = false;
+
+                while (!end){
+                    jugarHidatosCTRL.printTablero();
+                    String fila = reader.next();
+                    String col = reader.next();
+                    int i = Integer.valueOf(fila);
+                    int j = Integer.valueOf(col);
+                    if(!jugarHidatosCTRL.mueve(i,j)) {
+                        System.out.println("Movimiento incorrecto");
+                    }
+                    end = jugarHidatosCTRL.acabada();
+                }
+                System.out.println("Partida acabada!");
+            }
         }
         else if (forma.equals("T")) {
             HidatoTriangular test = new HidatoTriangular(numFilas, numColumnas, adj);
