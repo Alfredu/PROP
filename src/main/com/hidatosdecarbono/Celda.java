@@ -81,7 +81,7 @@ public class Celda {
         return (valor != 0);
     }
 
-    /**
+    /** TODO canviar aquest nom que es sida
      * Devuelve true si la Celda es valida (es de tipo FIJA o VARIABLE)
      * @return Un booleano que indica si la Celda es valida
      */

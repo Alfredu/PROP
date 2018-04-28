@@ -8,6 +8,8 @@ public class HidatoHexagonal extends Hidato{
         if(tipo.equals(TipoAdyacencia.LADOYVERTICE)){
             throw new IllegalArgumentException("Solo se permite adyacencia de lado en un hidato hexagonal");
         }
+        this.setTablero(numFila, numColumnas);
+        this.setAdyacencia(tipo);
     }
 
     @Override
@@ -17,7 +19,39 @@ public class HidatoHexagonal extends Hidato{
         int nFilas = this.getNumFilas();
         int nCols = this.getNumColumnas();
 
-        return null;
+        //Caso 1: Misma fila, casilla de la izquierda
+        if(j>0 && this.getNodo(i, j-1).noEsVacio()) lista.add(this.getNodo(i, j-1));
+        //Caso 2: Misma fila, casilla de la derecha
+        if(j<nCols-1 && this.getNodo(i, j+1).noEsVacio()) lista.add(this.getNodo(i, j+1));
+
+        if(i%2==0){
+            //Filas pares del hexagono
+
+            //Caso 3: Fila de debajo, casilla justo debajo en el tablero, casilla de la derecha en el dibujo
+            if(i<nFilas-1 && this.getNodo(i+1, j).noEsVacio()) lista.add(this.getNodo(i+1, j));
+            //Caso 4: Fila de debajo, casilla de la izquierda en el tablero, casilla de la izquierda en el dibujo
+            if(i<nFilas-1 && j>0 && this.getNodo(i+1, j-1).noEsVacio()) lista.add(this.getNodo(i+1, j-1));
+            //Caso 5: Fila de arriba, casilla justo arriba en el tablero, casilla de la derecha en el dibujo
+            if(i>0 && this.getNodo(i-1, j).noEsVacio()) lista.add(this.getNodo(i-1, j));
+            //Caso 6: Fila de arriba, casilla de la izquierda en el tablero, casilla de la izquierda en el dibujo
+            if(i>0 && j>0 && this.getNodo(i-1, j-1).noEsVacio()) lista.add(this.getNodo(i-1, j-1));
+
+        }
+        else{
+            //Filas impares del hexagono (desplazadas a la derecha una posicion)
+
+            //Caso 3: Fila de debajo, casilla justo debajo en el tablero, casilla de la izquierda en el dibujo
+            if(i<nFilas-1 && this.getNodo(i+1, j).noEsVacio()) lista.add(this.getNodo(i+1, j));
+            //Caso 4: Fila de debajo, casilla de la izquierda en el tablero, casilla de la derecha en el dibujo
+            if(i<nFilas-1 && j<nFilas-1 && this.getNodo(i+1, j+1).noEsVacio()) lista.add(this.getNodo(i+1, j+1));
+            //Caso 5: Fila de arriba, casilla justo arriba en el tablero, casilla de la izquierda en el dibujo
+            if(i>0 && this.getNodo(i-1, j).noEsVacio()) lista.add(this.getNodo(i-1, j));
+            //Caso 6: Fila de arriba, casilla de la izquierda en el tablero, casilla de la derecha en el dibujo
+            if(i>0 && j<nFilas-1 && this.getNodo(i-1, j+1).noEsVacio()) lista.add(this.getNodo(i-1, j+1));
+
+        }
+
+        return lista;
     }
 
 

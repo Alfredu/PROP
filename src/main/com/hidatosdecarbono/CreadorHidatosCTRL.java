@@ -23,6 +23,15 @@ public class CreadorHidatosCTRL {
                 printSolucion(hq);
             }
         }
+        else if(tipoHidato == TipoHidato.HEXGONAL){
+            HidatoHexagonal he = new HidatoHexagonal(numFilas, numColumnas, tipoAdj);
+            añadirCeldasHidato(he, celdas);
+            printHidato(he);
+
+            if(he.tieneSolucion()){
+                printSolucion(he);
+            }
+        }
         return true; //TODO: return true si tiene solucion
     }
 

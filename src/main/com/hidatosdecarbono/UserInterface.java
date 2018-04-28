@@ -66,21 +66,24 @@ public class UserInterface {
             leerCeldas(test);
             printHidato(test);*/
         }
-        /*else if (forma.equals("T")) {
+        else if (forma.equals("T")) {
             HidatoTriangular test = new HidatoTriangular(numFilas, numColumnas, adj);
-            leerCeldas(test);
-            printHidato(test);
+            /*leerCeldas(test);
+            printHidato(test);*/
         }
         else if (forma.equals("H")) {
             try {
+                ArrayList<String> celdas = leerCeldas(numFilas);
+                CreadorHidatosCTRL creadorHidatosCTRL = new CreadorHidatosCTRL();
+                creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.HEXGONAL, numFilas, numColumnas, adj, celdas);
                 HidatoHexagonal test = new HidatoHexagonal(numFilas, numColumnas, adj);
-                leerCeldas(test);
-                printHidato(test);
+                /*leerCeldas(test);
+                printHidato(test);*/
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
 
-        }*/
+        }
 
     }
 
