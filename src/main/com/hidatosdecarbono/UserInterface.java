@@ -108,15 +108,15 @@ public class UserInterface {
     }
 
     private TipoCelda stringToCelda(String s){
-        if(s.equals("#")) return TipoCelda.AGUJERO;
-        else if(s.equals("-")) return TipoCelda.INVISIBLE;
+        if(s.equals("*")) return TipoCelda.AGUJERO;
+        else if(s.equals("#")) return TipoCelda.INVISIBLE;
         else if(s.equals("?")) return TipoCelda.VARIABLE;
         else return TipoCelda.FIJA;
     }
 
     private String celdaToString(Celda c){
-        if(c.getTipo().equals(TipoCelda.AGUJERO)) return "#";
-        else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "-";
+        if(c.getTipo().equals(TipoCelda.AGUJERO)) return "*";
+        else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "#";
         else if(c.getTipo().equals(TipoCelda.VARIABLE)){
             if(c.tieneValor()) return String.valueOf(c.getValor());
             else return "?";

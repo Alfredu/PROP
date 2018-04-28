@@ -28,23 +28,24 @@ public class CreadorHidatosCTRL {
         int columnes = h.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String fila = celdas.get(i);
+            String[] celda = fila.split(",");
             for (int j = 0; j < columnes; j++) {
-                char celda = fila.charAt(j);
-                TipoCelda tipus = charToCelda(celda);
+
+                TipoCelda tipus = stringToCelda(celda[j]);
                 if(!tipus.equals(TipoCelda.FIJA)){
                     h.nuevaCelda(tipus,i,j);
                 }
                 else{
-                    h.nuevaCelda(tipus,i,j,Character.getNumericValue(celda));
+                    h.nuevaCelda(tipus,i,j,Integer.valueOf(celda[j]));
                 }
             }
         }
     }
 
-    private TipoCelda charToCelda(char c){
-        if(c == '#') return TipoCelda.AGUJERO;
-        else if(c =='-') return TipoCelda.INVISIBLE;
-        else if(c =='?') return TipoCelda.VARIABLE;
+    private TipoCelda stringToCelda(String s){
+        if(s.equals("*")) return TipoCelda.AGUJERO;
+        else if(s.equals("#")) return TipoCelda.INVISIBLE;
+        else if(s.equals("?")) return TipoCelda.VARIABLE;
         else return TipoCelda.FIJA;
     }
 
