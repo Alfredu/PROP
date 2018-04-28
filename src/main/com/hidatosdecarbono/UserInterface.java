@@ -100,8 +100,6 @@ public class UserInterface {
         }
         else if (forma.equals("H")) {
             try {
-                ArrayList<String> celdas = leerCeldas(numFilas);
-                CreadorHidatosCTRL creadorHidatosCTRL = new CreadorHidatosCTRL();
                 creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.HEXGONAL, numFilas, numColumnas, adj, celdas);
                 HidatoHexagonal test = new HidatoHexagonal(numFilas, numColumnas, adj);
                 /*leerCeldas(test);

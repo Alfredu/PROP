@@ -37,6 +37,7 @@ public class Graph {
     }
 
     public boolean esSolucionable(){
+        muestraGrafo();
         int n = graph.values().size();
         Node primerNodo = graph.get(1);
         int i=1;
