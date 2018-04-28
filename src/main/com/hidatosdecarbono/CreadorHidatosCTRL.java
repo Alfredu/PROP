@@ -4,17 +4,19 @@ import java.util.ArrayList;
 
 public class CreadorHidatosCTRL {
 
-    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas){
-        if(tipoHidato == TipoHidato.CUADRADO){
-            HidatoCuadrado hq = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
-            añadirCeldasHidato(hq,celdas);
-            printHidato(hq);
+    private Hidato hidatoCreado;
 
-            if(hq.tieneSolucion()) {
-                printSolucion(hq);
-            }
+    public Hidato getHidatoCreado(){
+        return hidatoCreado;
+    }
+
+    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas){
+        if(tipoHidato == TipoHidato.CUADRADO) {
+            hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
+            añadirCeldasHidato(celdas);
         }
-        return true; //TODO: return true si tiene solucion
+        return hidatoCreado.tieneSolucion();
+
     }
 
     /*public Hidato creaHidatoAleatorioParams(TipoHidato tipoHidato,int nCeldas,int nCeldasFijas,int nCeldasAgujero, TipoAdjacencia tipoAdjacencia){
@@ -23,9 +25,9 @@ public class CreadorHidatosCTRL {
 
     }*/
 
-    private void añadirCeldasHidato(Hidato h, ArrayList <String> celdas) {
-        int files = h.getNumFilas();
-        int columnes = h.getNumColumnas();
+    private void añadirCeldasHidato(ArrayList <String> celdas) {
+        int files = hidatoCreado.getNumFilas();
+        int columnes = hidatoCreado.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String fila = celdas.get(i);
             String[] celda = fila.split(",");
@@ -33,10 +35,10 @@ public class CreadorHidatosCTRL {
 
                 TipoCelda tipus = stringToCelda(celda[j]);
                 if(!tipus.equals(TipoCelda.FIJA)){
-                    h.nuevaCelda(tipus,i,j);
+                    hidatoCreado.nuevaCelda(tipus,i,j);
                 }
                 else{
-                    h.nuevaCelda(tipus,i,j,Integer.valueOf(celda[j]));
+                    hidatoCreado.nuevaCelda(tipus,i,j,Integer.valueOf(celda[j]));
                 }
             }
         }
@@ -49,13 +51,13 @@ public class CreadorHidatosCTRL {
         else return TipoCelda.FIJA;
     }
 
-    private void printHidato(Hidato h){
-        int files = h.getNumFilas();
-        int columnes = h.getNumColumnas();
+    public void printHidato(){
+        int files = hidatoCreado.getNumFilas();
+        int columnes = hidatoCreado.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
-                Celda c = h.getCeldaTablero(i, j);
+                Celda c = hidatoCreado.getCeldaTablero(i, j);
                 celes = celes.concat(celdaToString(c));
                 celes = celes.concat(" ");
             }
@@ -63,13 +65,13 @@ public class CreadorHidatosCTRL {
         }
     }
 
-    private void printSolucion(Hidato h){
-        int files = h.getNumFilas();
-        int columnes = h.getNumColumnas();
+    public void printSolucion(){
+        int files = hidatoCreado.getNumFilas();
+        int columnes = hidatoCreado.getNumColumnas();
         for (int i = 0; i < files; i++) {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
-                Celda c = h.getCeldaTableroSolucion(i, j);
+                Celda c = hidatoCreado.getCeldaTableroSolucion(i, j);
                 celes = celes.concat(celdaToString(c));
                 celes = celes.concat(" ");
             }

@@ -1,12 +1,14 @@
 package com.hidatosdecarbono;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import java.util.ArrayList;
 
 public abstract class Hidato {
     private int id;
     private TipoAdyacencia adyacencia;
     private Celda[][] tablero;
-    private Celda[][] solucion;
+    private Celda[][] tableroSolucion;
     private Node[][] nodo;
     private Graph grafo;
 
@@ -67,7 +69,7 @@ public abstract class Hidato {
      */
     void setTablero(int numFilas, int numColumnas){
         tablero = new Celda[numFilas][numColumnas];
-        solucion = new Celda[numFilas][numColumnas];
+        tableroSolucion = new Celda[numFilas][numColumnas];
         nodo = new Node[numFilas][numColumnas];
         grafo = new Graph();
     }
@@ -95,7 +97,7 @@ public abstract class Hidato {
     }
 
     public Celda getCeldaTableroSolucion(int fila, int col){
-        return solucion[fila][col];
+        return tableroSolucion[fila][col];
     }
 
     public Node getNodo(int i, int j){
@@ -110,37 +112,37 @@ public abstract class Hidato {
         }
     }
 
-    public abstract ArrayList<Node> getAdyacentes(int i, int j);
+    public abstract ArrayList<Node> getAdyacentes(int i, int j, Node[][] nodo);
 
     public boolean tieneSolucion(){
-        copiaTablero(solucion);
-        creaNodos(nodo);
-        creaGrafo(grafo);
+        copiaTablero(tableroSolucion);
+        creaGrafo(grafo, nodo, tableroSolucion);
         return grafo.esSolucionable();
     }
 
-    public void creaGrafo(Graph grafoSolucion) {
+    public void creaGrafo(Graph grafoSolucion, Node[][] nodo, Celda[][] solucion) {
+        creaNodos(nodo, solucion);
         int nFilas = this.getNumFilas();
         int nCols = this.getNumColumnas();
 
         for(int i = 0; i < nFilas; i++) {
             for (int j = 0; j < nCols; j++) {
                 if(nodo[i][j].noEsVacio()){
-                    nodo[i][j].addListaAdyacencias(getAdyacentes(i,j));
+                    nodo[i][j].addListaAdyacencias(getAdyacentes(i,j, nodo));
                     grafoSolucion.addNode(nodo[i][j]);
                 }
             }
         }
     }
 
-    public void creaNodos(Node[][] tableroNodos) {
+    public void creaNodos(Node[][] tableroNodos, Celda[][] solucion) {
         int id = 2;
         int nFilas = this.getNumFilas();
         int nCols = this.getNumColumnas();
 
         for(int i = 0; i < nFilas; i++){
             for (int j = 0; j < nCols; j++){
-                Celda actual = this.getCeldaTableroSolucion(i,j);
+                Celda actual = solucion[i][j];
                 if(actual.esValida()){
                     if (actual.getValor() == 1){
                         tableroNodos[i][j] = new Node(1,actual);

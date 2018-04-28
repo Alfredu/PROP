@@ -10,7 +10,7 @@ public class HidatoTriangular extends Hidato {
     }
 
     @Override
-    public ArrayList<Node> getAdyacentes(int i, int j) {
+    public ArrayList<Node> getAdyacentes(int i, int j, Node[][] nodo) {
         return null;
     }
 
