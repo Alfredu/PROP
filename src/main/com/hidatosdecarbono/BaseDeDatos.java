@@ -9,10 +9,10 @@ class InfoUsuario{
     public Map<String,Hidato> mapHidatos = new HashMap<>();
 }
 
-public class BaseDeDatosFake{
+public class BaseDeDatos {
     private Map<String,InfoUsuario> usersMap;
 
-    public BaseDeDatosFake() {
+    public BaseDeDatos() {
         this.usersMap = new HashMap<>();
     }
 
