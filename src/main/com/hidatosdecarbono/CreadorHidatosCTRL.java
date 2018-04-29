@@ -10,7 +10,7 @@ public class CreadorHidatosCTRL {
         return hidatoCreado;
     }
 
-    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas){
+    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas) throws IllegalArgumentException{
         if(tipoHidato == TipoHidato.CUADRADO) {
             hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
             añadirCeldasHidato(celdas);
@@ -20,7 +20,11 @@ public class CreadorHidatosCTRL {
             hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdj);
             añadirCeldasHidato(celdas);
         }
-        return hidatoCreado.tieneSolucion(); //TODO: return true si tiene solucion
+        else if(tipoHidato == tipoHidato.TRIANGULAR){
+            hidatoCreado = new HidatoTriangular(numFilas, numColumnas, tipoAdj);
+            añadirCeldasHidato(celdas);
+        }
+        return hidatoCreado.tieneSolucion();
     }
 
     /*public Hidato creaHidatoAleatorioParams(TipoHidato tipoHidato,int nCeldas,int nCeldasFijas,int nCeldasAgujero, TipoAdjacencia tipoAdjacencia){

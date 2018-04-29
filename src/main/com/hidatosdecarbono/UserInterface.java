@@ -94,9 +94,13 @@ public class UserInterface {
             }
         }
         else if (forma.equals("T")) {
-            HidatoTriangular test = new HidatoTriangular(numFilas, numColumnas, adj);
-            /*leerCeldas(test);
-            printHidato(test);*/
+            try {
+                creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.TRIANGULAR, numFilas, numColumnas, adj, celdas);
+                creadorHidatosCTRL.printHidato();
+                creadorHidatosCTRL.printSolucion();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
         else if (forma.equals("H")) {
             try {
