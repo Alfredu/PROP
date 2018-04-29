@@ -101,9 +101,8 @@ public class UserInterface {
         else if (forma.equals("H")) {
             try {
                 creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.HEXGONAL, numFilas, numColumnas, adj, celdas);
-                HidatoHexagonal test = new HidatoHexagonal(numFilas, numColumnas, adj);
-                /*leerCeldas(test);
-                printHidato(test);*/
+                creadorHidatosCTRL.printHidato();
+                creadorHidatosCTRL.printSolucion();
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }

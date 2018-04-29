@@ -20,7 +20,7 @@ public class CreadorHidatosCTRL {
             hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdj);
             añadirCeldasHidato(celdas);
         }
-        return true; //TODO: return true si tiene solucion
+        return hidatoCreado.tieneSolucion(); //TODO: return true si tiene solucion
     }
 
     /*public Hidato creaHidatoAleatorioParams(TipoHidato tipoHidato,int nCeldas,int nCeldasFijas,int nCeldasAgujero, TipoAdjacencia tipoAdjacencia){
