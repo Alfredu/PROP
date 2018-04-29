@@ -6,12 +6,23 @@ import java.util.Collections;
 
 public class Ranking {
 
+
+
     private ArrayList<EntradaRanking> entradasRanking;
 
     /**
      * Constructora por defecto
      */
     public Ranking() {
+        entradasRanking = new ArrayList<>();
+    }
+
+    /**
+     * Devuelve todas entradas del ranking.
+     * @return Un arrayList que contiene todas las entradas del ranking
+     */
+    public ArrayList<EntradaRanking> getEntradasRanking() {
+        return entradasRanking;
     }
 
     /**
