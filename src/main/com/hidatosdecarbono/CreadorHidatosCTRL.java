@@ -19,27 +19,28 @@ public class CreadorHidatosCTRL {
      * @param tipoHidato Un enum TipoHidato que contiene el tipo del Hidato a crear
      * @param numFilas Un integer con el numero de filas del hidato a crear
      * @param numColumnas Un integer con el numero de columnas del hidato a crear
-     * @param tipoAdj Un enum TipoAdyacencia que contiene el tipo de la adyacencia del hidato a crear
+     * @param tipoAdyacencia Un enum TipoAdyacencia que contiene el tipo de la adyacencia del hidato a crear
      * @param celdas Un array de strings que contiene las celdas del hidato a crear
      * @return Un boolean que indica si el hidato propuesto tiene o no solución
      */
-    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas) throws IllegalArgumentException{
+    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdyacencia, ArrayList <String> celdas) throws IllegalArgumentException{
         if(tipoHidato == TipoHidato.CUADRADO) {
-            hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
+            hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
 
         else if(tipoHidato == tipoHidato.HEXGONAL){
-            hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdj);
+            hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
         else if(tipoHidato == tipoHidato.TRIANGULAR){
-            hidatoCreado = new HidatoTriangular(numFilas, numColumnas, tipoAdj);
+            hidatoCreado = new HidatoTriangular(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
         return hidatoCreado.tieneSolucion();
     }
 
+    /*
     public boolean creaHidatoAleatorioParams(TipoHidato tipoHidato,int numCeldas,int numCeldasFijas,int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
         int numFilas =
         if(tipoHidato == TipoHidato.CUADRADO) {
@@ -54,7 +55,7 @@ public class CreadorHidatosCTRL {
             hidatoCreado = new HidatoTriangular(numCeldas,numCeldasFijas,numCeldasAgujero,tipoAdyacencia);
         }
         return hidatoCreado.tieneSolucion();
-    }
+    }*/
 
     private void añadirCeldasHidato(ArrayList <String> celdas) {
         int files = hidatoCreado.getNumFilas();
