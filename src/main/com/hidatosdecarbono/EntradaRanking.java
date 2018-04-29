@@ -6,49 +6,48 @@ public class EntradaRanking implements Comparable{
     private int puntuacion;
 
     /**
-     * Creadora de EntradaRanking
-     * @param ranking
-     * @param username
-     * @param tiempo
-     * @param numPistas
+     * Constructora para una EntradaRanking
+     * @param ranking Un Ranking que contiene el ranking al que pertenecera la nueva entradaRanking
+     * @param username Un string que contiene el username del jugador de la nueva entradaRanking
+     * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
+     * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
      */
     public EntradaRanking(Ranking ranking, String username, int tiempo ,int numPistas) {
         this.ranking = ranking;
         this.username = username;
         this.puntuacion = calculaPuntuacion(tiempo,numPistas);
-        ranking.actualizaMejorPuntuacion(this.puntuacion);
     }
 
     /**
-     * Calcula la puntuacion a partir del tiempo y el numero de pistas
-     * @param tiempo
-     * @param numPistas
-     * @return puntuacion
+     * Devuelve la puntuacion calculada a partir del tiempo y el numero de pistas
+     * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
+     * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
+     * @return puntuacion Un integer que contiene la puntuacion correspondiente a la nueva entradaRanking
      */
     private int calculaPuntuacion(int tiempo, int numPistas) {
         return tiempo - 5*numPistas;
     }
 
     /**
-     * Obtiene la puntuacion de la entradaRanking
-     * @return puntuacion
+     * Devuelve la puntuación de la entradaRanking
+     * @return puntuacion Un integer que contiene la puntuacion correspondiente a la nueva entradaRanking
      */
     public int getPuntuacion() {
         return this.puntuacion;
     }
 
     /**
-     * Obtiene el username de la entradaRanking
-     * @return username
+     * Devuelve el username de la entradaRanking
+     * @return username Un string que contiene el username del jugador de la entradaRanking
      */
     public String getUsername() {
         return this.username;
     }
 
     /**
-     * Sobreescribimos la funcion de Comparable para poder ordenar EntradasRanking por puntuacion
-     * @param o
-     * @return
+     * Devuelve si el objeto pasado por parametro es mayor,menor o igual que la entradaRanking.El objeto debe ser una EntradaRanking
+     * @param o Un objeto que contiene la EntradaRanking del elemento a comparar
+     * @return Un integer con valor -1 si es menor, 0 si es igual y 1 si es mayor la EntradaRanking pasada por parametro
      */
     @Override
     public int compareTo(Object o) {

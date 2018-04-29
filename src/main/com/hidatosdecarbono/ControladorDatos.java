@@ -8,14 +8,14 @@ package com.hidatosdecarbono;
 
 public class ControladorDatos{
 
-    private BaseDeDatosFake dbFake;
+    private BaseDeDatos db;
 
     public ControladorDatos() {
-        this.dbFake = new BaseDeDatosFake();;
+        this.db = new BaseDeDatos();;
     }
 
-    public BaseDeDatosFake getDbFake() {
-        return dbFake;
+    public BaseDeDatos getDb() {
+        return db;
     }
 
 
@@ -28,19 +28,19 @@ public class ControladorDatos{
     public void registraUsuario(String username, String password) throws InvalidUserException {
         InfoUsuario infoUsuario = new InfoUsuario();
         infoUsuario.password=password;
-        if(!dbFake.getUsersMap().containsKey(username)) {
-            dbFake.getUsersMap().put(username, infoUsuario);
+        if(!db.getUsersMap().containsKey(username)) {
+            db.getUsersMap().put(username, infoUsuario);
         }
         else throw new InvalidUserException("The username alredy exists");
     }
 
     public boolean loginUsuario(String username,String password){
-        return dbFake.getUsersMap().get(username).password.equals(password);
+        return db.getUsersMap().get(username).password.equals(password);
     }
 
     public String[] getAllUsers(){
-        String[] allUsers = new String[dbFake.getUsersMap().size()];
-        dbFake.getUsersMap().keySet().toArray(allUsers);
+        String[] allUsers = new String[db.getUsersMap().size()];
+        db.getUsersMap().keySet().toArray(allUsers);
         return allUsers;
     }
     

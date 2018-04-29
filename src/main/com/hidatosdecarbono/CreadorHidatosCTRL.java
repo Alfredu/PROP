@@ -6,28 +6,56 @@ public class CreadorHidatosCTRL {
 
     private Hidato hidatoCreado;
 
+    /**
+     * Devuelve el hidato creado.
+     * @return Un Hidato
+     */
     public Hidato getHidatoCreado(){
         return hidatoCreado;
     }
 
-    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdj, ArrayList <String> celdas){
+    /**
+     *Constructora para un Hidato propuesto por el usuario.
+     * @param tipoHidato Un enum TipoHidato que contiene el tipo del Hidato a crear
+     * @param numFilas Un integer con el numero de filas del hidato a crear
+     * @param numColumnas Un integer con el numero de columnas del hidato a crear
+     * @param tipoAdyacencia Un enum TipoAdyacencia que contiene el tipo de la adyacencia del hidato a crear
+     * @param celdas Un array de strings que contiene las celdas del hidato a crear
+     * @return Un boolean que indica si el hidato propuesto tiene o no solución
+     */
+    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdyacencia, ArrayList <String> celdas){
         if(tipoHidato == TipoHidato.CUADRADO) {
-            hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdj);
+            hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
 
-        else if(tipoHidato == tipoHidato.HEXGONAL){
-            hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdj);
+        else if(tipoHidato == TipoHidato.HEXGONAL){
+            hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
-        return hidatoCreado.tieneSolucion(); //TODO: return true si tiene solucion
+
+        else if(tipoHidato == TipoHidato.TRIANGULAR){
+            hidatoCreado = new HidatoTriangular(numFilas, numColumnas, tipoAdyacencia);
+            añadirCeldasHidato(celdas);
+        }
+        return hidatoCreado.tieneSolucion();
     }
 
-    /*public Hidato creaHidatoAleatorioParams(TipoHidato tipoHidato,int nCeldas,int nCeldasFijas,int nCeldasAgujero, TipoAdjacencia tipoAdjacencia){
-        if(tipoHidato == TipoHidato.CUADRADO){
+    public boolean creaHidatoAleatorioParams(TipoHidato tipoHidato,int numCeldas,int numCeldasFijas,int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
+        int numFilas = 
+        if(tipoHidato == TipoHidato.CUADRADO) {
+            hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdyacencia);
         }
 
-    }*/
+        else if(tipoHidato == TipoHidato.HEXGONAL){
+            hidatoCreado = new HidatoHexagonal(numCeldas,numCeldasFijas,numCeldasAgujero,tipoAdyacencia);
+        }
+
+        else if(tipoHidato == TipoHidato.TRIANGULAR){
+            hidatoCreado = new HidatoTriangular(numCeldas,numCeldasFijas,numCeldasAgujero,tipoAdyacencia);
+        }
+        return hidatoCreado.tieneSolucion();
+    }
 
     private void añadirCeldasHidato(ArrayList <String> celdas) {
         int files = hidatoCreado.getNumFilas();
@@ -48,6 +76,10 @@ public class CreadorHidatosCTRL {
         }
     }
 
+    private void añadirCeldasAleatoriasHidato(int numCeldas,int numCeldasFijas, int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
+
+    }
+
     private TipoCelda stringToCelda(String s){
         if(s.equals("*")) return TipoCelda.AGUJERO;
         else if(s.equals("#")) return TipoCelda.INVISIBLE;
@@ -55,6 +87,9 @@ public class CreadorHidatosCTRL {
         else return TipoCelda.FIJA;
     }
 
+    /**
+     * Imprime por pantalla el hidato del controlador
+     */
     public void printHidato(){
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
@@ -69,6 +104,9 @@ public class CreadorHidatosCTRL {
         }
     }
 
+    /**
+     * Imprime por pantalla la solución del hidato del controlador
+     */
     public void printSolucion(){
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();

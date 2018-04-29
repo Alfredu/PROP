@@ -2,9 +2,6 @@ package com.hidatosdecarbono;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControladorDatosTest {
@@ -18,7 +15,7 @@ class ControladorDatosTest {
     @Test
     void userRegisteredWhenNewUsernameAndPassword() throws InvalidUserException {
         dataCtrl.registraUsuario("nico123","1111");
-        String dbPass = dataCtrl.getDbFake().getUsersMap().get("nico123").password;
+        String dbPass = dataCtrl.getDb().getUsersMap().get("nico123").password;
         assertEquals("1111",dbPass);
     }
 

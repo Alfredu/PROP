@@ -6,37 +6,28 @@ import java.util.Collections;
 
 public class Ranking {
 
-    private int mejorPuntuacion;
     private ArrayList<EntradaRanking> entradasRanking;
 
     /**
-     * Creadora de Ranking que inicializa la mejor puntuacion a 0
+     * Constructora por defecto
      */
     public Ranking() {
-        this.mejorPuntuacion = 0;
     }
 
     /**
-     * Actuliza la mejorPuntuacion del ranking
-     * @param puntuacion
-     */
-    public void actualizaMejorPuntuacion(int puntuacion) {
-        if(puntuacion> this.mejorPuntuacion) this.mejorPuntuacion = puntuacion;
-    }
-
-    /**
-     * Añade una entradaRanking al Ranking
-     * @param entradaRanking
+     * Añade una nueva EntradaRanking al Ranking y las reordena por puntuacion
+     * @param entradaRanking Una EntradaRanking que contiene la nueva entrada a añadir en el ranking
      */
     public void addEntradaRanking(EntradaRanking entradaRanking) {
         this.entradasRanking.add(entradaRanking);
+        Collections.sort(entradasRanking);
     }
 
     /**
-     * Devuelve la entradaRanking de un usuario identificado por su username
-     * @param username
-     * @return entradaRanking
-     * @throws InvalidUserException
+     * Devuelve la mejor entradaRanking de un usuario identificado por su username
+     * @param username Un string que contiene el username del jugador
+     * @return entradaRanking Una EntradaRanking que contiene la mejor entrada del usuario en el ranking
+     * @throws InvalidUserException si se intenta buscar una entrada para un username que no tiene entradas en el ranking
      */
     public EntradaRanking getEntradaUsuario(String username) throws InvalidUserException {
         for( EntradaRanking entradaRanking : entradasRanking){
@@ -46,19 +37,28 @@ public class Ranking {
     }
 
     /**
-     * Devuelve una lista con top mejores entradasRanking del Ranking
-     * @param top
-     * @return topMejores
-     * @throws InvalidParameterException
+     * Devuelve una lista de tamaño indicado por el parametro que contiene las mejores entradasRanking del Ranking
+     * @param top Un integer que contiene el tamaño de la lista a devolver
+     * @return topMejores Un ArrayList que contiene las mejores entradas del ranking
+     * @throws InvalidParameterException si se intenta obtener una lista de mejores entradas mayor que el numero de entradas totales
      */
     public ArrayList<EntradaRanking> getTopEntradaUsuario(int top) throws InvalidParameterException {
         if(top > this.entradasRanking.size()) throw new InvalidParameterException();
         ArrayList<EntradaRanking> topMejores = new ArrayList<>();
-        Collections.sort(entradasRanking);
         for (int i = 0; i < top; i++) {
             topMejores.add(entradasRanking.get(i));
         }
         return topMejores;
+    }
+
+    /**
+     * Devuelve la mejor puntuacion del ranking
+     * @return  Un integer que contiene la puntuacion mas alta del ranking
+     * @throws IllegalStateException si no hay entradas en el ranking
+     */
+    public int getMejorPuntuacionRanking() throws IllegalStateException {
+        if(entradasRanking.size()>0) return entradasRanking.get(0).getPuntuacion();
+        throw new IllegalStateException("No hay entradas en el ranking");
     }
 
 }
