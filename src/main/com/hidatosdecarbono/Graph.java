@@ -20,7 +20,7 @@ public class Graph {
         return graph.size();
     }
 
-    /* Para debugar el grafo*/
+    /* Para debugar el grafo
     public void muestraGrafo() {
         for (int i = 1; i < graph.size() + 1; i++) {
             System.out.print(graph.get(i).getId());
@@ -35,9 +35,9 @@ public class Graph {
             System.out.println();
         }
     }
+    */
 
     public boolean esSolucionable(){
-        muestraGrafo();
         int n = graph.values().size();
         Node primerNodo = graph.get(1);
         int i=1;
