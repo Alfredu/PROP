@@ -47,7 +47,6 @@ public class Graph {
      * @return true si el Hidato tenía solución. false si no.
      */
     public boolean esSolucionable(){
-        muestraGrafo();
         int n = graph.values().size();
         Node primerNodo = graph.get(1);
         int i=1;

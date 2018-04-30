@@ -57,14 +57,26 @@ public class UserInterface {
         }
 
         System.out.println("Hidato creado, introduzca el valor de cada celda (se llenan las columnas de cada numFilas y se procede con la numFilas siguente");
-        System.out.println("Una celda viene representada por el tipo de celda (- invisible, # agujero, ? variable) y por su valor si es fija");
+        System.out.println("Una celda viene representada por el tipo de celda (# invisible, * agujero, ? variable) y por su valor si es fija");
 
         ArrayList <String> celdas = leerCeldas(numFilas);
         CreadorHidatosCTRL creadorHidatosCTRL = domini.getControladorCreador();
         boolean tieneSolucion = false;
+        TipoHidato tipo = TipoHidato.CUADRADO;
         if (forma.equals("C")) {
-            tieneSolucion = creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.CUADRADO, numFilas, numColumnas, adj, celdas);
+            tipo = TipoHidato.CUADRADO;
+        }
+        else if (forma.equals("T")) {
+            tipo = TipoHidato.TRIANGULAR;
+        }
+        else if (forma.equals("H")) {
+            tipo = TipoHidato.HEXGONAL;
+        }
+        try {
+            tieneSolucion = creadorHidatosCTRL.creaHidatoPropuesto(tipo, numFilas, numColumnas, adj, celdas);
             creadorHidatosCTRL.printHidato();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
         if (tieneSolucion){
@@ -78,39 +90,27 @@ public class UserInterface {
             if(opt.equals("Y") || opt.equals("y")){
                 JugarHidatosCTRL jugarHidatosCTRL = domini.getControladorJugar("Creado");
                 Boolean end = false;
-
+                System.out.println("Introduzca el valor de la fila y la columna donde moverse separados por un espacio, o pulse R para retroceder una casilla");
                 while (!end){
                     jugarHidatosCTRL.printTablero();
-                    String fila = reader.next();
-                    String col = reader.next();
-                    int i = Integer.valueOf(fila);
-                    int j = Integer.valueOf(col);
-                    if(!jugarHidatosCTRL.mueve(i,j)) {
-                        System.out.println("Movimiento incorrecto");
+                    String opcio = reader.next();
+                    if(opcio.equals("R")||opcio.equals("r")){
+                        jugarHidatosCTRL.retroceder();
                     }
-                    end = jugarHidatosCTRL.acabada();
+                    else {
+                        String fila = opcio;
+                        String col = reader.next();
+                        int i = Integer.valueOf(fila);
+                        int j = Integer.valueOf(col);
+                        if (!jugarHidatosCTRL.mueve(i, j)) {
+                            System.out.println("Movimiento incorrecto");
+                        }
+                        end = jugarHidatosCTRL.acabada();
+                    }
                 }
                 System.out.println("Partida acabada!");
+                jugarHidatosCTRL.printTablero();
             }
-        }
-        else if (forma.equals("T")) {
-            try {
-                creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.TRIANGULAR, numFilas, numColumnas, adj, celdas);
-                creadorHidatosCTRL.printHidato();
-                creadorHidatosCTRL.printSolucion();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        else if (forma.equals("H")) {
-            try {
-                creadorHidatosCTRL.creaHidatoPropuesto(TipoHidato.HEXGONAL, numFilas, numColumnas, adj, celdas);
-                creadorHidatosCTRL.printHidato();
-                creadorHidatosCTRL.printSolucion();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-
         }
 
     }

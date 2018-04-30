@@ -54,9 +54,13 @@ public class Partida {
 
     }
 
+    /* comprueva si se puede realizar el movimiento en la posicion indicada y en caso de ser posible pon el valor
+     de la celda a n, actualiza filaActual y colActual con la posicion de la celda, empila el movimiento, augmenta n en 1
+     y llama a checkSiguiente() para comprovar si hay una casilla adyacente a esta con valor n
+     */
     public boolean mueve(int i, int j){
         if(tablero[i][j].esVacia() && grafoHidato.sonAdyacentes(nodes[i][j],nodes[filaActual][colActual])) {
-            Movimiento m = new Movimiento(i, j);
+            Movimiento m = new Movimiento(filaActual, colActual);
             movimientos.push(m);
             tablero[i][j].setValor(n);
             filaActual = i;
@@ -69,10 +73,33 @@ public class Partida {
         return false;
     }
 
+    public boolean moonwalk(){
+        if(movimientos.empty()){
+            return false;
+        }
+        else{
+            Movimiento m = movimientos.pop();
+            if(tablero[filaActual][colActual].getTipo().equals(TipoCelda.VARIABLE)){
+                tablero[filaActual][colActual].setValor(0);
+                filaActual = m.getI();
+                colActual = m.getJ();
+                n--;
+            }
+            else if (tablero[filaActual][colActual].getTipo().equals(TipoCelda.FIJA)){
+                filaActual = m.getI();
+                colActual = m.getJ();
+                n--;
+                moonwalk();
+            }
+            return true;
+        }
+    }
+
+    //busca en el tablero la celda con valor 1 para iniciar la fila y columna actuales en esa posicion
     private void inicializarFilaColumna(){
-        for(int i = 0; i < tablero.length; i++){
-            for(int j = 0; j < tablero[i].length; j++){
-                if(tablero[i][j].getValor() == 1){
+        for(int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                if (tablero[i][j].getValor() == 1) {
                     filaActual = i;
                     colActual = j;
                 }
@@ -80,9 +107,14 @@ public class Partida {
         }
     }
 
+    /*comprueva si la celda con posicion filaActual y colActual es adyacente a una celda fija con valor n+1
+      y si es asi augmenta n, actualiza filaActual y colActual con la posicion de esta celda adyacente y vuelve a
+      llamarse para comprovar para la nueva filaActual y colActual
+     */
     private void checkSiguiente(){
         Node actual = nodes[filaActual][colActual];
         if(grafoHidato.checkValorAdyacente(actual,n)){
+            movimientos.push(new Movimiento(filaActual,colActual));
             for (int i = 0; i < tablero.length; i++){
                 for (int j = 0; j < tablero[i].length; j++){
                     if (tablero[i][j].getValor() == n){

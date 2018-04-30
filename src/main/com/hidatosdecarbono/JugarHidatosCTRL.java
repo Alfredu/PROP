@@ -15,6 +15,10 @@ public class JugarHidatosCTRL {
         return actual.acabado();
     }
 
+    public boolean retroceder(){
+        return actual.moonwalk();
+    }
+
 
     public void printTablero(){
         Celda[][] tablero = actual.getTablero();
@@ -31,20 +35,6 @@ public class JugarHidatosCTRL {
         }
     }
 
-    public void printTableroSolucion(){
-        Celda[][] tablero = actual.getTableroSolucion();
-        int files = tablero.length;
-        int columnes = tablero[0].length;
-        for (int i = 0; i < files; i++) {
-            String celes = "";
-            for (int j = 0; j < columnes; j++) {
-                Celda c = tablero[i][j];
-                celes = celes.concat(celdaToString(c));
-                celes = celes.concat(" ");
-            }
-            System.out.println(celes);
-        }
-    }
 
     private String celdaToString(Celda c){
         if(c.getTipo().equals(TipoCelda.AGUJERO)) return "#";

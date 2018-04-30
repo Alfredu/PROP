@@ -6,8 +6,6 @@ import java.util.Collections;
 
 public class Ranking {
 
-
-
     private ArrayList<EntradaRanking> entradasRanking;
 
     /**
@@ -27,9 +25,12 @@ public class Ranking {
 
     /**
      * Añade una nueva EntradaRanking al Ranking y las reordena por puntuacion
-     * @param entradaRanking Una EntradaRanking que contiene la nueva entrada a añadir en el ranking
+     * @param username Un string que contiene el username del jugador
+     * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
+     * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
      */
-    public void addEntradaRanking(EntradaRanking entradaRanking) {
+    public void addEntradaRanking(String username, int tiempo ,int numPistas) {
+        EntradaRanking entradaRanking = new EntradaRanking(username,tiempo,numPistas);
         this.entradasRanking.add(entradaRanking);
         Collections.sort(entradasRanking);
     }
