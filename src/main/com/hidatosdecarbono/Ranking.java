@@ -51,14 +51,14 @@ public class Ranking {
     /**
      * Devuelve una lista de tamaño indicado por el parametro que contiene las mejores entradasRanking del Ranking
      * @param top Un integer que contiene el tamaño de la lista a devolver
-     * @return topMejores Un ArrayList que contiene las mejores entradas del ranking
-     * @throws InvalidParameterException si se intenta obtener una lista de mejores entradas mayor que el numero de entradas totales
+     * @return topMejores Un ArrayList que contiene las mejores entradas del ranking, o entradas vacias(username =null) hasta llegar al tamaño indicado
      */
-    public ArrayList<EntradaRanking> getTopEntradaUsuario(int top) throws InvalidParameterException {
-        if(top > this.entradasRanking.size()) throw new InvalidParameterException();
+    public ArrayList<EntradaRanking> getTopEntradaUsuario(int top) {
         ArrayList<EntradaRanking> topMejores = new ArrayList<>();
+        EntradaRanking entradaVacia = new EntradaRanking(null,-1,-1);
         for (int i = 0; i < top; i++) {
-            topMejores.add(entradasRanking.get(i));
+            if(i<entradasRanking.size()) topMejores.add(entradasRanking.get(i));
+            else topMejores.add(entradaVacia);
         }
         return topMejores;
     }
@@ -71,6 +71,14 @@ public class Ranking {
     public int getMejorPuntuacionRanking() throws IllegalStateException {
         if(entradasRanking.size()>0) return entradasRanking.get(0).getPuntuacion();
         throw new IllegalStateException("No hay entradas en el ranking");
+    }
+
+    /**
+     * Devuelve el numero de EntradasRanking que tiene el ranking
+     * @return Un integer que contiene el numero de entradas del ranking
+     */
+    public int getNumEntradasRanking(){
+        return entradasRanking.size();
     }
 
 }

@@ -57,6 +57,12 @@ public class CreadorHidatosCTRL {
         return hidatoCreado.tieneSolucion();
     }*/
 
+    /**
+     * Crea las Celdas del Hidato interpretando los caracteres que codifican los distintos tipos de Celda.
+     * No se comprueba que el <i>input</i> sea válido.
+     *
+     * @param celdas ArrayList de Strings, cada entrada contiene la codificación en carácteres de una fila de Celdas.
+     */
     private void añadirCeldasHidato(ArrayList <String> celdas) {
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();

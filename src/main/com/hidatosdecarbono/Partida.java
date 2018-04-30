@@ -12,9 +12,15 @@ public class Partida {
     private int n = 2;
     private int filaActual;
     private int colActual;
+    private int numPistas = 0;
+    private long tiempoInicial;
+    private long tiempoPartida;
+    private Jugador jugadorPartida;
 
-    public Partida(Hidato hidato){
+    public Partida(Hidato hidato, Jugador jugadorAJugar){
+        this.tiempoInicial = System.currentTimeMillis();
         this.hidatoJugado = hidato;
+        this.jugadorPartida = jugadorAJugar;
 
         tablero = new Celda[hidatoJugado.getNumFilas()][hidatoJugado.getNumColumnas()];
         tableroSolucion = new Celda[hidatoJugado.getNumFilas()][hidatoJugado.getNumColumnas()];
@@ -33,14 +39,51 @@ public class Partida {
 
     }
 
+    /**
+     * Pide una pista para determinar el próximo movimiento y lo efectua. De no haberlo, devuelve false.
+     * @return true si se ha encontrado siguiente movimiento. false si no.
+     */
+    public boolean pidePista(){
+        numPistas++;
+        clearTableroSolucion();
+        if(grafoHidato.esSolucionable()){
+            //return la casella on estigui n
+            int i = 0;
+            for(Celda [] fila: tableroSolucion){
+                int j=0;
+                for(Celda celda : fila){
+                    if(celda.getValor() == n){
+                        mueve(i,j);
+                        return true;
+                    }
+                    j++;
+                }
+                i++;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Devuelve el Hidato que se está jugando
+     * @return El Hidato en juego.
+     */
     public Hidato getHidatoJugado(){
         return hidatoJugado;
     }
 
+    /**
+     * Devuelve el tablero en juego.
+     * @return Una matriz de Celdas que contiene el tablero en juego.
+     */
     public Celda[][] getTablero(){
         return tablero;
     }
 
+    /**
+     * Devuelve el tablero que contiene la solución
+     * @return Una matriz de Celdas que contiene el tablero solucionado
+     */
     public Celda[][] getTableroSolucion() {
         return tableroSolucion;
     }
@@ -73,6 +116,10 @@ public class Partida {
         return false;
     }
 
+    /**
+     * Deshace el último movimiento.
+     * @return true si se ha podido deshacer. false si no.
+     */
     public boolean moonwalk(){
         if(movimientos.empty()){
             return false;
@@ -128,8 +175,16 @@ public class Partida {
         }
     }
 
+    /**
+     * Indica si la partida ha sido completada.
+     * @return
+     */
     public boolean acabado(){
-        return (n == grafoHidato.size()+1);
+        if(n == grafoHidato.size()+1){
+            tiempoPartida = System.currentTimeMillis() - tiempoInicial;
+            return true;
+        }
+        return false;
     }
 
 

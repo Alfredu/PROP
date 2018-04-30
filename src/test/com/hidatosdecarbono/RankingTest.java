@@ -63,12 +63,13 @@ public class RankingTest {
         ranking.getEntradaUsuario("invalidUser");
     }
 
-    @Test(expected = InvalidParameterException.class)
-    public void lanzaInvalidParameterSiSePidenMasEntradasDeLasExistentes() throws InvalidParameterException {
+    @Test
+    public void topContieneEntradasVaciasSiSePidenMasEntradasDeLasExistentes() throws InvalidParameterException {
         ranking.addEntradaRanking( "user1", 10 * 60, 1);
         ranking.addEntradaRanking( "user2", 11 * 60, 1);
         ranking.addEntradaRanking( "user1", 13 * 60, 1);
-        ranking.getTopEntradaUsuario(4);
+        ArrayList<EntradaRanking> topMejores = ranking.getTopEntradaUsuario(4);
+        assertEquals(null,topMejores.get(3).getUsername());
     }
 
     @Test(expected = IllegalStateException.class)
