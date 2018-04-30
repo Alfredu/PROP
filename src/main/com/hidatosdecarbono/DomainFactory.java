@@ -13,7 +13,7 @@ public class DomainFactory {
     public JugarHidatosCTRL getControladorJugar(String s){
         if(s == "Creado") {
             juega = new JugarHidatosCTRL();
-            juega.inicializa(creador.getHidatoCreado());
+            juega.inicializa(creador.getHidatoCreado(), new Jugador("Test", "test"));
             return juega;
         }
         return new JugarHidatosCTRL();

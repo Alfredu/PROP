@@ -5,6 +5,10 @@ import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Clase con la representación interna del tablero en forma de grafo que se usa para
+ * solucionar los Hidatos. Se usa una representación en forma de Lista de Adyacencias.
+ */
 public class Graph {
     private HashMap<Integer,Node> graph;
 
@@ -20,7 +24,9 @@ public class Graph {
         return graph.size();
     }
 
-    /* Para debugar el grafo
+    /**
+     * Imprime las adyacencias del grafo por pantalla. Útil para debugging.
+     */
     public void muestraGrafo() {
         for (int i = 1; i < graph.size() + 1; i++) {
             System.out.print(graph.get(i).getId());
@@ -35,8 +41,11 @@ public class Graph {
             System.out.println();
         }
     }
-    */
 
+    /**
+     * Indica si el Hidato tiene solución o no.
+     * @return true si el Hidato tenía solución. false si no.
+     */
     public boolean esSolucionable(){
         int n = graph.values().size();
         Node primerNodo = graph.get(1);
@@ -46,21 +55,18 @@ public class Graph {
         return hacerMovimiento(primerNodo, i, n, visitados);
     }
 
-    /**
-     *
-     * @param node
-     * @param i
-     * @param n
-     * @return
-     */
     private boolean hacerMovimiento(Node node, int i, int n, boolean[] visitados){
 
+        //Primero comprovamos que no hayamos ya visitado ese nodo.
         if(visitados[node.getId()]) return false;
 
         Celda celdaNodo = node.getCelda();
         int ultimoValor = celdaNodo.getValor();
         visitados[node.getId()] = true;
-
+        /*Condiciones de finalización:
+            -Solo queda una casilla para llenar
+            -La ultima casilla a visitar ya tiene el valor que tocaba llenar.
+         */
         if(i==n && (celdaNodo.esVacia())){
             celdaNodo.setValor(i);
             return true;
@@ -68,9 +74,9 @@ public class Graph {
         else if (i==n && celdaNodo.getValor() == i){
             return true;
         }
-        //chicha
+        //Parte recursiva del algoritmo
         else{
-            //si estic buit em poso valor
+            //Si el nodo visitado es vacío establecemos el valor.
             if(celdaNodo.esVacia()) celdaNodo.setValor(i);
             boolean found = false;
             //Si found vale true sabemos que nodoEncontrado tiene valor.
