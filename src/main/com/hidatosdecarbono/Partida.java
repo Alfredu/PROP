@@ -15,10 +15,12 @@ public class Partida {
     private int numPistas = 0;
     private long tiempoInicial;
     private long tiempoPartida;
+    private Jugador jugadorPartida;
 
-    public Partida(Hidato hidato){
+    public Partida(Hidato hidato, Jugador jugadorAJugar){
         this.tiempoInicial = System.currentTimeMillis();
         this.hidatoJugado = hidato;
+        this.jugadorPartida = jugadorAJugar;
 
         tablero = new Celda[hidatoJugado.getNumFilas()][hidatoJugado.getNumColumnas()];
         tableroSolucion = new Celda[hidatoJugado.getNumFilas()][hidatoJugado.getNumColumnas()];

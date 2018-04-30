@@ -3,8 +3,8 @@ package com.hidatosdecarbono;
 public class JugarHidatosCTRL {
     private Partida actual;
 
-    public void inicializa(Hidato hidato){
-        actual = new Partida(hidato);
+    public void inicializa(Hidato hidato, Jugador jugadorAJugar){
+        actual = new Partida(hidato, jugadorAJugar);
     }
 
     public boolean mueve(int i, int j){
