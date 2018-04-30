@@ -1,19 +1,16 @@
 package com.hidatosdecarbono;
 
 public class EntradaRanking implements Comparable{
-    private Ranking ranking;
     private String username;
     private int puntuacion;
 
     /**
      * Constructora para una EntradaRanking
-     * @param ranking Un Ranking que contiene el ranking al que pertenecera la nueva entradaRanking
      * @param username Un string que contiene el username del jugador de la nueva entradaRanking
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
      * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
      */
-    public EntradaRanking(Ranking ranking, String username, int tiempo ,int numPistas) {
-        this.ranking = ranking;
+    public EntradaRanking(String username, int tiempo ,int numPistas) {
         this.username = username;
         this.puntuacion = calculaPuntuacion(tiempo,numPistas);
     }
