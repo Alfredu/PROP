@@ -11,6 +11,7 @@ public abstract class Hidato {
     private Celda[][] tableroSolucion;
     private Node[][] nodo;
     private Graph grafo;
+    private Ranking ranking;
 
     /**
      *
@@ -72,6 +73,7 @@ public abstract class Hidato {
         tableroSolucion = new Celda[numFilas][numColumnas];
         nodo = new Node[numFilas][numColumnas];
         grafo = new Graph();
+        ranking = new Ranking();
     }
 
     public void nuevaCelda(TipoCelda tipo, int fila, int columna, int valor) throws IllegalArgumentException{
@@ -118,6 +120,14 @@ public abstract class Hidato {
         copiaTablero(tableroSolucion);
         creaGrafo(grafo, nodo, tableroSolucion);
         return grafo.esSolucionable();
+    }
+
+    public void entraRanking(String username, int tiempo, int numPistas){
+        ranking.addEntradaRanking(username,tiempo,numPistas);
+    }
+
+    public ArrayList<EntradaRanking> getRanking(){
+        return ranking.getTopEntradaUsuario(5);
     }
 
     public void creaGrafo(Graph grafoSolucion, Node[][] nodo, Celda[][] solucion) {

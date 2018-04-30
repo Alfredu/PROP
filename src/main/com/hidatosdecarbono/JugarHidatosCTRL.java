@@ -1,10 +1,16 @@
 package com.hidatosdecarbono;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
+import java.util.ArrayList;
+
 public class JugarHidatosCTRL {
     private Partida actual;
+    private Hidato hidatoJugado;
 
     public void inicializa(Hidato hidato){
         actual = new Partida(hidato);
+        hidatoJugado = hidato;
     }
 
     public boolean mueve(int i, int j){
@@ -32,6 +38,19 @@ public class JugarHidatosCTRL {
                 celes = celes.concat(" ");
             }
             System.out.println(celes);
+        }
+    }
+
+    public void ranking(){
+        ArrayList<EntradaRanking> entradasRanking = hidatoJugado.getRanking();
+        int n = 1;
+        for(EntradaRanking entrada : entradasRanking){
+            System.out.print(n);
+            System.out.print("- ");
+            System.out.print(entrada);
+            System.out.print(" :  ");
+            System.out.print(entrada.getPuntuacion());
+            System.out.println();
         }
     }
 
