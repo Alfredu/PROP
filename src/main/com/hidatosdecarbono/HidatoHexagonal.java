@@ -8,8 +8,24 @@ public class HidatoHexagonal extends Hidato{
         if(tipo.equals(TipoAdyacencia.LADOYVERTICE)){
             throw new IllegalArgumentException("Solo se permite adyacencia de lado en un hidato hexagonal");
         }
-        this.setTablero(numFila, numColumnas);
+        this.inicializaHidato(numFila, numColumnas);
         this.setAdyacencia(tipo);
+    }
+
+    public HidatoHexagonal(int totalCaselles, TipoAdyacencia adyacencia){
+        if(adyacencia.equals(TipoAdyacencia.LADOYVERTICE)){
+            throw new IllegalArgumentException("Solo se permite adyacencia de lado en un hidato hexagonal");
+        }
+        int numFilas = 2;
+        int numColumnas = 2;
+        int iteracio = 0;
+        while(numColumnas*numFilas < totalCaselles){
+            if(iteracio%2 == 0) numFilas++;
+            else numColumnas++;
+            iteracio++;
+        }
+        this.inicializaHidato(numFilas,numColumnas);
+        this.setAdyacencia(adyacencia);
     }
 
     @Override

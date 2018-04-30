@@ -94,8 +94,36 @@ public class UserInterface {
         System.out.println("Entre el tipo de hidato, donde C = Cuadrado, T = triangular, H = hexagonal");
         String forma = reader.next();
 
+        if (!forma.equals("C") && !forma.equals("T") && !forma.equals("H")) {
+            System.out.println("Error en la introducción de la forma, reintentar? (Y/N)");
+            String opt = reader.next();
+            if (opt.equals("Y") || opt.equals("y")) añadirHidatoAleatorio();
+            else return;
+        }
+
+        TipoHidato tipo = TipoHidato.CUADRADO;
+        if (forma.equals("C")) {
+            tipo = TipoHidato.CUADRADO;
+        }
+        else if (forma.equals("T")) {
+            tipo = TipoHidato.TRIANGULAR;
+        }
+        else if (forma.equals("H")) {
+            tipo = TipoHidato.HEXGONAL;
+        }
+
         System.out.println("Entre el tipo de adyacencia, donde L = lados y LV = lado y vertice");
         String adjacencia = reader.next();
+
+        TipoAdyacencia adj = TipoAdyacencia.LADO;
+        if (adjacencia.equals("L")||adjacencia.equals("l")) adj = TipoAdyacencia.LADO;
+        else if (adjacencia.equals("LV")||adjacencia.equals("lv")) adj = TipoAdyacencia.LADOYVERTICE;
+        else {
+            System.out.println("Error en la introducción de la adyacencia, reintentar? (Y/N)");
+            String opt = reader.next();
+            if (opt.equals("Y") || opt.equals("y")) añadirHidatoAleatorio();
+            else return;
+        }
 
         System.out.println("Entre el numero total de casillas  del hidato:");
         int topo = reader.nextInt();
@@ -105,6 +133,24 @@ public class UserInterface {
 
         System.out.println("Entre el numero de casillas fijas con valor del hidato:");
         int fijas = reader.nextInt();
+
+        if(agujeros + fijas >= topo){
+            System.out.println("Hidato imposible de representar, fijas + agujeros >= numero total de casillas, reintentar? (Y/N)");
+            String opt = reader.next();
+            if (opt.equals("Y") || opt.equals("y")) añadirHidatoAleatorio();
+            else return;
+        }
+
+        CreadorHidatosCTRL creadorHidatosCTRL = domini.getControladorCreador();
+
+        try {
+            creadorHidatosCTRL.creaHidatoAleatorio(tipo,topo,fijas,agujeros,adj);
+            creadorHidatosCTRL.printHidato();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        muestraYJuega(creadorHidatosCTRL);
 
     }
 
@@ -152,6 +198,7 @@ public class UserInterface {
             jugarHidatosCTRL.ranking();
         }
         System.out.println("Quiere jugar de nuevo? (Y/N)");
+        opt = reader.next();
         if(opt.equals("Y") || opt.equals("y")){
             juegaPartida();
         }

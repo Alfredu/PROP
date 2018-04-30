@@ -8,8 +8,8 @@ public class JugarHidatosCTRL {
     private Partida actual;
     private Hidato hidatoJugado;
 
-    public void inicializa(Hidato hidato){
-        actual = new Partida(hidato);
+    public void inicializa(Hidato hidato, Jugador jugadorAJugar){
+        actual = new Partida(hidato,jugadorAJugar);
         hidatoJugado = hidato;
     }
 

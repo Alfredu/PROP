@@ -5,8 +5,21 @@ import java.util.ArrayList;
 public class HidatoTriangular extends Hidato {
 
     public HidatoTriangular(int numFilas, int numColumnas, TipoAdyacencia adjacencia){
-        this.setTablero(numFilas,numColumnas);
+        this.inicializaHidato(numFilas,numColumnas);
         this.setAdyacencia(adjacencia);
+    }
+
+    public HidatoTriangular(int totalCaselles, TipoAdyacencia adyacencia){
+        int numFilas = 2;
+        int numColumnas = 2;
+        int iteracio = 0;
+        while(numColumnas*numFilas < totalCaselles){
+            if(iteracio%2 == 0) numFilas++;
+            else numColumnas++;
+            iteracio++;
+        }
+        this.inicializaHidato(numFilas,numColumnas);
+        this.setAdyacencia(adyacencia);
     }
 
     @Override

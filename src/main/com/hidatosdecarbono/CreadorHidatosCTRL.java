@@ -24,7 +24,7 @@ public class CreadorHidatosCTRL {
      * @return Un boolean que indica si el hidato propuesto tiene o no solución
      */
     public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdyacencia, ArrayList <String> celdas) throws IllegalArgumentException{
-        if(tipoHidato == TipoHidato.CUADRADO) {
+        if(tipoHidato.equals(TipoHidato.CUADRADO)) {
             hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
@@ -40,22 +40,20 @@ public class CreadorHidatosCTRL {
         return hidatoCreado.tieneSolucion();
     }
 
-    /*
-    public boolean creaHidatoAleatorioParams(TipoHidato tipoHidato,int numCeldas,int numCeldasFijas,int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
-        int numFilas =
+    public void creaHidatoAleatorio(TipoHidato tipoHidato,int numCeldas,int numCeldasFijas,int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
         if(tipoHidato == TipoHidato.CUADRADO) {
-            hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdyacencia);
+            hidatoCreado = new HidatoCuadrado(numCeldas, tipoAdyacencia);
         }
 
         else if(tipoHidato == TipoHidato.HEXGONAL){
-            hidatoCreado = new HidatoHexagonal(numCeldas,numCeldasFijas,numCeldasAgujero,tipoAdyacencia);
+            hidatoCreado = new HidatoHexagonal(numCeldas, tipoAdyacencia);
         }
 
         else if(tipoHidato == TipoHidato.TRIANGULAR){
-            hidatoCreado = new HidatoTriangular(numCeldas,numCeldasFijas,numCeldasAgujero,tipoAdyacencia);
+            hidatoCreado = new HidatoTriangular(numCeldas, tipoAdyacencia);
         }
-        return hidatoCreado.tieneSolucion();
-    }*/
+        hidatoCreado.generaTableroAleatorio(numCeldas,numCeldasAgujero,numCeldasFijas);
+    }
 
     /**
      * Crea las Celdas del Hidato interpretando los caracteres que codifican los distintos tipos de Celda.
@@ -99,8 +97,15 @@ public class CreadorHidatosCTRL {
     public void printHidato(){
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
+        String celes = "- ";
+        for(int i = 0; i < columnes; i++){
+            celes = celes.concat(String.valueOf(i));
+            celes = celes.concat(" ");
+        }
+        System.out.println(celes);
         for (int i = 0; i < files; i++) {
-            String celes = "";
+            celes = String.valueOf(i);
+            celes = celes.concat("|");
             for (int j = 0; j < columnes; j++) {
                 Celda c = hidatoCreado.getCeldaTablero(i, j);
                 celes = celes.concat(celdaToString(c));
@@ -114,6 +119,7 @@ public class CreadorHidatosCTRL {
      * Imprime por pantalla la solución del hidato del controlador
      */
     public void printSolucion(){
+        hidatoCreado.tieneSolucion();
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
         for (int i = 0; i < files; i++) {

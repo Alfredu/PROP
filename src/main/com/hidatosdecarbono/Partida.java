@@ -1,6 +1,7 @@
 package com.hidatosdecarbono;
 
 import java.util.Stack;
+import static java.lang.Math.toIntExact;
 
 public class Partida {
     private Hidato hidatoJugado;
@@ -182,6 +183,8 @@ public class Partida {
     public boolean acabado(){
         if(n == grafoHidato.size()+1){
             tiempoPartida = System.currentTimeMillis() - tiempoInicial;
+            int time = toIntExact(tiempoPartida);
+            hidatoJugado.entraRanking(jugadorPartida.getUsername(),time,numPistas);
             return true;
         }
         return false;
