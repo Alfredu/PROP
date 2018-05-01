@@ -151,7 +151,7 @@ public abstract class Hidato {
         }
     }
 
-    public void creaNodos(Node[][] tableroNodos, Celda[][] solucion) {
+    private void creaNodos(Node[][] tableroNodos, Celda[][] solucion) {
         int id = 2;
         int nFilas = this.getNumFilas();
         int nCols = this.getNumColumnas();

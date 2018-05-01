@@ -26,7 +26,7 @@ public class HidatoCuadrado extends Hidato {
     }
 
     /**
-     * Devuelve una lista con todas las adyacencias de una casilla de posicion i,j (TODO Eloi aixo es correcte?)
+     * Devuelve una lista con todas las adyacencias de una casilla de posicion i,j
      * @param i
      * @param j
      * @return

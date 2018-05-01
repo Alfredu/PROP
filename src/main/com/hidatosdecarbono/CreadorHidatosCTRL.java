@@ -80,9 +80,6 @@ public class CreadorHidatosCTRL {
         }
     }
 
-    private void añadirCeldasAleatoriasHidato(int numCeldas,int numCeldasFijas, int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
-
-    }
 
     private TipoCelda stringToCelda(String s){
         if(s.equals("*")) return TipoCelda.AGUJERO;
