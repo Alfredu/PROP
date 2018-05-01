@@ -121,7 +121,7 @@ public class Graph {
 
     public boolean checkValorAdyacente(Node n1, int n){
         for (Node nodo : n1.getAdyacentes()) {
-            if(nodo.getCelda().getValor() == n) return true;
+            if(nodo.getCelda().getValor() == n && nodo.getCelda().getTipo().equals(TipoCelda.FIJA)) return true;
         }
         return false;
     }

@@ -192,12 +192,18 @@ public class UserInterface {
         Scanner reader = new Scanner(System.in);
         JugarHidatosCTRL jugarHidatosCTRL = domini.getControladorJugar("Creado");
         Boolean end = false;
-        System.out.println("Introduzca el valor de la fila y la columna donde moverse separados por un espacio, o pulse R para retroceder una casilla");
+        System.out.print("Introduzca el valor de la fila y la columna donde moverse separados por un espacio,");
+        System.out.println(" pulse R para retroceder una casilla o pulse P para pedir una pista (se coloca la siguiente casilla de forma automatica");
         while (!end){
             jugarHidatosCTRL.printTablero();
             String opcio = reader.next();
             if(opcio.equals("R")||opcio.equals("r")){
                 jugarHidatosCTRL.retroceder();
+            }
+            else if(opcio.equals("P")||opcio.equals("p")){
+                if(!jugarHidatosCTRL.pidePista()){
+                    System.out.println("No hay movimiento posible en este camino, prueve a retroceder");
+                }
             }
             else {
                 String fila = opcio;

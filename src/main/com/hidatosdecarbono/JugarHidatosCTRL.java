@@ -25,6 +25,10 @@ public class JugarHidatosCTRL {
         return actual.moonwalk();
     }
 
+    public boolean pidePista(){
+        return actual.pidePista();
+    }
+
 
     public void printTablero(){
         Celda[][] tablero = actual.getTablero();

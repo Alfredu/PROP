@@ -22,7 +22,7 @@ public class EntradaRanking implements Comparable{
      * @return puntuacion Un integer que contiene la puntuacion correspondiente a la nueva entradaRanking
      */
     private int calculaPuntuacion(int tiempo, int numPistas) {
-        return  Math.floorDiv(1000000,(tiempo+60*numPistas));
+        return  Math.floorDiv(10000000,(tiempo+60*numPistas));
     }
 
     /**
