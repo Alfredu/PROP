@@ -12,14 +12,25 @@ import java.util.HashMap;
 public class Graph {
     private HashMap<Integer,Node> graph;
 
+    /**
+     * Creadora por defecto. Crea un Grafo vacío.
+     */
     public Graph(){
         graph = new HashMap<Integer, Node>();
     }
 
+    /**
+     * Añade un nodo al Grafo
+     * @param node Nodo a añadir al Grafo
+     */
     public void addNode(Node node){
         graph.put(node.getId(),node);
     }
 
+    /**
+     * Devuelve el tamaño del Grafo
+     * @return Integer con el tamaño del Grafo
+     */
     public int size(){
         return graph.size();
     }
@@ -111,6 +122,12 @@ public class Graph {
         return false;
     }
 
+    /**
+     * Comprueba si dos Nodos son adyacentes
+     * @param n1 Nodo sobre el que se va a buscar
+     * @param n2 Nodo a buscar en n1
+     * @return true si n2 estaba en la lista de adyacencias de n1. false si no.
+     */
     public boolean sonAdyacentes(Node n1, Node n2){
         Node comprovar = graph.get(n1.getId());
         for (Node nodo : comprovar.getAdyacentes()){
@@ -119,6 +136,12 @@ public class Graph {
         return false;
     }
 
+    /**
+     * Comprueba si una casilla fija con un valor determinado es adyacente a un nodo
+     * @param n1 Nodo sobre el que se va a buscar el valor
+     * @param n Integer con el valor que se quiere comprobar si es adyacente a n1
+     * @return true si n1 tiene una casilla fija adyacente con el valor n. false si no
+     */
     public boolean checkValorAdyacente(Node n1, int n){
         for (Node nodo : n1.getAdyacentes()) {
             if(nodo.getCelda().getValor() == n && nodo.getCelda().getTipo().equals(TipoCelda.FIJA)) return true;

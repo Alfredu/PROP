@@ -71,7 +71,7 @@ public class CreadorHidatosCTRL {
 
                 TipoCelda tipus = stringToCelda(celda[j]);
                 if(!tipus.equals(TipoCelda.FIJA)){
-                    hidatoCreado.nuevaCelda(tipus,i,j);
+                    hidatoCreado.nuevaCelda(tipus,i,j, 0);
                 }
                 else{
                     hidatoCreado.nuevaCelda(tipus,i,j,Integer.valueOf(celda[j]));

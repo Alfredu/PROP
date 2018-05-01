@@ -77,6 +77,14 @@ public abstract class Hidato {
         ranking = new Ranking();
     }
 
+    /**
+     * Crea una nueva Celda en el tablero de juego
+     * @param tipo TipoCelda de la Celda a crear
+     * @param fila Integer con la fila de la Celda en el tablero
+     * @param columna Integer con la columna de la Celda en el tablero
+     * @param valor Valor a añadir en la Celda
+     * @throws IllegalArgumentException si el tipo de la Celda no corresponde.
+     */
     public void nuevaCelda(TipoCelda tipo, int fila, int columna, int valor) throws IllegalArgumentException{
         try{
             tablero[fila][columna] = new Celda(tipo, valor);
@@ -86,24 +94,32 @@ public abstract class Hidato {
         }
     }
 
-    public void nuevaCelda(TipoCelda tipo, int fila, int columna) throws IllegalArgumentException{
-        try{
-            tablero[fila][columna] = new Celda(tipo);
-        }
-        catch (IllegalArgumentException e){
-            throw e;
-        }
-    }
-
+    /**
+     * Devuelve una Celda del tablero
+     * @param fila Integer con la fila de la Celda
+     * @param col Integer con la columna de la Celda
+     * @return La Celda correspondiente a la posicion fila,col del tablero
+     */
     public Celda getCeldaTablero(int fila, int col){
         return tablero[fila][col];
     }
 
+    /**
+     * Devuelve una Celda del tablero de solucion
+     * @param fila Integer con la fila de la Celda
+     * @param col Integer con la columna de la Celda
+     * @return La Celda correspondiente a la posicion fila,col del tablero de solución
+     */
     public Celda getCeldaTableroSolucion(int fila, int col){
         return tableroSolucion[fila][col];
     }
 
 
+    /**
+     * Copia el tablero de juego al tablero por parámetros.
+     * @param newTablero Matriz de Celdas donde se copiara el tablero de juego.
+
+     */
     public void copiaTablero(Celda[][] newTablero){
         for(int i = 0; i < tablero.length; i++){
             for(int j = 0; j < tablero[i].length; j++){
@@ -112,6 +128,10 @@ public abstract class Hidato {
         }
     }
 
+    /**
+     * Copia el tablero con la solucion al tablero por parámetros.
+     * @param newTablero Matriz de Celdas donde se copiara el tablero
+     */
     public void copiaTableroSolucion(Celda[][] newTablero){
         for(int i = 0; i < tableroSolucion.length; i++){
             for(int j = 0; j < tableroSolucion[i].length; j++){
@@ -120,22 +140,49 @@ public abstract class Hidato {
         }
     }
 
+    /**
+     * Metodo abstracto. Devuelve todas las adyacencias de una casilla
+     * @param i Integer con la fila de la Celda
+     * @param j Integer con la columna de la Celda
+     * @param nodo Matriz de Node TODO preguntar Eloi
+     * @return Una ArrayList con todas los Nodos adyacentes a la casilla i,j
+     */
     public abstract ArrayList<Node> getAdyacentes(int i, int j, Node[][] nodo);
 
+    /**
+     * Indica si el Hidato tiene solucion
+     * @return true si el Hidato tiene solucion. false si no.
+     */
     public boolean tieneSolucion(){
         copiaTablero(tableroSolucion);
         creaGrafo(grafo, nodo, tableroSolucion);
         return grafo.esSolucionable();
     }
 
+    /**
+     * Añade una entrada al Ranking de ese hidato
+     * @param username String con el Nombre de usuario del jugador de la entrada
+     * @param tiempo Integer Tiempo que ha tardado el jugador en acabar la partida
+     * @param numPistas Integer con el Numero de Pistas que ha usado
+     */
     public void entraRanking(String username, int tiempo, int numPistas){
         ranking.addEntradaRanking(username,tiempo,numPistas);
     }
 
+    /**
+     * Devuelve las entradas del Ranking del Hidato
+     * @return Un ArrayList con todas las EntradaRanking perteneciente al Hidato
+     */
     public ArrayList<EntradaRanking> getRanking(){
         return ranking.getEntradasRanking();
     }
 
+    /**
+     * Crea un grafo a partir del tablero
+     * @param grafoSolucion Grafo de salida creado a partir del tablero (output).
+     * @param nodo Matriz de Nodos a partir del cual se genera el Grafo.
+     * @param solucion Matriz de Celdas TODO preguntar Eloi
+     */
     public void creaGrafo(Graph grafoSolucion, Node[][] nodo, Celda[][] solucion) {
         creaNodos(nodo, solucion);
         int nFilas = this.getNumFilas();
@@ -173,6 +220,12 @@ public abstract class Hidato {
         }
     }
 
+    /**
+     * Genera un tablero aleatorio con los parámetros indicados
+     * @param totalCasillas Integer con el numero de Celdas totales del hidato
+     * @param agujeros Integer con el numero de Celdas del Hidato que seran agujeros
+     * @param fijas Integer con el numero de Celdas del Hidato con el numero ya fijado.
+     */
     public void generaTableroAleatorio(int totalCasillas, int agujeros, int fijas){
 
         //inicialitzem el tauler solucio amb caselles variables a 0
