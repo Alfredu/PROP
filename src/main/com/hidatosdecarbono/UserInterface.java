@@ -7,28 +7,32 @@ public class UserInterface {
     private DomainFactory domini = new DomainFactory();
 
     void run() {
-        System.out.println("Demo hidato");
-
+        System.out.println("Demo hidato:");
         logIn();
+        boolean end = false;
+        while(!end) {
+            System.out.println("Opciones:");
+            System.out.println("1- Añadir un hidato por casillas");
+            System.out.println("2- Añadir un hidato aleatorio");
+            System.out.println("3- LogIn con nuevo jugador");
+            System.out.println("4- Terminar juego");
 
-        System.out.println("Opciones:");
-        System.out.println("1- Añadir un hidato por casillas");
-        System.out.println("2- Añadir un hidato aleatorio");
+            Scanner reader = new Scanner(System.in);
+            int opt;
+            opt = reader.nextInt();
 
-        Scanner reader = new Scanner(System.in);
-        int opt;
-        opt = reader.nextInt();
+            if (opt == 1) {
+                añadirHidatoPorParametros();
+            }
+            else if (opt == 2) {
+                añadirHidatoAleatorio();
+            }
+            else if (opt == 3) logIn();
+            else end = true;
+        }
 
-        if (opt == 1) {
-            añadirHidatoPorParametros();
-        }
-        else if(opt == 2){
-            añadirHidatoAleatorio();
-        }
-        else {
-            System.out.println("Error");
-            return;
-        }
+
+
     }
 
     private void logIn(){
