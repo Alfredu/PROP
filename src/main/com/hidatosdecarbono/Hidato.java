@@ -230,7 +230,7 @@ public abstract class Hidato {
         if(grafo.esSolucionable()){
             iterador = 0;
             //posem un numero aleatori de celes que eren variables a fixes (tenen valor segur ja que l'hidato ha quedat resolt)
-            while(iterador < fijas){
+            while(iterador < fijas-1){
                 int i = ThreadLocalRandom.current().nextInt(0, tablero.length);
                 int j = ThreadLocalRandom.current().nextInt(0, tablero[0].length);
                 if (tableroSolucion[i][j].getTipo().equals(TipoCelda.VARIABLE)){

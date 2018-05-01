@@ -12,7 +12,7 @@ public class Ranking {
      * Constructora por defecto
      */
     public Ranking() {
-        entradasRanking = new ArrayList<>();
+        entradasRanking = new ArrayList<EntradaRanking>();
     }
 
     /**

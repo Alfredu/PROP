@@ -97,22 +97,17 @@ public class CreadorHidatosCTRL {
     public void printHidato(){
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
-        String celes = "- ";
-        for(int i = 0; i < columnes; i++){
-            celes = celes.concat(String.valueOf(i));
-            celes = celes.concat(" ");
-        }
-        System.out.println(celes);
+        String celes = "";
         for (int i = 0; i < files; i++) {
-            celes = String.valueOf(i);
-            celes = celes.concat("|");
             for (int j = 0; j < columnes; j++) {
                 Celda c = hidatoCreado.getCeldaTablero(i, j);
                 celes = celes.concat(celdaToString(c));
                 celes = celes.concat(" ");
             }
             System.out.println(celes);
+            celes = "";
         }
+
     }
 
     /**
@@ -134,7 +129,7 @@ public class CreadorHidatosCTRL {
     }
 
     private String celdaToString(Celda c){
-        if(c.getTipo().equals(TipoCelda.AGUJERO)) return "#";
+        if(c.getTipo().equals(TipoCelda.AGUJERO)) return "*";
         else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "-";
         else if(c.getTipo().equals(TipoCelda.VARIABLE)){
             if(c.tieneValor()) return String.valueOf(c.getValor());

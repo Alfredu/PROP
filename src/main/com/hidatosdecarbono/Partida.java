@@ -103,6 +103,7 @@ public class Partida {
      y llama a checkSiguiente() para comprovar si hay una casilla adyacente a esta con valor n
      */
     public boolean mueve(int i, int j){
+        if(i < 0 || i >= tablero.length || j < 0 || j >= tablero[i].length) return false;
         if(tablero[i][j].esVacia() && grafoHidato.sonAdyacentes(nodes[i][j],nodes[filaActual][colActual])) {
             Movimiento m = new Movimiento(filaActual, colActual);
             movimientos.push(m);

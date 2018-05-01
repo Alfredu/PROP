@@ -9,6 +9,8 @@ public class UserInterface {
     void run() {
         System.out.println("Demo hidato");
 
+        logIn();
+
         System.out.println("Opciones:");
         System.out.println("1- Añadir un hidato por casillas");
         System.out.println("2- Añadir un hidato aleatorio");
@@ -27,6 +29,20 @@ public class UserInterface {
             System.out.println("Error");
             return;
         }
+    }
+
+    private void logIn(){
+        System.out.println("Registro en el sistema, introduzca su Username");
+        Scanner reader = new Scanner(System.in);
+        String username = reader.next();
+        System.out.println("Registro en el sistema, introduzca su contraseña");
+        String pass = reader.next();
+        LogInCTRL logIn = domini.getLogInCTRL();
+        logIn.creaJugador(username,pass);
+
+        System.out.print("Loggeado en el sistema como: ");
+        System.out.println(logIn.getJugador().getUsername());
+
     }
 
     private void añadirHidatoPorParametros() {

@@ -30,8 +30,10 @@ public class JugarHidatosCTRL {
         Celda[][] tablero = actual.getTablero();
         int files = tablero.length;
         int columnes = tablero[0].length;
+        String celes;
         for (int i = 0; i < files; i++) {
-            String celes = "";
+            celes = String.valueOf(i);
+            celes = celes.concat("|");
             for (int j = 0; j < columnes; j++) {
                 Celda c = tablero[i][j];
                 celes = celes.concat(celdaToString(c));
@@ -47,16 +49,16 @@ public class JugarHidatosCTRL {
         for(EntradaRanking entrada : entradasRanking){
             System.out.print(n);
             System.out.print("- ");
-            System.out.print(entrada);
+            System.out.print(entrada.getUsername());
             System.out.print(" :  ");
-            System.out.print(entrada.getPuntuacion());
-            System.out.println();
+            System.out.println(entrada.getPuntuacion());
+            n++;
         }
     }
 
 
     private String celdaToString(Celda c){
-        if(c.getTipo().equals(TipoCelda.AGUJERO)) return "#";
+        if(c.getTipo().equals(TipoCelda.AGUJERO)) return "*";
         else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "-";
         else if(c.getTipo().equals(TipoCelda.VARIABLE)){
             if(c.tieneValor()) return String.valueOf(c.getValor());
