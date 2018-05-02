@@ -102,6 +102,13 @@ public class Partida {
      de la celda a n, actualiza filaActual y colActual con la posicion de la celda, empila el movimiento, augmenta n en 1
      y llama a checkSiguiente() para comprovar si hay una casilla adyacente a esta con valor n
      */
+
+    /**
+     * Realiza un movimiento en la posicion indicada. Indica si ha sido posible.
+     * @param i Un Integer con la fila de la Celda donde se quiere hacer el movimiento.
+     * @param j Un Integer con la columna de la Celda donde se quiere hacer el movimiento.
+     * @return true si se ha hecho el movimiento con éxito. false si no.
+     */
     public boolean mueve(int i, int j){
         if(i < 0 || i >= tablero.length || j < 0 || j >= tablero[i].length) return false;
         if(tablero[i][j].esVacia() && grafoHidato.sonAdyacentes(nodes[i][j],nodes[filaActual][colActual])) {
@@ -179,7 +186,7 @@ public class Partida {
 
     /**
      * Indica si la partida ha sido completada.
-     * @return
+     * @return true si la partida ha acabado. false si no.
      */
     public boolean acabado(){
         if(n == grafoHidato.size()+1){

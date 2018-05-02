@@ -28,6 +28,12 @@ public class HidatoHexagonal extends Hidato{
         this.setAdyacencia(adyacencia);
     }
 
+    /**
+     * Devuelve una lista con todas las adyacencias de un Nodo de posicion i,j.
+     * @param i Integer con la fila de la Celda.
+     * @param j Integer con la columna de la Celda.
+     * @return Un ArrayList con todos los Nodos adyacentes a la Celda.
+     */
     @Override
     public ArrayList<Node> getAdyacentes(int i, int j, Node[][] nodes) {
         ArrayList<Node> lista = new ArrayList<Node>();
