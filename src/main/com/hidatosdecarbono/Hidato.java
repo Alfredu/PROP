@@ -15,7 +15,7 @@ public abstract class Hidato {
     private Ranking ranking;
 
     /**
-     *
+     * Asigna un id al Hidato
      * @param id Un integer que contiene el id
      *           del Hidato
      */
@@ -24,7 +24,7 @@ public abstract class Hidato {
     }
 
     /**
-     *
+     * Devuelve el id del Hidato
      * @return Un integer que contiene el id del hidato
      */
     public int getId() {
@@ -32,7 +32,7 @@ public abstract class Hidato {
     }
 
     /**
-     *
+     * Devuelve el numero de filas del Hidato.
      * @return Un integer que contiene el numero de filas del hidato
      */
     public int getNumFilas(){
@@ -40,7 +40,7 @@ public abstract class Hidato {
     }
 
     /**
-     *
+     * Devuelve el numero de columnas.
      * @return Un integer que contiene el numero de columnas del hidato
      */
     public int getNumColumnas(){
@@ -48,7 +48,7 @@ public abstract class Hidato {
     }
 
     /**
-     *
+     * Asigna un tipo de adyacencia al Hidato.
      * @param adyacencia Una enumeracion con el tipo de adyacencia que se quiere usar en el hidato
      */
     void setAdyacencia(TipoAdyacencia adyacencia) {
@@ -78,7 +78,7 @@ public abstract class Hidato {
     }
 
     /**
-     * Crea una nueva Celda en el tablero de juego
+     * Crea una nueva Celda en el tablero de juego con valor
      * @param tipo TipoCelda de la Celda a crear
      * @param fila Integer con la fila de la Celda en el tablero
      * @param columna Integer con la columna de la Celda en el tablero
@@ -88,6 +88,22 @@ public abstract class Hidato {
     public void nuevaCelda(TipoCelda tipo, int fila, int columna, int valor) throws IllegalArgumentException{
         try{
             tablero[fila][columna] = new Celda(tipo, valor);
+        }
+        catch (IllegalArgumentException e){
+            throw e;
+        }
+    }
+
+    /**
+     * Crea una Celda en el tablero de juego sin valor
+     * @param tipo TipoCelda de la Celda a crear
+     * @param fila Integer con la fila de la Celda en el tablero
+     * @param columna Integer con la columna de la Celda en el tablero
+     * @throws IllegalArgumentException si el tipo de la Celda no corresponde.
+     */
+    public void nuevaCelda(TipoCelda tipo, int fila, int columna) throws IllegalArgumentException{
+        try{
+           tablero[fila][columna] = new Celda(tipo);
         }
         catch (IllegalArgumentException e){
             throw e;
