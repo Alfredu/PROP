@@ -181,7 +181,7 @@ public class UserInterface {
         if(opt.equals("Y") || opt.equals("y")){
             creadorHidatosCTRL.printSolucion();
         }
-        System.out.println("Quiere jugar o klk? (Y/N)");
+        System.out.println("Desea jugar el Hidato? (Y/N)");
         opt = reader.next();
         if(opt.equals("Y") || opt.equals("y")){
             juegaPartida();
