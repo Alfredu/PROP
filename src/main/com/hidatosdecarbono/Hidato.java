@@ -1,7 +1,5 @@
 package com.hidatosdecarbono;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -56,7 +54,7 @@ public abstract class Hidato {
     }
 
     /**
-     *
+     * Devuelve el tipo de adyacencia del Hidato.
      * @return Una enumeracion con el tipo de adyacencia que usa el hidato
      */
     public TipoAdyacencia getAdyacencia() {
@@ -65,7 +63,7 @@ public abstract class Hidato {
 
 
     /**
-     *
+     * Inicializa el Hidato.
      * @param numFilas Un integer con el numero de filas del tablero
      * @param numColumnas Un integer con el numero de columnas del tablero
      */
@@ -160,7 +158,7 @@ public abstract class Hidato {
      * Metodo abstracto. Devuelve todas las adyacencias de una casilla
      * @param i Integer con la fila de la Celda
      * @param j Integer con la columna de la Celda
-     * @param nodo Matriz de Node TODO preguntar Eloi
+     * @param nodo Matriz de Nodos creada a partir del tablero de Celdas (output).
      * @return Una ArrayList con todas los Nodos adyacentes a la casilla i,j
      */
     public abstract ArrayList<Node> getAdyacentes(int i, int j, Node[][] nodo);
@@ -196,8 +194,8 @@ public abstract class Hidato {
     /**
      * Crea un grafo a partir del tablero
      * @param grafoSolucion Grafo de salida creado a partir del tablero (output).
-     * @param nodo Matriz de Nodos a partir del cual se genera el Grafo.
-     * @param solucion Matriz de Celdas TODO preguntar Eloi
+     * @param nodo Matriz de Nodos a partir del cual se genera el Grafo (output)
+     * @param solucion Matriz de Celdas a partir de la cual se genera la matriz de Nodos.
      */
     public void creaGrafo(Graph grafoSolucion, Node[][] nodo, Celda[][] solucion) {
         creaNodos(nodo, solucion);
@@ -222,7 +220,7 @@ public abstract class Hidato {
         for(int i = 0; i < nFilas; i++){
             for (int j = 0; j < nCols; j++){
                 Celda actual = solucion[i][j];
-                if(actual.esValida()){
+                if(actual.esFijaOVariable()){
                     if (actual.getValor() == 1){
                         tableroNodos[i][j] = new Node(1,actual);
                     }

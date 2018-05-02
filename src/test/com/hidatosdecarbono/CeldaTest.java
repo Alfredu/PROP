@@ -1,6 +1,5 @@
 package com.hidatosdecarbono;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,9 +52,9 @@ class CeldaTest {
         Celda variable = new Celda(TipoCelda.VARIABLE, 4);
         Celda agujero = new Celda(TipoCelda.AGUJERO);
 
-        assertTrue(fija.esValida());
-        assertTrue(variable.esValida());
-        assertTrue(!agujero.esValida());
+        assertTrue(fija.esFijaOVariable());
+        assertTrue(variable.esFijaOVariable());
+        assertTrue(!agujero.esFijaOVariable());
     }
 
 }

@@ -22,6 +22,13 @@ public class HidatoTriangular extends Hidato {
         this.setAdyacencia(adyacencia);
     }
 
+    /**
+     * Devuelve una lista de Nodos adyacente a la Celda de la posicion i,j
+     * @param i Integer con la fila de la Celda
+     * @param j Integer con la columna de la Celda
+     * @param nodes Matriz de Nodos donde se comprueban las adyacencias.
+     * @return ArrayList con los Nodos adyacentes a esa Celda.
+     */
     @Override
     public ArrayList<Node> getAdyacentes(int i, int j, Node[][] nodes) {
         /*
