@@ -28,7 +28,7 @@ public class RankingTest {
     public void encuentraMejorEntradaUsuario() throws InvalidUserException {
         ranking.addEntradaRanking("user1",15*60,1);
         ranking.addEntradaRanking("user1",10*60,6);
-        assertEquals("La mejor puntuacion de user1 es 1041",1000000/(15*60+1*60),ranking.getEntradaUsuario("user1").getPuntuacion());
+        assertEquals("La mejor puntuacion de user1 es 1041",10000000/(15*60+1*60),ranking.getEntradaUsuario("user1").getPuntuacion());
     }
     @Test
     public void encuentraTop3MejoresEntradas() throws InvalidParameterException {
@@ -38,9 +38,9 @@ public class RankingTest {
         ranking.addEntradaRanking( "user1", 13 * 60, 1);
         ranking.addEntradaRanking("user1", 9 * 60, 1);
         ArrayList<EntradaRanking> topMejores = ranking.getTopEntradaUsuario(3);
-        assertEquals("Primero",1000000/(9*60+60),topMejores.get(0).getPuntuacion());
-        assertEquals("Segundo",1000000/(10*60+60),topMejores.get(1).getPuntuacion());
-        assertEquals("Tercero",1000000/(11*60+60),topMejores.get(2).getPuntuacion());
+        assertEquals("Primero",10000000/(9*60+60),topMejores.get(0).getPuntuacion());
+        assertEquals("Segundo",10000000/(10*60+60),topMejores.get(1).getPuntuacion());
+        assertEquals("Tercero",10000000/(11*60+60),topMejores.get(2).getPuntuacion());
     }
 
     @Test
