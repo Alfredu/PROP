@@ -56,9 +56,4 @@ public class HidatoCuadrado extends Hidato {
 
 
 
-
-
-
-
-
 }

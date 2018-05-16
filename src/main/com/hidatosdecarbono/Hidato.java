@@ -11,6 +11,7 @@ public abstract class Hidato {
     private Node[][] nodo;
     private Graph grafo;
     private Ranking ranking;
+    private Dificultad dificultad;
 
     /**
      * Asigna un id al Hidato
@@ -318,6 +319,48 @@ public abstract class Hidato {
         }
         else{
             generaTableroAleatorio(totalCasillas,agujeros,fijas);
+        }
+
+    }
+
+    public void setDificultad(Dificultad d){
+        this.dificultad = d;
+    }
+
+    float porcentaje(int nCeldas){
+        float vacias = 0;
+        float fijas = 0;
+        for(int i = 0; i < tableroSolucion.length; i++){
+            for(int j=0; j < tableroSolucion[i].length; j++){
+                if(getCeldaTablero(i,j).getTipo().equals(TipoCelda.FIJA)) fijas++;
+                else if(getCeldaTablero(i,j).getTipo().equals(TipoCelda.VARIABLE)) vacias++;
+            }
+        }
+        float cells = vacias + fijas;
+        nCeldas = (int) cells;
+
+        return (fijas/cells)*100;
+    }
+
+    public void decideDificultad(){
+        int nCeldas = 0;
+        float porcentajeFijas = porcentaje(nCeldas);
+
+        if(nCeldas < 10) dificultad = Dificultad.FACIL;
+        else if(nCeldas < 30){
+            if(porcentajeFijas > 70) dificultad = Dificultad.FACIL;
+            else if(porcentajeFijas > 35) dificultad = Dificultad.MEDIO;
+            else dificultad = Dificultad.DIFICIL;
+        }
+        else if(nCeldas < 50){
+            if(porcentajeFijas > 80) dificultad = Dificultad.FACIL;
+            else if(porcentajeFijas > 45) dificultad = Dificultad.MEDIO;
+            else dificultad = Dificultad.DIFICIL;
+        }
+        else{
+            if(porcentajeFijas > 85) dificultad = Dificultad.FACIL;
+            else if(porcentajeFijas > 55) dificultad = Dificultad.MEDIO;
+            else dificultad = Dificultad.DIFICIL;
         }
 
     }
