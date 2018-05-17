@@ -8,6 +8,14 @@ import java.util.ArrayList;
 
 public class Persistencia {
 
+
+    /**
+     * Guarda el contenido del primer parametro en un fichero situado en el path relativo persistencia/
+     * con el nombre indicado en el segundo parametro. Si existe,concatena el nuevo contenido al existente
+     * sino lo crea y añade el nuevo contenido.
+     * @param json Un String que contiene la informacion a guardar de forma persistente
+     * @param nombreFichero Un String que contiene el nombre del fichero de persistencia
+     */
    public void guardaEnTxt(String json, String nombreFichero){
        try{
            File file =new File("persistencia/"+nombreFichero);
@@ -23,6 +31,12 @@ public class Persistencia {
        }
    }
 
+    /**
+     * Devuelve un ArrayList de JSONObject que representan cada linea del fichero ubicado en
+     * el path relativo persistencia/ y con el nombre indicado por el parametro.
+     * @param nombreFichero Un String que contiene el nombre del fichero a leer
+     * @return ArrayList<JSONObjectA> o null si no existe el fichero indicado por parametro
+     */
    protected ArrayList<JSONObject> obtenDeTxt(String nombreFichero){
        ArrayList<JSONObject> texto = new ArrayList<>();
        try {
