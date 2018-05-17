@@ -55,7 +55,6 @@ public class HidatoCuadrado extends Hidato {
     }
 
 
-
     @Override
     public TipoHidato getTipoHidato() {
         return TipoHidato.CUADRADO;

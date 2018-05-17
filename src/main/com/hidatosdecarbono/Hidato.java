@@ -8,11 +8,10 @@ public abstract class Hidato {
     private TipoAdyacencia adyacencia;
     private Celda[][] tablero;
     private Celda[][] tableroSolucion;
-    private Dificultad dificultad;
     private transient Node[][] nodo;
     private transient Graph grafo;
     private transient Ranking ranking;
-
+    private Dificultad dificultad;
     /**
      * Asigna un id al Hidato
      * @param id Un integer que contiene el id
