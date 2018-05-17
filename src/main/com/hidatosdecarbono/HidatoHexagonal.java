@@ -75,5 +75,8 @@ public class HidatoHexagonal extends Hidato{
         return lista;
     }
 
-
+    @Override
+    public TipoHidato getTipoHidato() {
+        return TipoHidato.HEXGONAL;
+    }
 }

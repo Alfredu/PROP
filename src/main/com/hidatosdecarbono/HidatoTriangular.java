@@ -65,5 +65,8 @@ public class HidatoTriangular extends Hidato {
         return lista;
     }
 
-
+    @Override
+    public TipoHidato getTipoHidato() {
+        return TipoHidato.TRIANGULAR;
+    }
 }

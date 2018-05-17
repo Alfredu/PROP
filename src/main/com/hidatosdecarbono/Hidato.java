@@ -8,10 +8,10 @@ public abstract class Hidato {
     private TipoAdyacencia adyacencia;
     private Celda[][] tablero;
     private Celda[][] tableroSolucion;
-    private Node[][] nodo;
-    private Graph grafo;
-    private Ranking ranking;
     private Dificultad dificultad;
+    private transient Node[][] nodo;
+    private transient Graph grafo;
+    private transient Ranking ranking;
 
     /**
      * Asigna un id al Hidato
@@ -323,6 +323,7 @@ public abstract class Hidato {
 
     }
 
+    public abstract TipoHidato getTipoHidato();
     public void setDificultad(Dificultad d){
         this.dificultad = d;
     }
