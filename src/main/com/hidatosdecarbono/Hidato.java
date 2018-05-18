@@ -8,10 +8,11 @@ public abstract class Hidato {
     private TipoAdyacencia adyacencia;
     private Celda[][] tablero;
     private Celda[][] tableroSolucion;
-    private transient Node[][] nodo;
-    private transient Graph grafo;
-    private transient Ranking ranking;
+    private Node[][] nodo;
+    private Graph grafo;
+    private Ranking ranking;
     private Dificultad dificultad;
+
     /**
      * Asigna un id al Hidato
      * @param id Un integer que contiene el id
@@ -27,6 +28,14 @@ public abstract class Hidato {
      */
     public int getId() {
         return id;
+    }
+
+    public void setDificultad(Dificultad d){
+        this.dificultad = d;
+    }
+
+    public Dificultad getDificultad() {
+        return dificultad;
     }
 
     /**
@@ -322,12 +331,81 @@ public abstract class Hidato {
 
     }
 
-    public abstract TipoHidato getTipoHidato();
-    public void setDificultad(Dificultad d){
-        this.dificultad = d;
+    public void generaAleatorioPorDificultad(int nCasillas, Dificultad d){
+        int agujeros = nCasillas%10;
+        int fijas = 5;
+        if(dificultad.equals(Dificultad.FACIL)){
+            if(nCasillas < 16){
+                fijas = ThreadLocalRandom.current().nextInt(3, 12);
+            }
+            if(nCasillas - agujeros < 30){
+                if (adyacencia.equals(TipoAdyacencia.LADO)){
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 60, 85);
+                }
+                else{
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 65, 85);
+                }
+            }
+            else if(nCasillas - agujeros < 50){
+                if (adyacencia.equals(TipoAdyacencia.LADO)){
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 75, 85);
+                }
+                else{
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 80, 90);
+                }
+            }
+        }
+        else if(dificultad.equals(Dificultad.MEDIO)){
+            if(nCasillas - agujeros < 30){
+                if (adyacencia.equals(TipoAdyacencia.LADO)){
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 30, 60);
+                }
+                else{
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 35, 65);
+                }
+            }
+            else if(nCasillas - agujeros < 50){
+                if (adyacencia.equals(TipoAdyacencia.LADO)){
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 40, 75);
+                }
+                else{
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 45, 80);
+                }
+            }
+        }
+        else{
+            if(nCasillas - agujeros < 30){
+                if (adyacencia.equals(TipoAdyacencia.LADO)){
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 10, 30);
+                }
+                else{
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 10, 35);
+                }
+            }
+            else if(nCasillas - agujeros < 50){
+                if (adyacencia.equals(TipoAdyacencia.LADO)){
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 15, 40);
+                }
+                else{
+                    fijas = getFijasPercentaje(nCasillas - agujeros, 15, 45);
+                }
+            }
+        }
+        generaTableroAleatorio(nCasillas,agujeros,fijas);
     }
 
-    float porcentaje(int nCeldas){
+    public void asociaRanking(Ranking ranking){
+        this.ranking = ranking;
+    }
+
+    private int getFijasPercentaje(int nCasillas, int percentajeMin, int percentajeMax){
+        int maxLimit = (nCasillas*percentajeMax)/100;
+        int minLimit = (nCasillas*percentajeMin)/100;
+
+        return ThreadLocalRandom.current().nextInt(minLimit, maxLimit);
+    }
+
+    private float porcentaje(int nCeldas){
         float vacias = 0;
         float fijas = 0;
         for(int i = 0; i < tableroSolucion.length; i++){
@@ -346,21 +424,42 @@ public abstract class Hidato {
         int nCeldas = 0;
         float porcentajeFijas = porcentaje(nCeldas);
 
-        if(nCeldas < 10) dificultad = Dificultad.FACIL;
+        if(nCeldas < 15) dificultad = Dificultad.FACIL;
         else if(nCeldas < 30){
-            if(porcentajeFijas > 70) dificultad = Dificultad.FACIL;
-            else if(porcentajeFijas > 35) dificultad = Dificultad.MEDIO;
-            else dificultad = Dificultad.DIFICIL;
+            if(adyacencia.equals(TipoAdyacencia.LADO)) {
+                if (porcentajeFijas > 60) dificultad = Dificultad.FACIL;
+                else if (porcentajeFijas > 30) dificultad = Dificultad.MEDIO;
+                else dificultad = Dificultad.DIFICIL;
+            }
+            else{
+                if (porcentajeFijas > 65) dificultad = Dificultad.FACIL;
+                else if (porcentajeFijas > 35) dificultad = Dificultad.MEDIO;
+                else dificultad = Dificultad.DIFICIL;
+            }
         }
         else if(nCeldas < 50){
-            if(porcentajeFijas > 80) dificultad = Dificultad.FACIL;
-            else if(porcentajeFijas > 45) dificultad = Dificultad.MEDIO;
-            else dificultad = Dificultad.DIFICIL;
+            if(adyacencia.equals(TipoAdyacencia.LADO)) {
+                if (porcentajeFijas > 75) dificultad = Dificultad.FACIL;
+                else if (porcentajeFijas > 40) dificultad = Dificultad.MEDIO;
+                else dificultad = Dificultad.DIFICIL;
+            }
+            else{
+                if (porcentajeFijas > 80) dificultad = Dificultad.FACIL;
+                else if (porcentajeFijas > 45) dificultad = Dificultad.MEDIO;
+                else dificultad = Dificultad.DIFICIL;
+            }
         }
         else{
-            if(porcentajeFijas > 85) dificultad = Dificultad.FACIL;
-            else if(porcentajeFijas > 55) dificultad = Dificultad.MEDIO;
-            else dificultad = Dificultad.DIFICIL;
+            if(adyacencia.equals(TipoAdyacencia.LADO)) {
+                if (porcentajeFijas > 80) dificultad = Dificultad.FACIL;
+                else if (porcentajeFijas > 55) dificultad = Dificultad.MEDIO;
+                else dificultad = Dificultad.DIFICIL;
+            }
+            else{
+                if (porcentajeFijas > 85) dificultad = Dificultad.FACIL;
+                else if (porcentajeFijas > 60) dificultad = Dificultad.MEDIO;
+                else dificultad = Dificultad.DIFICIL;
+            }
         }
 
     }

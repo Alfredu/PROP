@@ -1,10 +1,16 @@
 package com.hidatosdecarbono;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CreadorHidatosCTRL {
 
     private Hidato hidatoCreado;
+    private RankingCTRL rankingCTRL;
+
+    public CreadorHidatosCTRL(RankingCTRL rankingCTRL){
+        this.rankingCTRL = rankingCTRL;
+    }
 
     /**
      * Devuelve el hidato creado.
@@ -37,7 +43,33 @@ public class CreadorHidatosCTRL {
             hidatoCreado = new HidatoTriangular(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
+        hidatoCreado.decideDificultad();
+        Dificultad d = hidatoCreado.getDificultad();
+
+        if(d.equals(Dificultad.FACIL)) hidatoCreado.asociaRanking(rankingCTRL.getRankingFacil());
+        else if(d.equals(Dificultad.MEDIO)) hidatoCreado.asociaRanking(rankingCTRL.getRankingMedio());
+        else hidatoCreado.asociaRanking(rankingCTRL.getRankingDificil());
+
         return hidatoCreado.tieneSolucion();
+    }
+
+    public void creaHidatoPorDificultad(Dificultad dificultad){
+        int forma = ThreadLocalRandom.current().nextInt(0, 3);
+        int adj = ThreadLocalRandom.current().nextInt(0, 2);
+        int celdas;
+        if(dificultad.equals(Dificultad.FACIL)) {
+            celdas = ThreadLocalRandom.current().nextInt(9, 45);
+        }
+        else{
+            celdas = ThreadLocalRandom.current().nextInt(16, 45);
+        }
+
+        if(forma == 0 && adj == 0) hidatoCreado = new HidatoCuadrado(celdas, TipoAdyacencia.LADO);
+        else if(forma == 0 && adj == 1) hidatoCreado = new HidatoCuadrado(celdas, TipoAdyacencia.LADOYVERTICE);
+        else if(forma == 1 && adj == 0) hidatoCreado = new HidatoTriangular(celdas, TipoAdyacencia.LADO);
+        else if(forma == 1 && adj == 1) hidatoCreado = new HidatoTriangular(celdas, TipoAdyacencia.LADOYVERTICE);
+        else if(forma == 2) hidatoCreado = new HidatoHexagonal(celdas, TipoAdyacencia.LADO);
+
     }
 
     public void creaHidatoAleatorio(TipoHidato tipoHidato,int numCeldas,int numCeldasFijas,int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
@@ -53,6 +85,7 @@ public class CreadorHidatosCTRL {
             hidatoCreado = new HidatoTriangular(numCeldas, tipoAdyacencia);
         }
         hidatoCreado.generaTableroAleatorio(numCeldas,numCeldasAgujero,numCeldasFijas);
+        hidatoCreado.decideDificultad();
     }
 
     /**

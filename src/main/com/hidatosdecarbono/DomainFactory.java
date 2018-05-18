@@ -4,6 +4,7 @@ public class DomainFactory {
     private LogInCTRL logInCTRL;
     private CreadorHidatosCTRL creador;
     private JugarHidatosCTRL juega;
+    private RankingCTRL rankingCTRL = new RankingCTRL();
 
     public LogInCTRL getLogInCTRL(){
         logInCTRL = new LogInCTRL();
@@ -11,7 +12,7 @@ public class DomainFactory {
     }
 
     public CreadorHidatosCTRL getControladorCreador() {
-        creador = new CreadorHidatosCTRL();
+        creador = new CreadorHidatosCTRL(rankingCTRL);
         return creador;
     }
 
@@ -22,5 +23,9 @@ public class DomainFactory {
             return juega;
         }
         return new JugarHidatosCTRL();
+    }
+
+    public RankingCTRL getRankingCTRL() {
+        return rankingCTRL;
     }
 }
