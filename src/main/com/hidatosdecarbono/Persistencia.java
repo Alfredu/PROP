@@ -16,13 +16,13 @@ public class Persistencia {
      * @param json Un String que contiene la informacion a guardar de forma persistente
      * @param nombreFichero Un String que contiene el nombre del fichero de persistencia
      */
-   public void guardaEnTxt(String json, String nombreFichero){
+   public void guardaEnTxt(String json, String nombreFichero, boolean concatenar){
        try{
            File file =new File("persistencia/"+nombreFichero);
            if(!file.exists()){
                file.createNewFile();
            }
-           FileWriter fw = new FileWriter(file,true);
+           FileWriter fw = new FileWriter(file,concatenar);
            BufferedWriter bw = new BufferedWriter(fw);
            bw.write(json+"\n");
            bw.close();

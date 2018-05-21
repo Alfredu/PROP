@@ -463,7 +463,7 @@ public abstract class Hidato {
         }
 
     }
-
+    public abstract TipoHidato getTipoHidato();
 
 
 }
