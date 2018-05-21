@@ -78,6 +78,7 @@ public class PersistenciaCTRL {
                 break;
         }
         json = json.substring(1,json.length()-1); //feo pero efectivo -> Patron adaptacion ;D
+        System.out.println(json);
         Ranking ranking = gson.fromJson(json,Ranking.class);
         return ranking;
     }
