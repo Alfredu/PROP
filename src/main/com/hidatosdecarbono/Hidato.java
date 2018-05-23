@@ -332,6 +332,7 @@ public abstract class Hidato {
     }
 
     public void generaAleatorioPorDificultad(int nCasillas, Dificultad d){
+        this.dificultad = d;
         int agujeros = nCasillas%10;
         int fijas = 5;
         if(dificultad.equals(Dificultad.FACIL)){
