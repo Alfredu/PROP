@@ -206,7 +206,10 @@ public class UserInterface {
             System.out.println(e.getMessage());
         }
 
+        System.out.println(creadorHidatosCTRL.adyacenciaHidato());
+        System.out.println(creadorHidatosCTRL.formaHidato());
         muestraYJuega(creadorHidatosCTRL);
+
 
     }
 

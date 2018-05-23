@@ -148,4 +148,8 @@ public class Graph {
         }
         return false;
     }
+
+    public void colocaDistanciaCorrecta(int n){
+
+    }
 }
