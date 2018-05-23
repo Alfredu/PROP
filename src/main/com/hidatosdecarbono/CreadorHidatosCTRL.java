@@ -90,6 +90,19 @@ public class CreadorHidatosCTRL {
         hidatoCreado.decideDificultad();
     }
 
+    public String adyacenciaHidato(){
+        TipoAdyacencia adj = hidatoCreado.getAdyacencia();
+        if(adj.equals(TipoAdyacencia.LADO)) return "Lado";
+        else return "Lado y vertice";
+    }
+
+    public String formaHidato(){
+        TipoHidato forma = hidatoCreado.getTipoHidato();
+        if(forma.equals(TipoHidato.CUADRADO)) return "Cuadrado";
+        else if(forma.equals(TipoHidato.TRIANGULAR)) return "Triangular";
+        else return "Hexagonal";
+    }
+
     /**
      * Crea las Celdas del Hidato interpretando los caracteres que codifican los distintos tipos de Celda.
      * No se comprueba que el <i>input</i> sea válido.
