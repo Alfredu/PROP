@@ -14,8 +14,9 @@ public class UserInterface {
             System.out.println("Opciones:");
             System.out.println("1- Añadir un hidato por casillas");
             System.out.println("2- Añadir un hidato aleatorio");
-            System.out.println("3- LogIn con nuevo jugador");
-            System.out.println("4- Terminar juego");
+            System.out.println("3- Añadir hidato por dificultad");
+            System.out.println("4- LogIn con nuevo jugador");
+            System.out.println("5- Terminar juego");
 
             Scanner reader = new Scanner(System.in);
             int opt;
@@ -27,12 +28,10 @@ public class UserInterface {
             else if (opt == 2) {
                 añadirHidatoAleatorio();
             }
-            else if (opt == 3) logIn();
+            else if (opt == 3) añadirPorDificultad();
+            else if(opt == 4) logIn();
             else end = true;
         }
-
-
-
     }
 
     private void logIn(){
@@ -165,6 +164,43 @@ public class UserInterface {
 
         try {
             creadorHidatosCTRL.creaHidatoAleatorio(tipo,topo,fijas,agujeros,adj);
+            creadorHidatosCTRL.printHidato();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        muestraYJuega(creadorHidatosCTRL);
+
+    }
+
+    private void añadirPorDificultad(){
+        Scanner reader = new Scanner(System.in);
+
+        System.out.println("Entre la dificultad del hidato, F = Facil, M = Medio y D = Dificil");
+        String dificultad = reader.next();
+
+        if (!dificultad.equals("F") && !dificultad.equals("M") && !dificultad.equals("D")) {
+            System.out.println("Error en la introducción de la forma, reintentar? (Y/N)");
+            String opt = reader.next();
+            if (opt.equals("Y") || opt.equals("y")) añadirHidatoAleatorio();
+            else return;
+        }
+
+        Dificultad d = Dificultad.FACIL;
+        if (dificultad.equals("F")) {
+            d = Dificultad.FACIL;
+        }
+        else if (dificultad.equals("M")) {
+            d = Dificultad.MEDIO;
+        }
+        else if (dificultad.equals("D")) {
+            d = Dificultad.DIFICIL;
+        }
+
+        CreadorHidatosCTRL creadorHidatosCTRL = domini.getControladorCreador();
+
+        try {
+            creadorHidatosCTRL.creaHidatoPorDificultad(d);
             creadorHidatosCTRL.printHidato();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());

@@ -70,6 +70,8 @@ public class CreadorHidatosCTRL {
         else if(forma == 1 && adj == 1) hidatoCreado = new HidatoTriangular(celdas, TipoAdyacencia.LADOYVERTICE);
         else if(forma == 2) hidatoCreado = new HidatoHexagonal(celdas, TipoAdyacencia.LADO);
 
+        hidatoCreado.generaAleatorioPorDificultad(celdas,dificultad);
+
     }
 
     public void creaHidatoAleatorio(TipoHidato tipoHidato,int numCeldas,int numCeldasFijas,int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
