@@ -6,12 +6,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class Hidato {
     private int id;
     private TipoAdyacencia adyacencia;
-    private Celda[][] tablero;
-    private Celda[][] tableroSolucion;
-    private Node[][] nodo;
-    private Graph grafo;
-    private Ranking ranking;
     private Dificultad dificultad;
+    private Celda[][] tablero;
+    private transient Celda[][] tableroSolucion;
+    private transient Node[][] nodo;
+    private transient Graph grafo;
+    private transient Ranking ranking;
 
     /**
      * Asigna un id al Hidato
@@ -32,6 +32,10 @@ public abstract class Hidato {
 
     public void setDificultad(Dificultad d){
         this.dificultad = d;
+    }
+
+    public void setTablero (Celda[][] tablero){
+        this.tablero = tablero;
     }
 
     public Dificultad getDificultad() {

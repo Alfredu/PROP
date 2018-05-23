@@ -1,11 +1,14 @@
 package com.hidatosdecarbono;
 import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class PersistenciaCTRL {
 
     private PersistenciaJugador persistenciaJugador;
     private PersistenciaRanking persistenciaRanking;
+    private PersistenciaHidato persistenciaHidato;
     private final String ficheroJugadores = "jugadores.txt";
     private final String ficheroHidatos = "hidatos.txt";
     private final String ficheroRankingFacil = "rankingFacil.txt";
@@ -18,6 +21,7 @@ public class PersistenciaCTRL {
     public PersistenciaCTRL() {
         this.persistenciaRanking = new PersistenciaRanking();
         this.persistenciaJugador = new PersistenciaJugador();
+        this.persistenciaHidato = new PersistenciaHidato();
     }
 
     /**
@@ -83,28 +87,67 @@ public class PersistenciaCTRL {
         return ranking;
     }
 
-
-    /*public Ranking obtenRanking(Dificultad dificultad){
-        Gson gson = new Gson();
-        String json = persistenciaJugador.obtenJugador(username,ficheroJugadores).toString();
-        Jugador jugador = gson.fromJson(json,Jugador.class);
-        return jugador;
-    }*/
-
-
-
-
-    /*public void guardaHidato (Hidato hidato){
+    public void guardaHidato (Hidato hidato){
         Gson gson = new Gson();
         String json = gson.toJson(hidato);
         json = añadeTipoHidato(json,hidato.getTipoHidato());
-        //persistenciaHidato.guardaEnTxt(json,nombreFicheroHidatos);
+        persistenciaHidato.guardaEnTxt(json,ficheroHidatos);
+    }
+
+    public Hidato obtenHidato (int id){
+        Gson gson = new Gson();
+        JSONObject json = persistenciaHidato.obtenHidato(id,ficheroHidatos);
+        System.out.println(json);
+        return creaHidatoDeseJSON(json);
     }
 
     private String añadeTipoHidato(String json,TipoHidato tipoHidato){
-        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
-        jsonObject.addProperty("tipo",tipoHidato.toString());
+        JSONObject jsonObject = new JSONObject(json);
+        jsonObject.put("tipo",tipoHidato);
         return jsonObject.toString();
-    }*/
+    }
+
+    private Hidato creaHidatoDeseJSON(JSONObject jsonObject){
+        TipoHidato tipoHidato =  jsonObject.getEnum(TipoHidato.class,"tipo");
+        TipoAdyacencia tipoAdyacencia = jsonObject.getEnum(TipoAdyacencia.class,"adyacencia");
+        Dificultad dificultad = jsonObject.getEnum(Dificultad.class,"dificultad");
+        Celda[][] tablero = obtenerTablero(jsonObject.getJSONArray("tablero"));
+        int numFilas = tablero.length;
+        int numColumnas = tablero[0].length;
+        Hidato hidato = null;
+        switch (tipoHidato){
+            case TRIANGULAR:
+                hidato = new HidatoTriangular(numFilas,numColumnas,tipoAdyacencia);
+                break;
+            case CUADRADO:
+                hidato = new  HidatoCuadrado(numFilas,numColumnas,tipoAdyacencia);
+                break;
+            case HEXGONAL:
+                hidato = new HidatoHexagonal(numFilas,numColumnas,tipoAdyacencia);
+                break;
+        }
+        hidato.setDificultad(dificultad);
+        hidato.setTablero(tablero);
+        return hidato;
+    }
+
+    private Celda[][] obtenerTablero(JSONArray jsonArray){
+        int nFilas = jsonArray.length();
+        int nColumnas = jsonArray.getJSONArray(0).length();
+        Celda tablero[][] = new Celda[nFilas][nColumnas];
+        for (int i = 0; i < nFilas; i++) {
+            for (int j = 0; j < nColumnas; j++) {
+                Celda celda = new Celda();
+                JSONObject jsonCelda = jsonArray.getJSONArray(i).getJSONObject(j);
+                celda.setValor(jsonCelda.getInt("valor"));
+                celda.setTipo(jsonCelda.getEnum(TipoCelda.class,"tipo"));
+                tablero[i][j] = celda;
+            }
+        }
+        return tablero;
+    }
+
+
+
 
 }
