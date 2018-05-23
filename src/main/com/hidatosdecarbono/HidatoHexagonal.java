@@ -64,11 +64,11 @@ public class HidatoHexagonal extends Hidato{
             //Caso 3: Fila de debajo, casilla justo debajo en el tablero, casilla de la izquierda en el dibujo
             if(i<nFilas-1 && nodes[i+1][j].noEsVacio()) lista.add(nodes[i+1][j]);
             //Caso 4: Fila de debajo, casilla de la izquierda en el tablero, casilla de la derecha en el dibujo
-            if(i<nFilas-1 && j<nFilas-1 && nodes[i+1][j+1].noEsVacio()) lista.add(nodes[i+1][j+1]);
+            if(i<nFilas-1 && j<nCols-1 && nodes[i+1][j+1].noEsVacio()) lista.add(nodes[i+1][j+1]);
             //Caso 5: Fila de arriba, casilla justo arriba en el tablero, casilla de la izquierda en el dibujo
             if(i>0 && nodes[i-1][j].noEsVacio()) lista.add(nodes[i-1][j]);
             //Caso 6: Fila de arriba, casilla de la izquierda en el tablero, casilla de la derecha en el dibujo
-            if(i>0 && j<nFilas-1 && nodes[i-1][j+1].noEsVacio()) lista.add(nodes[i-1][j+1]);
+            if(i>0 && j<nCols-1 && nodes[i-1][j+1].noEsVacio()) lista.add(nodes[i-1][j+1]);
 
         }
 
