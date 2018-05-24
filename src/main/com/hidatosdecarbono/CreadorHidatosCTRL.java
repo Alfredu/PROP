@@ -50,7 +50,11 @@ public class CreadorHidatosCTRL {
         else if(d.equals(Dificultad.MEDIO)) hidatoCreado.asociaRanking(rankingCTRL.getRankingMedio());
         else hidatoCreado.asociaRanking(rankingCTRL.getRankingDificil());
 
-        return hidatoCreado.tieneSolucion();
+        double t1 = System.nanoTime();
+        boolean r = hidatoCreado.tieneSolucion();
+        double t2 = System.nanoTime();
+        System.out.println(t2-t1);
+        return r;
     }
 
     public void creaHidatoPorDificultad(Dificultad dificultad){
@@ -175,7 +179,7 @@ public class CreadorHidatosCTRL {
 
     private String celdaToString(Celda c){
         if(c.getTipo().equals(TipoCelda.AGUJERO)) return "*";
-        else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "-";
+        else if(c.getTipo().equals(TipoCelda.INVISIBLE)) return "#";
         else if(c.getTipo().equals(TipoCelda.VARIABLE)){
             if(c.tieneValor()) return String.valueOf(c.getValor());
             else return "?";

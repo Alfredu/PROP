@@ -2,8 +2,7 @@ package com.hidatosdecarbono;
 
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Clase con la representación interna del tablero en forma de grafo que se usa para
@@ -86,33 +85,36 @@ public class Graph {
             return true;
         }
         //Parte recursiva del algoritmo
-        else{
+        else {
             //Si el nodo visitado es vacío establecemos el valor.
-            if(celdaNodo.esVacia()) celdaNodo.setValor(i);
-            boolean found = false;
-            //Si found vale true sabemos que nodoEncontrado tiene valor.
-            //Este null es para saltarnos el error del compilador.
+            if (celdaNodo.esVacia()) celdaNodo.setValor(i);
 
-            //buscar si i+1 ja esta colocat
-            Node nodoEncontrado = null;
-            for(Node nodo : node.getAdyacentes()){
-                if(nodo.getCelda().getValor() == i+1){
-                    found = true;
-                    nodoEncontrado = nodo;
-                    break;
-                }
-            }
-            if(found){
-                boolean res = hacerMovimiento(nodoEncontrado, i+1, n, visitados);
-                if(res) return true;
-            }
+            if (checkDistancias(node)) {
+                boolean found = false;
+                //Si found vale true sabemos que nodoEncontrado tiene valor.
+                //Este null es para saltarnos el error del compilador.
 
-            //si no, intentar colocarlo a tots els adjacents buits
-            else {
+                //buscar si i+1 ja esta colocat
+                Node nodoEncontrado = null;
                 for (Node nodo : node.getAdyacentes()) {
-                    if(nodo.getCelda().esVacia()) {
-                        boolean res = hacerMovimiento(nodo, i + 1, n, visitados);
-                        if (res) return true;
+                    if (nodo.getCelda().getValor() == i + 1) {
+                        found = true;
+                        nodoEncontrado = nodo;
+                        break;
+                    }
+                }
+                if (found) {
+                    boolean res = hacerMovimiento(nodoEncontrado, i + 1, n, visitados);
+                    if (res) return true;
+                }
+
+                //si no, intentar colocarlo a tots els adjacents buits
+                else {
+                    for (Node nodo : node.getAdyacentes()) {
+                        if (nodo.getCelda().esVacia()) {
+                            boolean res = hacerMovimiento(nodo, i + 1, n, visitados);
+                            if (res) return true;
+                        }
                     }
                 }
             }
@@ -149,7 +151,54 @@ public class Graph {
         return false;
     }
 
-    public void colocaDistanciaCorrecta(int n){
+    private boolean checkConectividad(Node primerNodo){
+        boolean[] visitado = new boolean[graph.values().size()+1];
 
+        visitado[primerNodo.getId()] = true;
+        LinkedList<Node> cola = new LinkedList<Node>();
+        cola.add(primerNodo);
+
+        while (!cola.isEmpty()){
+            Node nodoActual = cola.pollFirst();
+
+            for (Node nodo : nodoActual.getAdyacentes()){
+
+            }
+        }
+        return true;
+    }
+
+    private boolean checkDistancias(Node node){
+        int n = graph.values().size();
+        int[] distancias = new int[n+1];
+        Arrays.fill(distancias,-1);
+
+        int valorOriginal = node.getCelda().getValor();
+        distancias[node.getId()] = 0;
+        int d = 0;
+        LinkedList<Node> cola = new LinkedList<Node>();
+        cola.add(node);
+
+        while(!cola.isEmpty()){
+            Node actual = cola.pollFirst();
+            //la distancia als nodes adjacents sera la distancia d'aquest node + 1
+            d = distancias[actual.getId()] + 1;
+
+            for (Node nodo : actual.getAdyacentes()){
+                /*si el node no te una distancia inciada es que no s'ha visitat, per tant li assignem
+                  la distancia del node actual + 1 i l'afegim a la cua
+                */
+                if(distancias[nodo.getId()] == -1 &&(nodo.getCelda().esVacia() || nodo.getCelda().getValor() > valorOriginal)){
+                    distancias[nodo.getId()] = d;
+                    cola.add(nodo);
+                    //comprovem que la cela original i la cela actual estan a una distancia plausible
+                    int valorCelaActual = nodo.getCelda().getValor();
+                    if (valorCelaActual != 0) {
+                        if (valorCelaActual - valorOriginal < d) return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
