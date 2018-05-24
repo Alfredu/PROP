@@ -152,7 +152,8 @@ public class Graph {
     }
 
     private boolean checkConectividad(Node primerNodo){
-        boolean[] visitado = new boolean[graph.values().size()+1];
+        int n = graph.values().size();
+        boolean[] visitado = new boolean[n+1];
 
         visitado[primerNodo.getId()] = true;
         LinkedList<Node> cola = new LinkedList<Node>();
@@ -162,8 +163,15 @@ public class Graph {
             Node nodoActual = cola.pollFirst();
 
             for (Node nodo : nodoActual.getAdyacentes()){
-
+                if(nodo.getCelda().esVacia()){
+                    visitado[nodo.getId()] = true;
+                    cola.add(nodo);
+                }
             }
+
+        }
+        for(int i = 0; i < n; i++){
+
         }
         return true;
     }
