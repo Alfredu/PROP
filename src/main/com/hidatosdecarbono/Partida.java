@@ -5,10 +5,10 @@ import static java.lang.Math.toIntExact;
 
 public class Partida {
     private Hidato hidatoJugado;
-    private Graph grafoHidato;
+    private transient Graph grafoHidato;
     private Celda[][] tablero;
-    private Celda[][] tableroSolucion;
-    private Node[][] nodes;
+    private transient Celda[][] tableroSolucion;
+    private transient Node[][] nodes;
     private Stack<Movimiento> movimientos;
     private int n = 2;
     private int filaActual;
@@ -199,5 +199,36 @@ public class Partida {
     }
 
 
+    public void setTablero(Celda[][] tablero) {
+        this.tablero = tablero;
+    }
+
+    public void setMovimientos(Stack<Movimiento> movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
+    public void setFilaActual(int filaActual) {
+        this.filaActual = filaActual;
+    }
+
+    public void setColActual(int colActual) {
+        this.colActual = colActual;
+    }
+
+    public void setNumPistas(int numPistas) {
+        this.numPistas = numPistas;
+    }
+
+    public void setTiempoInicial(long tiempoInicial) {
+        this.tiempoInicial = tiempoInicial;
+    }
+
+    public void setTiempoPartida(long tiempoPartida) {
+        this.tiempoPartida = tiempoPartida;
+    }
 
 }

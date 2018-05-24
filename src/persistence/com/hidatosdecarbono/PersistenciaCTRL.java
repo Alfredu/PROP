@@ -3,18 +3,21 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Stack;
+
 
 public class PersistenciaCTRL {
 
     private PersistenciaJugador persistenciaJugador;
     private PersistenciaRanking persistenciaRanking;
     private PersistenciaHidato persistenciaHidato;
+    private PersistenciaPartida persistenciaPartida;
     private final String ficheroJugadores = "jugadores.txt";
     private final String ficheroHidatos = "hidatos.txt";
     private final String ficheroRankingFacil = "rankingFacil.txt";
     private final String ficheroRankingMedio = "rankingMedio.txt";
     private final String ficheroRankingDificil = "rankingDificil.txt";
-
+    private final String ficheroPartidas = "partidas.txt";
     /**
      * Constructora por defecto.Crea las instancias de las clases de persistencia.
      */
@@ -22,6 +25,7 @@ public class PersistenciaCTRL {
         this.persistenciaRanking = new PersistenciaRanking();
         this.persistenciaJugador = new PersistenciaJugador();
         this.persistenciaHidato = new PersistenciaHidato();
+        this.persistenciaPartida = new PersistenciaPartida();
     }
 
     /**
@@ -100,6 +104,52 @@ public class PersistenciaCTRL {
         System.out.println(json);
         return creaHidatoDeseJSON(json);
     }
+
+    public void guardaPartida (Partida partida){
+        Gson gson = new Gson();
+        String json = gson.toJson(partida);
+        JSONObject jsonObject = new JSONObject(json);
+        String jsonHidato =jsonObject.getJSONObject("hidatoJugado").toString();
+        jsonHidato = añadeTipoHidato(jsonHidato,partida.getHidatoJugado().getTipoHidato());
+        jsonObject.put("hidatoJugado",new JSONObject(jsonHidato));
+        json = jsonObject.toString();
+        System.out.println(json);
+        persistenciaHidato.guardaEnTxt(json,ficheroPartidas);
+    }
+
+    public Partida obtenPartida (int id){
+        Gson gson = new Gson();
+        JSONObject json = persistenciaPartida.obtenPartida(id,ficheroPartidas);
+        System.out.println(json);
+        JSONObject hidatoJson = json.getJSONObject("hidatoJugado");
+        System.out.println(hidatoJson);
+        Hidato hidatoJugado = creaHidatoDeseJSON(hidatoJson);
+        Celda [][] tablero = obtenerTablero(json.getJSONArray("tablero"));
+        Partida partida = creaPartida(hidatoJugado,tablero,json);
+        return partida;
+    }
+
+    private Partida creaPartida(Hidato hidatoJugado, Celda[][] tablero, JSONObject json) {
+        Gson gson = new Gson();
+        Jugador jugadorPartida = gson.fromJson(json.get("jugadorPartida").toString(),Jugador.class);
+        Partida partida = new Partida(hidatoJugado,jugadorPartida);
+        partida.setColActual(json.getInt("colActual"));
+        partida.setFilaActual(json.getInt("filaActual"));
+        partida.setTiempoPartida(json.getInt("tiempoPartida"));
+        partida.setTiempoInicial(json.getInt("tiempoInicial"));
+        partida.setTablero(tablero);
+        partida.setNumPistas(json.getInt("numPistas"));
+        partida.setN(json.getInt("n"));
+        Stack<Movimiento> movimientos = new Stack<>();
+        JSONArray arrayMovimientos = json.getJSONArray("movimientos");
+        for (int i = 0; i < arrayMovimientos.length() ; i++) {
+            Movimiento m = new Movimiento(arrayMovimientos.getJSONObject(i).getInt("i"),arrayMovimientos.getJSONObject(i).getInt("j"));
+            movimientos.push(m);
+        }
+        partida.setMovimientos(movimientos);
+        return partida;
+    }
+
 
     private String añadeTipoHidato(String json,TipoHidato tipoHidato){
         JSONObject jsonObject = new JSONObject(json);
