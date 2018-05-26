@@ -263,74 +263,77 @@ public abstract class Hidato {
         }
 
         //coloco les caselles invisibles pels extrems
-        int nVacias = ((tablero.length*tablero[0].length) - totalCasillas);
+        int nVacias = ((tablero.length * tablero[0].length) - totalCasillas);
         int filaInvi = 0;
         int colInvi = 1;
         int iterador = 0;
-        while(iterador < nVacias){
-            if(iterador%2 == 0) {
+        while (iterador < nVacias) {
+            if (iterador % 2 == 0) {
                 tableroSolucion[filaInvi][0].setTipo(TipoCelda.INVISIBLE);
                 filaInvi++;
-            }
-            else{
+            } else {
                 tableroSolucion[0][colInvi].setTipo(TipoCelda.INVISIBLE);
                 colInvi++;
             }
             iterador++;
         }
+        boolean found = false;
 
-
-        //coloco els forats
-        iterador = 0;
-        while(iterador < agujeros){
-            int i =  ThreadLocalRandom.current().nextInt(0, tablero.length);
-            int j =  ThreadLocalRandom.current().nextInt(0, tablero[i].length);
-            if (tableroSolucion[i][j].getTipo().equals(TipoCelda.VARIABLE)){
-                tableroSolucion[i][j].setTipo(TipoCelda.AGUJERO);
-                iterador++;
-
-            }
-        }
-
-        //coloco el numero 1 en una posicio aleatoria
-        boolean end = false;
-        while (!end) {
-            int fila1 = ThreadLocalRandom.current().nextInt(0, tablero.length);
-            int col1 = ThreadLocalRandom.current().nextInt(0, tablero[0].length);
-            if(tableroSolucion[fila1][col1].getTipo().equals(TipoCelda.VARIABLE)){
-                end = true;
-                tableroSolucion[fila1][col1].setValor(1);
-                tableroSolucion[fila1][col1].setTipo(TipoCelda.FIJA);
-            }
-        }
-
-        creaGrafo(grafo,nodo,tableroSolucion);
-
-        //si es solucionable, les celes del tauler Solucio tenen una configuracio amb l'hidato resolt
-        if(grafo.esSolucionable()){
+        while(!found) {
+            //coloco els forats
             iterador = 0;
-            //posem un numero aleatori de celes que eren variables a fixes (tenen valor segur ja que l'hidato ha quedat resolt)
-            while(iterador < fijas-1){
+            while (iterador < agujeros) {
                 int i = ThreadLocalRandom.current().nextInt(0, tablero.length);
-                int j = ThreadLocalRandom.current().nextInt(0, tablero[0].length);
-                if (tableroSolucion[i][j].getTipo().equals(TipoCelda.VARIABLE)){
-                    tableroSolucion[i][j].setTipo(TipoCelda.FIJA);
+                int j = ThreadLocalRandom.current().nextInt(0, tablero[i].length);
+                if (tableroSolucion[i][j].getTipo().equals(TipoCelda.VARIABLE)) {
+                    tableroSolucion[i][j].setTipo(TipoCelda.AGUJERO);
                     iterador++;
+
                 }
             }
-            //posem les celes variables que han quedat a 0
-            for(int i= 0; i < tablero.length; i++){
-                for(int j = 0; j < tablero[i].length; j++){
-                    if(tableroSolucion[i][j].getTipo().equals(TipoCelda.VARIABLE)){
-                        tableroSolucion[i][j].setValor(0);
+
+            //coloco el numero 1 en una posicio aleatoria
+            boolean end = false;
+            while (!end) {
+                int fila1 = ThreadLocalRandom.current().nextInt(0, tablero.length);
+                int col1 = ThreadLocalRandom.current().nextInt(0, tablero[0].length);
+                if (tableroSolucion[fila1][col1].getTipo().equals(TipoCelda.VARIABLE)) {
+                    end = true;
+                    tableroSolucion[fila1][col1].setValor(1);
+                    tableroSolucion[fila1][col1].setTipo(TipoCelda.FIJA);
+                }
+            }
+
+            creaGrafo(grafo, nodo, tableroSolucion);
+
+            //si es solucionable, les celes del tauler Solucio tenen una configuracio amb l'hidato resolt
+            found = grafo.esCreable();
+            if (found) {
+                iterador = 0;
+                //copiem aquest taulerSolucio al tauler que representa el hidato
+                copiaTableroSolucion(tablero);
+
+                //posem un numero aleatori de celes que eren variables a fixes (tenen valor segur ja que l'hidato ha quedat resolt)
+                while (iterador < fijas - 1) {
+                    int i = ThreadLocalRandom.current().nextInt(0, tablero.length);
+                    int j = ThreadLocalRandom.current().nextInt(0, tablero[0].length);
+                    if (tablero[i][j].getTipo().equals(TipoCelda.VARIABLE)) {
+                        tablero[i][j].setTipo(TipoCelda.FIJA);
+                        iterador++;
                     }
                 }
+                //posem les celes variables que han quedat a 0
+                for (int i = 0; i < tablero.length; i++) {
+                    for (int j = 0; j < tablero[i].length; j++) {
+                        if (tablero[i][j].getTipo().equals(TipoCelda.VARIABLE)) {
+                            tablero[i][j].setValor(0);
+                        }
+                    }
+                }
+
+            } else {
+                clearTableroSolucion();
             }
-            //copiem aquest taulerSolucio al tauler que representa el hidato
-            copiaTableroSolucion(tablero);
-        }
-        else{
-            generaTableroAleatorio(totalCasillas,agujeros,fijas);
         }
 
     }
@@ -469,6 +472,17 @@ public abstract class Hidato {
 
     }
     public abstract TipoHidato getTipoHidato();
+
+    private void clearTableroSolucion() {
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                if (!tableroSolucion[i][j].getTipo().equals(TipoCelda.INVISIBLE)) {
+                    tableroSolucion[i][j].setTipo(TipoCelda.VARIABLE);
+                    tableroSolucion[i][j].setValor(0);
+                }
+            }
+        }
+    }
 
 
 }

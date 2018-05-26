@@ -151,7 +151,7 @@ public class CreadorHidatosCTRL {
             for (int j = 0; j < columnes; j++) {
                 Celda c = hidatoCreado.getCeldaTablero(i, j);
                 celes = celes.concat(celdaToString(c));
-                celes = celes.concat(" ");
+                celes = celes.concat(",");
             }
             System.out.println(celes);
             celes = "";
@@ -163,7 +163,7 @@ public class CreadorHidatosCTRL {
      * Imprime por pantalla la solución del hidato del controlador
      */
     public void printSolucion(){
-        hidatoCreado.tieneSolucion();
+
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
         for (int i = 0; i < files; i++) {
@@ -171,7 +171,7 @@ public class CreadorHidatosCTRL {
             for (int j = 0; j < columnes; j++) {
                 Celda c = hidatoCreado.getCeldaTableroSolucion(i, j);
                 celes = celes.concat(celdaToString(c));
-                celes = celes.concat(" ");
+                celes = celes.concat(",");
             }
             System.out.println(celes);
         }

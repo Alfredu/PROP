@@ -3,6 +3,7 @@ package com.hidatosdecarbono;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Clase con la representación interna del tablero en forma de grafo que se usa para
@@ -61,12 +62,22 @@ public class Graph {
         Node primerNodo = graph.get(1);
         int i=1;
         //Para hacer mas facil la correspondencia valor<->posicion vector porque valor empieza a 1.
-        boolean[] visitados = new boolean[n+2];
-        if(!checkConectividad(primerNodo)) return false;
+        boolean[] visitados = new boolean[n+1];
+
         return hacerMovimiento(primerNodo, i, n, visitados);
     }
 
-    private boolean hacerMovimiento(Node node, int i, int n, boolean[] visitados){
+    public boolean esCreable(){
+        int n = graph.values().size();
+        Node primerNodo = graph.get(1);
+        int i=1;
+        //Para hacer mas facil la correspondencia valor<->posicion vector porque valor empieza a 1.
+        boolean[] visitados = new boolean[n+1];
+
+        return hacerMovimientoCrear(primerNodo, i, n, visitados);
+    }
+
+    private boolean hacerMovimiento(Node node, int nActual, int nMax, boolean[] visitados){
 
         //Primero comprovamos que no hayamos ya visitado ese nodo.
         if(visitados[node.getId()]) return false;
@@ -79,51 +90,96 @@ public class Graph {
             -Solo queda una casilla para llenar
             -La ultima casilla a visitar ya tiene el valor que tocaba llenar.
          */
-            if (i == n && (celdaNodo.esVacia())) {
-                celdaNodo.setValor(i);
+            if (nActual == nMax && (celdaNodo.esVacia())) {
+                celdaNodo.setValor(nActual);
                 return true;
-            } else if (i == n && celdaNodo.getValor() == i) {
+            } else if (nActual == nMax && celdaNodo.getValor() == nActual) {
                 return true;
             }
             //Parte recursiva del algoritmo
             else {
 
-                if(checkConectividad(node)) {
-                    //Si el nodo visitado es vacío establecemos el valor.
-                    if (celdaNodo.esVacia()) celdaNodo.setValor(i);
-                    //if(checkConectividad(node)) {
+                //Si el nodo visitado es vacío establecemos el valor.
+                if (celdaNodo.esVacia()) celdaNodo.setValor(nActual);
 
-                    boolean found = false;
-                    //Si found vale true sabemos que nodoEncontrado tiene valor.
-                    //Este null es para saltarnos el error del compilador.
 
-                    //buscar si i+1 ja esta colocat
-                    Node nodoEncontrado = null;
+                boolean found = false;
+                //Si found vale true sabemos que nodoEncontrado tiene valor.
+                //Este null es para saltarnos el error del compilador.
+
+                //buscar si i+1 ja esta colocat
+                Node nodoEncontrado = null;
+                for (Node nodo : node.getAdyacentes()) {
+                    if (nodo.getCelda().getValor() == nActual + 1) {
+                        found = true;
+                        nodoEncontrado = nodo;
+                        break;
+                    }
+                }
+                if (found) {
+                    boolean res = hacerMovimiento(nodoEncontrado, nActual + 1, nMax, visitados);
+                    if (res) return true;
+                }
+
+                //si no, intentar colocarlo a tots els adjacents buits
+                else {
                     for (Node nodo : node.getAdyacentes()) {
-                        if (nodo.getCelda().getValor() == i + 1) {
-                            found = true;
-                            nodoEncontrado = nodo;
-                            break;
-                        }
-                    }
-                    if (found) {
-                        boolean res = hacerMovimiento(nodoEncontrado, i + 1, n, visitados);
-                        if (res) return true;
-                    }
-
-                    //si no, intentar colocarlo a tots els adjacents buits
-                    else {
-                        for (Node nodo : node.getAdyacentes()) {
-                            if (nodo.getCelda().esVacia()) {
-                                boolean res = hacerMovimiento(nodo, i + 1, n, visitados);
-                                if (res) return true;
-                            }
+                        if (nodo.getCelda().esVacia()) {
+                            boolean res = hacerMovimiento(nodo, nActual + 1, nMax, visitados);
+                            if (res) return true;
                         }
                     }
                 }
             }
             visitados[node.getId()] = false;
             celdaNodo.setValor(ultimoValor);
+        return false;
+
+    }
+
+    private boolean hacerMovimientoCrear(Node node, int nActual, int nMax, boolean[] visitados){
+
+        //Primero comprovamos que no hayamos ya visitado ese nodo.
+        if(visitados[node.getId()]) return false;
+
+
+        Celda celdaNodo = node.getCelda();
+        int ultimoValor = celdaNodo.getValor();
+        visitados[node.getId()] = true;
+        /*Condiciones de finalización:
+            -Solo queda una casilla para llenar
+            -La ultima casilla a visitar ya tiene el valor que tocaba llenar.
+         */
+        if (nActual == nMax && (celdaNodo.esVacia())) {
+            celdaNodo.setValor(nActual);
+            return true;
+        } else if (nActual == nMax && celdaNodo.getValor() == nActual) {
+            return true;
+        }
+        //Parte recursiva del algoritmo
+        else {
+
+            //Si el nodo visitado es vacío establecemos el valor.
+            if (celdaNodo.esVacia()) celdaNodo.setValor(nActual);
+
+
+            if(checkConectividad(node)) {
+                ArrayList<Node> adyacentes = node.getAdyacentes();
+                int size = adyacentes.size();
+                int rand = ThreadLocalRandom.current().nextInt(0, size);
+                for (int it = 0; it < size; it++) {
+                    int iterador = (it+rand)%size;
+                    Node nodo = adyacentes.get(iterador);
+                    if (nodo.getCelda().esVacia()) {
+                        boolean res = hacerMovimiento(nodo, nActual + 1, nMax, visitados);
+                            if (res) return true;
+                    }
+                }
+            }
+        }
+
+        visitados[node.getId()] = false;
+        celdaNodo.setValor(ultimoValor);
         return false;
 
     }
@@ -157,7 +213,7 @@ public class Graph {
 
     public boolean checkConectividad(Node primerNodo){
         int n = graph.values().size();
-        boolean[] visitado = new boolean[n+2];
+        boolean[] visitado = new boolean[n+1];
 
         visitado[primerNodo.getId()] = true;
         LinkedList<Node> cola = new LinkedList<>();
