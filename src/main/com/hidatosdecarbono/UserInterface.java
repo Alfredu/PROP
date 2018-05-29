@@ -1,5 +1,8 @@
 package com.hidatosdecarbono;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,11 +44,15 @@ public class UserInterface {
         System.out.println("Registro en el sistema, introduzca su contraseña");
         String pass = reader.next();
         LogInCTRL logIn = domini.getLogInCTRL();
-        logIn.creaJugador(username,pass);
+        try {
+            logIn.creaJugador(username,pass);
+            System.out.print("Loggeado en el sistema como: ");
+            System.out.println(logIn.getJugador().getUsername());
 
-        System.out.print("Loggeado en el sistema como: ");
-        System.out.println(logIn.getJugador().getUsername());
-
+        } catch (InvalidUserException e) {
+            System.out.println(e);
+            logIn();
+        }
     }
 
     private void añadirHidatoPorParametros() {

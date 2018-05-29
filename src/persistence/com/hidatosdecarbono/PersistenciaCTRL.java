@@ -3,6 +3,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.security.InvalidParameterException;
 import java.util.Stack;
 
 
@@ -33,10 +34,10 @@ public class PersistenciaCTRL {
      * @param jugador Un Jugador que contiene el username y la contraseña
      * @throws InvalidUserException si el username del Jugador pasado por parametro ya existia.
      */
-    public void guardaJugador (Jugador jugador) throws InvalidUserException {
+    public void guardaJugador (Jugador jugador) throws InvalidUserException, InvalidParameterException {
         Gson gson = new Gson();
         String json = gson.toJson(jugador);
-        if(persistenciaJugador.obtenJugador(jugador.getUsername(), ficheroJugadores) != null)
+        if(persistenciaJugador.obtenJugador(jugador.getUsername(), jugador.getPassword(), ficheroJugadores) != null)
             throw new InvalidUserException("No se puede guardar el jugador, ya existe otro con el mismo username");
         persistenciaJugador.guardaEnTxt(json, ficheroJugadores);
     }
@@ -46,11 +47,13 @@ public class PersistenciaCTRL {
      * @param username Un String que contiene el username del jugador que buscamos
      * @return jugador Jugador de la persistencia que tiene el mismo username que el pasado por parametro
      */
-    public Jugador obtenJugador(String username){
+    public Jugador obtenJugador(String username, String password) throws InvalidUserException{
         Gson gson = new Gson();
-        String json = persistenciaJugador.obtenJugador(username, ficheroJugadores).toString();
-        Jugador jugador = gson.fromJson(json,Jugador.class);
-        return jugador;
+        JSONObject jsonObj = persistenciaJugador.obtenJugador(username, password, ficheroJugadores);
+        String json = null;
+        if(jsonObj != null) json = jsonObj.toString();
+        if(json == null) return null;
+        return gson.fromJson(json,Jugador.class);
     }
 
 

@@ -1,13 +1,19 @@
 package com.hidatosdecarbono;
 
 public class DomainFactory {
+    private PersistenciaCTRL persistencia;
     private LogInCTRL logInCTRL;
     private CreadorHidatosCTRL creador;
     private JugarHidatosCTRL juega;
     private RankingCTRL rankingCTRL = new RankingCTRL();
 
+
+    public DomainFactory(){
+        persistencia = new PersistenciaCTRL();
+    }
+
     public LogInCTRL getLogInCTRL(){
-        logInCTRL = new LogInCTRL();
+        logInCTRL = new LogInCTRL(persistencia);
         return logInCTRL;
     }
 

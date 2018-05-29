@@ -139,10 +139,6 @@ public class Graph {
 
     private boolean hacerMovimientoCrear(Node node, int nActual, int nMax, boolean[] visitados){
 
-        //Primero comprovamos que no hayamos ya visitado ese nodo.
-        if(visitados[node.getId()]) return false;
-
-
         Celda celdaNodo = node.getCelda();
         int ultimoValor = celdaNodo.getValor();
         visitados[node.getId()] = true;
@@ -162,7 +158,6 @@ public class Graph {
             //Si el nodo visitado es vacío establecemos el valor.
             if (celdaNodo.esVacia()) celdaNodo.setValor(nActual);
 
-
             if(checkConectividad(node)) {
                 ArrayList<Node> adyacentes = node.getAdyacentes();
                 int size = adyacentes.size();
@@ -170,7 +165,7 @@ public class Graph {
                 for (int it = 0; it < size; it++) {
                     int iterador = (it+rand)%size;
                     Node nodo = adyacentes.get(iterador);
-                    if (nodo.getCelda().esVacia()) {
+                    if (nodo.getCelda().esVacia() && !visitados[nodo.getId()]) {
                         boolean res = hacerMovimiento(nodo, nActual + 1, nMax, visitados);
                             if (res) return true;
                     }
@@ -215,11 +210,14 @@ public class Graph {
         int n = graph.values().size();
         boolean[] visitado = new boolean[n+1];
 
+        //Marquem el primer node com a visitat i l'afegim a la cua
         visitado[primerNodo.getId()] = true;
         LinkedList<Node> cola = new LinkedList<>();
         cola.add(primerNodo);
 
         while (!cola.isEmpty()){
+            /*agafem el primer node de la cua i busquem
+             si té nodes adjacents buits i no visitats*/
             Node nodoActual = cola.pollFirst();
 
             for (Node nodo : nodoActual.getAdyacentes()){

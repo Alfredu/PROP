@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +26,7 @@ public class PersistenciaJugadorCTRLTest {
     }
 
     @Test
-    public void guardaTresJugadoresCorrectamente() throws InvalidUserException {
+    public void guardaTresJugadoresCorrectamente() throws InvalidUserException, Exception{
         Jugador jugador1 = new Jugador("user1","1");
         Jugador jugador2 = new Jugador("user2","2");
         Jugador jugador3 = new Jugador("user3","3");
@@ -40,14 +41,14 @@ public class PersistenciaJugadorCTRLTest {
 
 
     @Test
-    public void encuentraJugadorExistente() throws InvalidUserException {
+    public void encuentraJugadorExistente() throws InvalidUserException, Exception{
         Jugador jugador1 = new Jugador("user1","1");
         Jugador jugador2 = new Jugador("user2","2");
         Jugador jugador3 = new Jugador("user3","3");
         persistenciaCTRL.guardaJugador(jugador1);
         persistenciaCTRL.guardaJugador(jugador2);
         persistenciaCTRL.guardaJugador(jugador3);
-        Jugador jugadorObtenido = persistenciaCTRL.obtenJugador(jugador2.getUsername());
+        Jugador jugadorObtenido = persistenciaCTRL.obtenJugador(jugador2.getUsername(), jugador2.getPassword());
         assertEquals("Ha encontrado el user2",jugador2.getUsername(),jugadorObtenido.getUsername());
     }
 
