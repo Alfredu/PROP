@@ -30,6 +30,8 @@ public abstract class Hidato {
         return id;
     }
 
+    public abstract TipoHidato getTipoHidato();
+
     public void setDificultad(Dificultad d){
         this.dificultad = d;
     }
@@ -76,6 +78,15 @@ public abstract class Hidato {
 
 
     /**
+     * Devuelve el ranking asociado a ese hidato
+     * @return Un ArrayList con todas las EntradaRanking perteneciente al Hidato
+     */
+
+    public Ranking getRanking() {
+        return ranking;
+    }
+
+    /**
      * Inicializa el Hidato.
      * @param numFilas Un integer con el numero de filas del tablero
      * @param numColumnas Un integer con el numero de columnas del tablero
@@ -85,7 +96,6 @@ public abstract class Hidato {
         tableroSolucion = new Celda[numFilas][numColumnas];
         nodo = new Node[numFilas][numColumnas];
         grafo = new Graph();
-        ranking = new Ranking();
     }
 
     /**
@@ -200,7 +210,7 @@ public abstract class Hidato {
      * Devuelve las entradas del Ranking del Hidato
      * @return Un ArrayList con todas las EntradaRanking perteneciente al Hidato
      */
-    public ArrayList<EntradaRanking> getRanking(){
+    public ArrayList<EntradaRanking> getEntradasRanking(){
         return ranking.getEntradasRanking();
     }
 
@@ -471,7 +481,7 @@ public abstract class Hidato {
         }
 
     }
-    public abstract TipoHidato getTipoHidato();
+
 
     private void clearTableroSolucion() {
         for (int i = 0; i < tablero.length; i++) {

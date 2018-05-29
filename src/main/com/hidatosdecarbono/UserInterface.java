@@ -19,7 +19,8 @@ public class UserInterface {
             System.out.println("2- Añadir un hidato aleatorio");
             System.out.println("3- Añadir hidato por dificultad");
             System.out.println("4- LogIn con nuevo jugador");
-            System.out.println("5- Terminar juego");
+            System.out.println("5- Consultar puntuaciones");
+            System.out.println("6- Terminar juego");
 
             Scanner reader = new Scanner(System.in);
             int opt;
@@ -33,6 +34,7 @@ public class UserInterface {
             }
             else if (opt == 3) añadirPorDificultad();
             else if(opt == 4) logIn();
+            else if(opt == 5) consultarRankings();
             else end = true;
         }
     }
@@ -186,21 +188,22 @@ public class UserInterface {
         System.out.println("Entre la dificultad del hidato, F = Facil, M = Medio y D = Dificil");
         String dificultad = reader.next();
 
-        if (!dificultad.equals("F") && !dificultad.equals("M") && !dificultad.equals("D")) {
+        if (!dificultad.equals("F") && !dificultad.equals("M") && !dificultad.equals("D") &&
+                !dificultad.equals("f") && !dificultad.equals("m") && !dificultad.equals("d")) {
             System.out.println("Error en la introducción de la forma, reintentar? (Y/N)");
             String opt = reader.next();
-            if (opt.equals("Y") || opt.equals("y")) añadirHidatoAleatorio();
+            if (opt.equals("Y") || opt.equals("y")) añadirPorDificultad();
             else return;
         }
 
         Dificultad d = Dificultad.FACIL;
-        if (dificultad.equals("F")) {
+        if (dificultad.equals("F") || dificultad.equals("f")) {
             d = Dificultad.FACIL;
         }
-        else if (dificultad.equals("M")) {
+        else if (dificultad.equals("M") || dificultad.equals("m")) {
             d = Dificultad.MEDIO;
         }
-        else if (dificultad.equals("D")) {
+        else if (dificultad.equals("D") || dificultad.equals("d")) {
             d = Dificultad.DIFICIL;
         }
 
@@ -274,6 +277,20 @@ public class UserInterface {
         if(opt.equals("Y") || opt.equals("y")){
             juegaPartida();
         }
+    }
+
+    private void consultarRankings(){
+        System.out.println("Seleccione la dificultad a consultar: F = Facil, M = Media, D = Dificil");
+        Scanner reader = new Scanner(System.in);
+        String opt = reader.next();
+        Dificultad dificultad;
+        if (opt.equals("F") || opt.equals("f")) dificultad = Dificultad.FACIL;
+        else if(opt.equals("M")||opt.equals("m")) dificultad = Dificultad.MEDIO;
+        else dificultad = Dificultad.DIFICIL;
+
+        ConsultarRankingCTRL rankingCTRL = domini.getRankingCTRL(dificultad);
+        rankingCTRL.getEntradasRanking();
+        System.out.println();
     }
 
 

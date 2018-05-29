@@ -1,37 +1,38 @@
 package com.hidatosdecarbono;
 
 public class DomainFactory {
-    private PersistenciaCTRL persistencia;
+    private PersistenciaCTRL persistenciaCTRL;
     private LogInCTRL logInCTRL;
-    private CreadorHidatosCTRL creador;
-    private JugarHidatosCTRL juega;
-    private RankingCTRL rankingCTRL = new RankingCTRL();
+    private CreadorHidatosCTRL creadorHidatosCTRL;
+    private JugarHidatosCTRL jugarHidatosCTRL;
+    private ConsultarRankingCTRL rankingCTRL;
 
 
     public DomainFactory(){
-        persistencia = new PersistenciaCTRL();
+        persistenciaCTRL = new PersistenciaCTRL();
     }
 
     public LogInCTRL getLogInCTRL(){
-        logInCTRL = new LogInCTRL(persistencia);
+        logInCTRL = new LogInCTRL(persistenciaCTRL);
         return logInCTRL;
     }
 
     public CreadorHidatosCTRL getControladorCreador() {
-        creador = new CreadorHidatosCTRL(rankingCTRL);
-        return creador;
+        creadorHidatosCTRL = new CreadorHidatosCTRL(persistenciaCTRL);
+        return creadorHidatosCTRL;
     }
 
     public JugarHidatosCTRL getControladorJugar(String s){
         if(s == "Creado") {
-            juega = new JugarHidatosCTRL();
-            juega.inicializa(creador.getHidatoCreado(), logInCTRL.getJugador());
-            return juega;
+            jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
+            jugarHidatosCTRL.inicializa(creadorHidatosCTRL.getHidatoCreado(), logInCTRL.getJugador());
+            return jugarHidatosCTRL;
         }
-        return new JugarHidatosCTRL();
+        return new JugarHidatosCTRL(persistenciaCTRL);
     }
 
-    public RankingCTRL getRankingCTRL() {
+    public ConsultarRankingCTRL getRankingCTRL(Dificultad dificultad) {
+        rankingCTRL = new ConsultarRankingCTRL(persistenciaCTRL, dificultad);
         return rankingCTRL;
     }
 }

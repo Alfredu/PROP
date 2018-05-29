@@ -1,12 +1,15 @@
 package com.hidatosdecarbono;
 
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 import java.util.ArrayList;
 
 public class JugarHidatosCTRL {
+    private PersistenciaCTRL persistencia;
     private Partida actual;
     private Hidato hidatoJugado;
+
+    public JugarHidatosCTRL(PersistenciaCTRL persistencia){
+        this.persistencia = persistencia;
+    }
 
     public void inicializa(Hidato hidato, Jugador jugadorAJugar){
         actual = new Partida(hidato,jugadorAJugar);
@@ -18,7 +21,12 @@ public class JugarHidatosCTRL {
     }
 
     public boolean acabada(){
-        return actual.acabado();
+        boolean result = actual.acabado();
+
+        if(result){
+            persistencia.guardaRanking(hidatoJugado.getRanking(),hidatoJugado.getDificultad());
+        }
+        return result;
     }
 
     public boolean retroceder(){
@@ -48,7 +56,7 @@ public class JugarHidatosCTRL {
     }
 
     public void ranking(){
-        ArrayList<EntradaRanking> entradasRanking = hidatoJugado.getRanking();
+        ArrayList<EntradaRanking> entradasRanking = hidatoJugado.getEntradasRanking();
         int n = 1;
         for(EntradaRanking entrada : entradasRanking){
             System.out.print(n);

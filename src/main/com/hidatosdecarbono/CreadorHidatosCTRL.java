@@ -6,10 +6,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CreadorHidatosCTRL {
 
     private Hidato hidatoCreado;
-    private RankingCTRL rankingCTRL;
+    private PersistenciaCTRL persistenciaCTRL;
 
-    public CreadorHidatosCTRL(RankingCTRL rankingCTRL){
-        this.rankingCTRL = rankingCTRL;
+    public CreadorHidatosCTRL(PersistenciaCTRL persistenciaCTRL){
+        this.persistenciaCTRL = persistenciaCTRL;
     }
 
     /**
@@ -35,26 +35,20 @@ public class CreadorHidatosCTRL {
             añadirCeldasHidato(celdas);
         }
 
-        else if(tipoHidato == tipoHidato.HEXGONAL){
+        else if(tipoHidato.equals(TipoHidato.HEXGONAL)){
             hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
-        else if(tipoHidato == tipoHidato.TRIANGULAR){
+        else if(tipoHidato.equals(TipoHidato.TRIANGULAR)){
             hidatoCreado = new HidatoTriangular(numFilas, numColumnas, tipoAdyacencia);
             añadirCeldasHidato(celdas);
         }
         hidatoCreado.decideDificultad();
         Dificultad d = hidatoCreado.getDificultad();
 
-        if(d.equals(Dificultad.FACIL)) hidatoCreado.asociaRanking(rankingCTRL.getRankingFacil());
-        else if(d.equals(Dificultad.MEDIO)) hidatoCreado.asociaRanking(rankingCTRL.getRankingMedio());
-        else hidatoCreado.asociaRanking(rankingCTRL.getRankingDificil());
+        hidatoCreado.asociaRanking(persistenciaCTRL.obtenRanking(d));
 
-        double t1 = System.nanoTime();
-        boolean r = hidatoCreado.tieneSolucion();
-        double t2 = System.nanoTime();
-        System.out.println(t2-t1);
-        return r;
+        return hidatoCreado.tieneSolucion();
     }
 
     public void creaHidatoPorDificultad(Dificultad dificultad){
@@ -62,10 +56,10 @@ public class CreadorHidatosCTRL {
         int adj = ThreadLocalRandom.current().nextInt(0, 2);
         int celdas;
         if(dificultad.equals(Dificultad.FACIL)) {
-            celdas = ThreadLocalRandom.current().nextInt(9, 45);
+            celdas = ThreadLocalRandom.current().nextInt(9, 40);
         }
         else{
-            celdas = ThreadLocalRandom.current().nextInt(16, 45);
+            celdas = ThreadLocalRandom.current().nextInt(16, 50);
         }
 
         if(forma == 0 && adj == 0) hidatoCreado = new HidatoCuadrado(celdas, TipoAdyacencia.LADO);
@@ -75,6 +69,7 @@ public class CreadorHidatosCTRL {
         else if(forma == 2) hidatoCreado = new HidatoHexagonal(celdas, TipoAdyacencia.LADO);
 
         hidatoCreado.generaAleatorioPorDificultad(celdas,dificultad);
+        hidatoCreado.asociaRanking(persistenciaCTRL.obtenRanking(dificultad));
 
     }
 
@@ -92,6 +87,7 @@ public class CreadorHidatosCTRL {
         }
         hidatoCreado.generaTableroAleatorio(numCeldas,numCeldasAgujero,numCeldasFijas);
         hidatoCreado.decideDificultad();
+        hidatoCreado.asociaRanking(persistenciaCTRL.obtenRanking(hidatoCreado.getDificultad()));
     }
 
     public String adyacenciaHidato(){
