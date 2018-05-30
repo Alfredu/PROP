@@ -190,12 +190,16 @@ public class Partida {
      */
     public boolean acabado(){
         if(n == grafoHidato.size()+1){
-            tiempoPartida = System.currentTimeMillis() - tiempoInicial;
+            tiempoPartida = tiempoPartida + (System.currentTimeMillis() - tiempoInicial);
             int time = toIntExact(tiempoPartida);
             hidatoJugado.entraRanking(jugadorPartida.getUsername(),time,numPistas);
             return true;
         }
         return false;
+    }
+
+    public void pausar(){
+        tiempoPartida = tiempoPartida = (System.currentTimeMillis() - tiempoInicial);
     }
 
 
