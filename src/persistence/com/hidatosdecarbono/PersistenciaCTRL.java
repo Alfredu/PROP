@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 
@@ -14,7 +16,9 @@ public class PersistenciaCTRL {
     private PersistenciaHidato persistenciaHidato;
     private PersistenciaPartida persistenciaPartida;
     private final String ficheroJugadores = "jugadores.txt";
-    private final String ficheroHidatos = "hidatos.txt";
+    private final String ficheroHidatosFacil = "hidatosFacil.txt";
+    private final String ficheroHidatosMedio = "hidatosMedio.txt";
+    private final String ficheroHidatosDificil = "hidatosDificil.txt";
     private final String ficheroRankingFacil = "rankingFacil.txt";
     private final String ficheroRankingMedio = "rankingMedio.txt";
     private final String ficheroRankingDificil = "rankingDificil.txt";
@@ -96,14 +100,60 @@ public class PersistenciaCTRL {
         Gson gson = new Gson();
         String json = gson.toJson(hidato);
         json = añadeTipoHidato(json,hidato.getTipoHidato());
-        persistenciaHidato.guardaEnTxt(json,ficheroHidatos);
+        Dificultad dificultad = hidato.getDificultad();
+        switch (dificultad){
+            case FACIL:
+                persistenciaHidato.guardaEnTxt(json,ficheroHidatosFacil);
+                break;
+            case MEDIO:
+                persistenciaHidato.guardaEnTxt(json,ficheroHidatosMedio);
+                break;
+            case DIFICIL:
+                persistenciaHidato.guardaEnTxt(json,ficheroHidatosDificil);
+                break;
+        }
     }
 
-    public Hidato obtenHidato (int id){
+    public Hidato obtenHidato (int id,Dificultad dificultad){
         Gson gson = new Gson();
-        JSONObject json = persistenciaHidato.obtenHidato(id,ficheroHidatos);
+        JSONObject json = null;
+        switch (dificultad){
+            case FACIL:
+                json = persistenciaHidato.obtenHidato(id,ficheroHidatosFacil);
+                break;
+            case MEDIO:
+                json = persistenciaHidato.obtenHidato(id,ficheroHidatosMedio);
+                break;
+            case DIFICIL:
+                json = persistenciaHidato.obtenHidato(id,ficheroHidatosDificil);
+                break;
+        }
         System.out.println(json);
         return creaHidatoDeseJSON(json);
+    }
+
+    public HashMap<Integer, Hidato> obtenColeccionHidatos (Dificultad dificultad){
+        Gson gson = new Gson();
+        ArrayList<JSONObject> jsonArray = null;
+        HashMap<Integer, Hidato> hashMap = new HashMap<>();
+        switch (dificultad){
+            case FACIL:
+                jsonArray = persistenciaHidato.obtenColeccionHidatos(ficheroHidatosFacil);
+                break;
+            case MEDIO:
+                jsonArray = persistenciaHidato.obtenColeccionHidatos(ficheroHidatosMedio);
+                break;
+            case DIFICIL:
+                jsonArray = persistenciaHidato.obtenColeccionHidatos(ficheroHidatosDificil);
+                break;
+        }
+        if(jsonArray!= null && !jsonArray.isEmpty()){
+            for (int i = 0; i < jsonArray.size(); i++) {
+                hashMap.put(i,creaHidatoDeseJSON(jsonArray.get(i)));
+            }
+            return hashMap;
+        }
+        return null;
     }
 
     public void guardaPartida (Partida partida){
@@ -115,7 +165,7 @@ public class PersistenciaCTRL {
         jsonObject.put("hidatoJugado",new JSONObject(jsonHidato));
         json = jsonObject.toString();
         System.out.println(json);
-        persistenciaHidato.guardaEnTxt(json,ficheroPartidas);
+        persistenciaPartida.guardaEnTxt(json,ficheroPartidas);
     }
 
     public Partida obtenPartida (int id){

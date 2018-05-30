@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertTrue;
 
@@ -23,7 +24,7 @@ public class PersistenciaHidatoTest {
 
     @After
     public void tearDown() throws Exception {
-        File file = new File("persistencia/hidatos.txt");
+        File file = new File("persistencia/hidatosDificil.txt");
         file.delete();
     }
 
@@ -42,11 +43,11 @@ public class PersistenciaHidatoTest {
                "\"id\":0," +
                "\"tablero\":[[{\"tipo\":\"INVISIBLE\",\"valor\":0},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"INVISIBLE\",\"valor\":0}],[{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"FIJA\",\"valor\":1},{\"tipo\":\"VARIABLE\",\"valor\":0}],[{\"tipo\":\"FIJA\",\"valor\":7},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"FIJA\",\"valor\":9},{\"tipo\":\"INVISIBLE\",\"valor\":0}]]," +
                "\"dificultad\":\"DIFICIL\"}"};
-       assertTrue(mismoTextoEnFichero(texto,"hidatos.txt"));
+       assertTrue(mismoTextoEnFichero(texto,"hidatosDificil.txt"));
     }
 
     @Test
-    public void obtieneHidatoCorrectamente() {
+    public void obtieneHidatoDificilCorrectamente() {
         test = new HidatoCuadrado(3,4,TipoAdyacencia.LADOYVERTICE);
         test.setDificultad(Dificultad.DIFICIL);
         ArrayList<String> celdas = new ArrayList<>();
@@ -56,8 +57,37 @@ public class PersistenciaHidatoTest {
         añadirCeldasHidato(celdas);
         test.tieneSolucion();
         persistenciaCTRL.guardaHidato(test);
-        Hidato hidato = persistenciaCTRL.obtenHidato(0);
+        Hidato hidato = persistenciaCTRL.obtenHidato(0,Dificultad.DIFICIL);
         assertTrue(hidato.tieneSolucion());
+    }
+
+    @Test
+    public void obtieneColeccionHidatosDificilCorrectamente() {
+        //Hidato 1
+        test = new HidatoCuadrado(3,4,TipoAdyacencia.LADOYVERTICE);
+        test.setDificultad(Dificultad.DIFICIL);
+        ArrayList<String> celdas = new ArrayList<>();
+        celdas.add("#,?,?,#");
+        celdas.add("?,?,1,?");
+        celdas.add("7,?,9,#");
+        añadirCeldasHidato(celdas);
+        test.tieneSolucion();
+        persistenciaCTRL.guardaHidato(test);
+
+        //Hidato 2
+        test = new HidatoCuadrado(3,4,TipoAdyacencia.LADOYVERTICE);
+        test.setDificultad(Dificultad.DIFICIL);
+        celdas = new ArrayList<>();
+        celdas.add("#,?,?,#");
+        celdas.add("?,?,1,?");
+        celdas.add("9,?,7,#");
+        añadirCeldasHidato(celdas);
+        test.tieneSolucion();
+        persistenciaCTRL.guardaHidato(test);
+
+        HashMap<Integer, Hidato> hashMapHidatos = persistenciaCTRL.obtenColeccionHidatos(Dificultad.DIFICIL);
+        assertTrue(hashMapHidatos.get(0).tieneSolucion());
+        assertTrue(hashMapHidatos.get(1).tieneSolucion());
     }
 
 

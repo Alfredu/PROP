@@ -16,4 +16,9 @@ public class PersistenciaHidato extends Persistencia{
         return array.get(id);
     }
 
+    public ArrayList<JSONObject> obtenColeccionHidatos(String nombreFichero){
+        ArrayList<JSONObject> array = obtenDeTxt(nombreFichero);
+        return array;
+    }
+
 }
