@@ -33,7 +33,6 @@ public class PersistenciaPartidaTest {
     @After
     public void tearDown() throws Exception {
         File file = new File("persistencia/partidas.txt");
-        file.delete();
     }
 
     @Test
@@ -49,6 +48,7 @@ public class PersistenciaPartidaTest {
         partida.mueve(0, 1);
         persistenciaCTRL.guardaPartida(partida);
         Partida partidaRestaurada = persistenciaCTRL.obtenPartida(0);
+        Partida partidaRestaurada = persistenciaCTRL.obtenPartida();
         partidaRestaurada.moonwalk();
         assertTrue(partidaRestaurada.mueve(0, 1));
         assertEquals(4, partidaRestaurada.getTablero()[0][1].getValor());

@@ -31,6 +31,11 @@ public class Persistencia {
        }
    }
 
+    public void eliminaTxt(String nombreFichero){
+        File file =new File("persistencia/"+nombreFichero);
+        file.delete();
+    }
+
     /**
      * Devuelve un ArrayList de JSONObject que representan cada linea del fichero ubicado en
      * el path relativo persistencia/ y con el nombre indicado por el parametro.

@@ -168,9 +168,9 @@ public class PersistenciaCTRL {
         persistenciaPartida.guardaEnTxt(json,ficheroPartidas);
     }
 
-    public Partida obtenPartida (int id){
+    public Partida obtenPartida (){
         Gson gson = new Gson();
-        JSONObject json = persistenciaPartida.obtenPartida(id,ficheroPartidas);
+        JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas);
         System.out.println(json);
         JSONObject hidatoJson = json.getJSONObject("hidatoJugado");
         System.out.println(hidatoJson);

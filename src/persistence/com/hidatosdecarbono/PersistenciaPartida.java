@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class PersistenciaPartida extends Persistencia{
 
     public void guardaEnTxt(String json, String nombreFichero) {
-        super.guardaEnTxt(json, nombreFichero, true);
+        super.guardaEnTxt(json, nombreFichero, false);
     }
 
-    public JSONObject obtenPartida(int id, String nombreFichero){
+    public JSONObject obtenPartida(String nombreFichero){
         ArrayList<JSONObject> array = obtenDeTxt(nombreFichero);
-        if(id >= array.size()) throw new IndexOutOfBoundsException();
-        return array.get(id);
+        eliminaTxt(nombreFichero);
+        return array.get(0);
     }
 
 }
