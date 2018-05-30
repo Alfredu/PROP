@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class JugarHidatosCTRL {
     private PersistenciaCTRL persistencia;
-    private Partida actual;
+    private Partida partida;
     private Hidato hidatoJugado;
 
     public JugarHidatosCTRL(PersistenciaCTRL persistencia){
@@ -12,16 +12,20 @@ public class JugarHidatosCTRL {
     }
 
     public void inicializa(Hidato hidato, Jugador jugadorAJugar){
-        actual = new Partida(hidato,jugadorAJugar);
+        partida = new Partida(hidato,jugadorAJugar);
         hidatoJugado = hidato;
     }
 
+    public void setPartida(Partida partida){
+        this.partida = partida;
+    }
+
     public boolean mueve(int i, int j){
-        return actual.mueve(i,j);
+        return partida.mueve(i,j);
     }
 
     public boolean acabada(){
-        boolean result = actual.acabado();
+        boolean result = partida.acabado();
 
         if(result){
             persistencia.guardaRanking(hidatoJugado.getRanking(),hidatoJugado.getDificultad());
@@ -29,17 +33,30 @@ public class JugarHidatosCTRL {
         return result;
     }
 
+    public boolean compruebaPausa(){
+        partida.pausar();
+        try{
+            Partida p = persistencia.obtenPartida();
+        }
+        catch (IndexOutOfBoundsException e){
+            return false;
+        }
+        return true;
+    }
+
+
+
     public boolean retroceder(){
-        return actual.moonwalk();
+        return partida.moonwalk();
     }
 
     public boolean pidePista(){
-        return actual.pidePista();
+        return partida.pidePista();
     }
 
 
     public void printTablero(){
-        Celda[][] tablero = actual.getTablero();
+        Celda[][] tablero = partida.getTablero();
         int files = tablero.length;
         int columnes = tablero[0].length;
         String celes;

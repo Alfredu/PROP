@@ -168,7 +168,7 @@ public class PersistenciaCTRL {
         persistenciaPartida.guardaEnTxt(json,ficheroPartidas);
     }
 
-    public Partida obtenPartida (){
+    public Partida obtenPartida() throws IndexOutOfBoundsException{
         Gson gson = new Gson();
         JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas);
         System.out.println(json);

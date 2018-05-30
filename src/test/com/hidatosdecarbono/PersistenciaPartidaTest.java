@@ -47,7 +47,6 @@ public class PersistenciaPartidaTest {
         //ponemos el 4 en la casilla al lado del 3 situada en 0,1
         partida.mueve(0, 1);
         persistenciaCTRL.guardaPartida(partida);
-        Partida partidaRestaurada = persistenciaCTRL.obtenPartida(0);
         Partida partidaRestaurada = persistenciaCTRL.obtenPartida();
         partidaRestaurada.moonwalk();
         assertTrue(partidaRestaurada.mueve(0, 1));

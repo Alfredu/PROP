@@ -199,7 +199,7 @@ public class Partida {
     }
 
     public void pausar(){
-        tiempoPartida = tiempoPartida = (System.currentTimeMillis() - tiempoInicial);
+        tiempoPartida = tiempoPartida + (System.currentTimeMillis() - tiempoInicial);
     }
 
 

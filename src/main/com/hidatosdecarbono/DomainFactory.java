@@ -22,13 +22,17 @@ public class DomainFactory {
         return creadorHidatosCTRL;
     }
 
-    public JugarHidatosCTRL getControladorJugar(String s){
-        if(s == "Creado") {
-            jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
-            jugarHidatosCTRL.inicializa(creadorHidatosCTRL.getHidatoCreado(), logInCTRL.getJugador());
-            return jugarHidatosCTRL;
-        }
-        return new JugarHidatosCTRL(persistenciaCTRL);
+    public JugarHidatosCTRL getControladorJugarHidatoCreado(){
+        jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
+        jugarHidatosCTRL.inicializa(creadorHidatosCTRL.getHidatoCreado(), logInCTRL.getJugador());
+        return jugarHidatosCTRL;
+    }
+
+    public JugarHidatosCTRL getControladorJugarHidatoPausado(){
+        jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
+        Partida partida = persistenciaCTRL.obtenPartida();
+        jugarHidatosCTRL.setPartida(partida);
+        return jugarHidatosCTRL;
     }
 
     public ConsultarRankingCTRL getRankingCTRL(Dificultad dificultad) {

@@ -1,8 +1,5 @@
 package com.hidatosdecarbono;
 
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -239,10 +236,11 @@ public class UserInterface {
 
     private void juegaPartida() {
         Scanner reader = new Scanner(System.in);
-        JugarHidatosCTRL jugarHidatosCTRL = domini.getControladorJugar("Creado");
-        Boolean end = false;
+        JugarHidatosCTRL jugarHidatosCTRL = domini.getControladorJugarHidatoCreado();
+        boolean end = false;
         System.out.print("Introduzca el valor de la fila y la columna donde moverse separados por un espacio,");
-        System.out.println(" pulse R para retroceder una casilla o pulse P para pedir una pista (se coloca la siguiente casilla de forma automatica");
+        System.out.println(" pulse R para retroceder una casilla, pulse P para pedir una pista (se coloca la siguiente casilla de forma automatica o pulse S para parar la partida (STOP)");
+        boolean finalitzada = false;
         while (!end){
             jugarHidatosCTRL.printTablero();
             String opcio = reader.next();
@@ -254,6 +252,12 @@ public class UserInterface {
                     System.out.println("No hay movimiento posible en este camino, prueve a retroceder");
                 }
             }
+            else if(opcio.equals("s") || opcio.equals("S")){
+                if(jugarHidatosCTRL.compruebaPausa()){
+
+                }
+                end = true;
+            }
             else {
                 String fila = opcio;
                 String col = reader.next();
@@ -262,21 +266,19 @@ public class UserInterface {
                 if (!jugarHidatosCTRL.mueve(i, j)) {
                     System.out.println("Movimiento incorrecto");
                 }
-                end = jugarHidatosCTRL.acabada();
+                end = finalitzada = jugarHidatosCTRL.acabada();
             }
         }
-        System.out.println("Partida acabada!");
-        jugarHidatosCTRL.printTablero();
-        System.out.println("Desea consultar el ranking? (Y/N)");
-        String opt = reader.next();
-        if(opt.equals("Y") || opt.equals("y")){
-            jugarHidatosCTRL.ranking();
+        if(finalitzada) {
+            System.out.println("Partida acabada!");
+            jugarHidatosCTRL.printTablero();
+            System.out.println("Desea consultar el ranking? (Y/N)");
+            String opt = reader.next();
+            if (opt.equals("Y") || opt.equals("y")) {
+                jugarHidatosCTRL.ranking();
+            }
         }
-        System.out.println("Quiere jugar de nuevo? (Y/N)");
-        opt = reader.next();
-        if(opt.equals("Y") || opt.equals("y")){
-            juegaPartida();
-        }
+
     }
 
     private void consultarRankings(){
