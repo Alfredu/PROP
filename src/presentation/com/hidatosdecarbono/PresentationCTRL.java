@@ -11,11 +11,26 @@ public class PresentationCTRL {
         domini = new DomainFactory();
         frame = new JFrame("HIDATOS DE CARBONO");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        try{
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+        }
+        catch (Exception e){
+            //TODO manage aquesta excepcio
+        }
 
     }
 
+    public void runFirstMenu(){
+        loadVentana(
+                new FirstWindow(this).$$$getRootComponent$$$()
+        );
+    }
+
     public void runLogin(){
-        loadVentana(new LoginLayout(domini.getLogInCTRL(), this).$$$getRootComponent$$$());
+        loadVentana(
+                new LoginLayout(domini.getLogInCTRL(), this).$$$getRootComponent$$$()
+        );
     }
 
     private void loadVentana(Container cont){
@@ -25,7 +40,7 @@ public class PresentationCTRL {
     }
 
     public void runMainMenu(){
-        loadVentana(new MainMenu().$$$getRootComponent$$$());
+        loadVentana(new MainMenu(this).$$$getRootComponent$$$());
         frame.pack();
         frame.setVisible(true);
     }

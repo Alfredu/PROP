@@ -3,8 +3,9 @@ package com.hidatosdecarbono;
 public class Main {
 
     public static void main(String[] args){
+
         PresentationCTRL presentacio = new PresentationCTRL();
-        presentacio.runLogin();
+        presentacio.runFirstMenu();
 
         //UserInterface interficie = new UserInterface();
         //interficie.runLogin();
