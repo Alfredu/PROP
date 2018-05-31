@@ -4,10 +4,10 @@ public class Main {
 
     public static void main(String[] args){
 
-        PresentationCTRL presentacio = new PresentationCTRL();
-        presentacio.runFirstMenu();
+        //PresentationCTRL presentacio = new PresentationCTRL();
+        //presentacio.runFirstMenu();
 
-        //UserInterface interficie = new UserInterface();
-        //interficie.runLogin();
+        UserInterface interficie = new UserInterface();
+        interficie.run();
     }
 }

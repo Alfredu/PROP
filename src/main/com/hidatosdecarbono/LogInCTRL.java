@@ -20,17 +20,18 @@ public class LogInCTRL {
         catch (InvalidUserException e) {
             return false;
         }
+        jugador = nou;
         return true;
         
     }
     
     public boolean logIn(String username, String pass) throws InvalidUserException{
-        jugador = persistencia.obtenJugador(username);
+        Jugador login = persistencia.obtenJugador(username);
 
-        if(!jugador.getPassword().equals(pass)){
-            jugador = null;
-            return false;
+        if(login.getPassword().equals(pass)){
+            jugador = login;
+            return true;
         }
-        return true;
+        return false;
     }
 }

@@ -17,6 +17,8 @@ public class UserInterface {
             System.out.println("3- Añadir hidato por dificultad");
             System.out.println("4- LogIn con nuevo jugador");
             System.out.println("5- Consultar puntuaciones");
+            System.out.println("6- Reanudar hidato");
+            System.out.println("7- Seleccionar hidato");
             System.out.println("6- Terminar juego");
 
             Scanner reader = new Scanner(System.in);
@@ -32,6 +34,14 @@ public class UserInterface {
             else if (opt == 3) añadirPorDificultad();
             else if(opt == 4) logIn();
             else if(opt == 5) consultarRankings();
+            else if(opt == 6){
+                try{
+                    juegaPartida(domini.getControladorJugarHidatoPausado());
+                }
+                catch (IndexOutOfBoundsException e){
+                    System.out.println("No hi ha partida guardada");
+                }
+            }
             else end = true;
         }
     }
@@ -230,13 +240,12 @@ public class UserInterface {
         System.out.println("Desea jugar el Hidato? (Y/N)");
         opt = reader.next();
         if(opt.equals("Y") || opt.equals("y")){
-            juegaPartida();
+            juegaPartida(domini.getControladorJugarHidatoCreado());
         }
     }
 
-    private void juegaPartida() {
+    private void juegaPartida(JugarHidatosCTRL jugarHidatosCTRL) {
         Scanner reader = new Scanner(System.in);
-        JugarHidatosCTRL jugarHidatosCTRL = domini.getControladorJugarHidatoCreado();
         boolean end = false;
         System.out.print("Introduzca el valor de la fila y la columna donde moverse separados por un espacio,");
         System.out.println(" pulse R para retroceder una casilla, pulse P para pedir una pista (se coloca la siguiente casilla de forma automatica o pulse S para parar la partida (STOP)");
