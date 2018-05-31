@@ -22,12 +22,13 @@ public class LoginLayout {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    login.creaJugador(nomUsuari.getText(), contrasenya.getText());
-                    presentationCTRL.runMainMenu();
-                } catch (InvalidUserException e) {
+                boolean logged = login.altaJugador(nomUsuari.getText(), contrasenya.getText());
+                   if(logged) {
+                       presentationCTRL.runMainMenu();
+                   }
+                   else{
                     JOptionPane.showMessageDialog(mainPanel, "ERROR! L'USUARI JA EXISTEIX", "ERRROR", JOptionPane.ERROR_MESSAGE);
-                }
+                    }
             }
         });
         enrereButton.addActionListener(new ActionListener() {

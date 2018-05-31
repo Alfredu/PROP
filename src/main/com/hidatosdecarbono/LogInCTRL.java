@@ -1,7 +1,5 @@
 package com.hidatosdecarbono;
 
-import java.security.InvalidParameterException;
-
 public class LogInCTRL {
     private PersistenciaCTRL persistencia;
     private Jugador jugador;
@@ -14,13 +12,25 @@ public class LogInCTRL {
         return jugador;
     }
 
-    public void creaJugador(String username, String pass) throws InvalidUserException {
-        jugador = persistencia.obtenJugador(username,pass);
-
-        if(jugador == null){
-            jugador = new Jugador(username,pass);
-            persistencia.guardaJugador(jugador);
+    public boolean altaJugador(String username, String pass) {
+        Jugador nou = new Jugador(username,pass);
+        try{
+            persistencia.guardaJugador(nou);
         }
+        catch (InvalidUserException e) {
+            return false;
+        }
+        return true;
+        
+    }
+    
+    public boolean logIn(String username, String pass) throws InvalidUserException{
+        jugador = persistencia.obtenJugador(username);
 
+        if(!jugador.getPassword().equals(pass)){
+            jugador = null;
+            return false;
+        }
+        return true;
     }
 }

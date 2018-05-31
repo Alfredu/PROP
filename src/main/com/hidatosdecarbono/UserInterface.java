@@ -43,13 +43,13 @@ public class UserInterface {
         System.out.println("Registro en el sistema, introduzca su contraseña");
         String pass = reader.next();
         LogInCTRL logIn = domini.getLogInCTRL();
-        try {
-            logIn.creaJugador(username,pass);
+        boolean log = logIn.altaJugador(username,pass);
+        if(log) {
             System.out.print("Loggeado en el sistema como: ");
             System.out.println(logIn.getJugador().getUsername());
-
-        } catch (InvalidUserException e) {
-            System.out.println(e);
+        }
+        else{
+            System.out.print("Ya existe ese usuario");
             logIn();
         }
     }

@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 
 import static org.junit.Assert.*;
 
@@ -48,7 +47,7 @@ public class PersistenciaJugadorCTRLTest {
         persistenciaCTRL.guardaJugador(jugador1);
         persistenciaCTRL.guardaJugador(jugador2);
         persistenciaCTRL.guardaJugador(jugador3);
-        Jugador jugadorObtenido = persistenciaCTRL.obtenJugador(jugador2.getUsername(), jugador2.getPassword());
+        Jugador jugadorObtenido = persistenciaCTRL.obtenJugador(jugador2.getUsername());
         assertEquals("Ha encontrado el user2",jugador2.getUsername(),jugadorObtenido.getUsername());
     }
 
