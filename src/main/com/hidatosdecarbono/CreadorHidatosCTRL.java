@@ -44,9 +44,7 @@ public class CreadorHidatosCTRL {
             añadirCeldasHidato(celdas);
         }
         hidatoCreado.decideDificultad();
-        Dificultad d = hidatoCreado.getDificultad();
 
-        hidatoCreado.asociaRanking(persistenciaCTRL.obtenRanking(d));
 
         return hidatoCreado.tieneSolucion();
     }
@@ -69,7 +67,6 @@ public class CreadorHidatosCTRL {
         else if(forma == 2) hidatoCreado = new HidatoHexagonal(celdas, TipoAdyacencia.LADO);
 
         hidatoCreado.generaAleatorioPorDificultad(celdas,dificultad);
-        hidatoCreado.asociaRanking(persistenciaCTRL.obtenRanking(dificultad));
 
     }
 
@@ -87,7 +84,6 @@ public class CreadorHidatosCTRL {
         }
         hidatoCreado.generaTableroAleatorio(numCeldas,numCeldasAgujero,numCeldasFijas);
         hidatoCreado.decideDificultad();
-        hidatoCreado.asociaRanking(persistenciaCTRL.obtenRanking(hidatoCreado.getDificultad()));
     }
 
     public String adyacenciaHidato(){
@@ -137,31 +133,32 @@ public class CreadorHidatosCTRL {
     }
 
     /**
-     * Imprime por pantalla el hidato del controlador
+     * Devuelve un hidato en formato String
      */
-    public void printHidato(){
+    public ArrayList<String> printHidato(){
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
-        String celes = "";
+        ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < files; i++) {
+            String celes = "";
             for (int j = 0; j < columnes; j++) {
                 Celda c = hidatoCreado.getCeldaTablero(i, j);
                 celes = celes.concat(celdaToString(c));
                 celes = celes.concat(",");
             }
-            System.out.println(celes);
-            celes = "";
+            result.add(celes);
         }
-
+        return result;
     }
 
     /**
      * Imprime por pantalla la solución del hidato del controlador
      */
-    public void printSolucion(){
+    public ArrayList<String> printSolucion(){
 
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
+        ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < files; i++) {
             String celes = "";
             for (int j = 0; j < columnes; j++) {
@@ -169,8 +166,9 @@ public class CreadorHidatosCTRL {
                 celes = celes.concat(celdaToString(c));
                 celes = celes.concat(",");
             }
-            System.out.println(celes);
+            result.add(celes);
         }
+        return result;
     }
 
     private String celdaToString(Celda c){

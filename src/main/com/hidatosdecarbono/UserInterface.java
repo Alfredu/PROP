@@ -19,7 +19,7 @@ public class UserInterface {
             System.out.println("5- Consultar puntuaciones");
             System.out.println("6- Reanudar hidato");
             System.out.println("7- Seleccionar hidato");
-            System.out.println("6- Terminar juego");
+            System.out.println("8- Terminar juego");
 
             Scanner reader = new Scanner(System.in);
             int opt;
@@ -53,13 +53,20 @@ public class UserInterface {
         System.out.println("Registro en el sistema, introduzca su contraseña");
         String pass = reader.next();
         LogInCTRL logIn = domini.getLogInCTRL();
-        boolean log = logIn.altaJugador(username,pass);
+        boolean log = false;
+        try{
+            log = logIn.logIn(username,pass);
+        }
+        catch (InvalidUserException e){
+            System.out.print("No existe el usuario");
+            logIn();
+        }
         if(log) {
             System.out.print("Loggeado en el sistema como: ");
             System.out.println(logIn.getJugador().getUsername());
         }
         else{
-            System.out.print("Ya existe ese usuario");
+            System.out.print("La pass no coincide");
             logIn();
         }
     }
@@ -114,7 +121,10 @@ public class UserInterface {
         }
         try {
             tieneSolucion = creadorHidatosCTRL.creaHidatoPropuesto(tipo, numFilas, numColumnas, adj, celdas);
-            creadorHidatosCTRL.printHidato();
+            ArrayList<String> print = creadorHidatosCTRL.printHidato();
+            for(int i = 0; i < print.size(); i++){
+                System.out.println(print.get(i));
+            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -180,7 +190,10 @@ public class UserInterface {
 
         try {
             creadorHidatosCTRL.creaHidatoAleatorio(tipo,topo,fijas,agujeros,adj);
-            creadorHidatosCTRL.printHidato();
+            ArrayList<String> print = creadorHidatosCTRL.printHidato();
+            for(int i = 0; i < print.size(); i++){
+                System.out.println(print.get(i));
+            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -218,7 +231,10 @@ public class UserInterface {
 
         try {
             creadorHidatosCTRL.creaHidatoPorDificultad(d);
-            creadorHidatosCTRL.printHidato();
+            ArrayList<String> print = creadorHidatosCTRL.printHidato();
+            for(int i = 0; i < print.size(); i++){
+                System.out.println(print.get(i));
+            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -235,7 +251,10 @@ public class UserInterface {
         System.out.println("Hidato amb solucio, visualitzar hidato? (Y/N)");
         String opt = reader.next();
         if(opt.equals("Y") || opt.equals("y")){
-            creadorHidatosCTRL.printSolucion();
+            ArrayList<String> print = creadorHidatosCTRL.printSolucion();
+            for(int i = 0; i < print.size(); i++){
+                System.out.println(print.get(i));
+            }
         }
         System.out.println("Desea jugar el Hidato? (Y/N)");
         opt = reader.next();
@@ -262,10 +281,19 @@ public class UserInterface {
                 }
             }
             else if(opcio.equals("s") || opcio.equals("S")){
-                if(jugarHidatosCTRL.compruebaPausa()){
-
+                if(jugarHidatosCTRL.compruebaPausada()){
+                    System.out.println("Ya hay una partida guardada, desea sobrescribirla? (Y/N)");
+                    String guardar = reader.next();
+                    if(guardar.equals("Y")||guardar.equals("y")){
+                        jugarHidatosCTRL.pausa();
+                        end = true;
+                    }
                 }
-                end = true;
+                else{
+                    jugarHidatosCTRL.pausa();
+                    end = true;
+                }
+
             }
             else {
                 String fila = opcio;
