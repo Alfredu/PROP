@@ -12,6 +12,12 @@ public class LogInCTRL {
         return jugador;
     }
 
+    /**
+     * Da de alta el jugador en el sistema
+     * @param username
+     * @param pass
+     * @return Devuelve true si se da de alta al jugador, false si ya existe un jugador con el mismo username registrado
+     */
     public boolean altaJugador(String username, String pass) {
         Jugador nou = new Jugador(username,pass);
         try{

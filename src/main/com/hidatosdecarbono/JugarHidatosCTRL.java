@@ -18,6 +18,9 @@ public class JugarHidatosCTRL {
 
     public void setPartida(Partida partida){
         this.partida = partida;
+        hidatoJugado = partida.getHidatoJugado();
+        Dificultad d = hidatoJugado.getDificultad();
+        hidatoJugado.asociaRanking(persistencia.obtenRanking(d));
     }
 
     public boolean mueve(int i, int j){
@@ -33,15 +36,30 @@ public class JugarHidatosCTRL {
         return result;
     }
 
-    public boolean compruebaPausa(){
-        partida.pausar();
+    /**
+     * Comprueva si hay una partida ya pausada en el sistema
+     * @return True si existe, False en caso contrario
+     */
+
+    public boolean compruebaPausada(){
+        Partida p;
         try{
-            Partida p = persistencia.obtenPartida();
+            p = persistencia.obtenPartida();
+            persistencia.guardaPartida(p);
         }
         catch (IndexOutOfBoundsException e){
             return false;
         }
         return true;
+    }
+
+    /**
+     * Guarda la partida actual
+     */
+
+    public void pausa(){
+        partida.pausar();
+        persistencia.guardaPartida(partida);
     }
 
 

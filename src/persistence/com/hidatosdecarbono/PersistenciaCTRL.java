@@ -166,7 +166,6 @@ public class PersistenciaCTRL {
         jsonHidato = añadeTipoHidato(jsonHidato,partida.getHidatoJugado().getTipoHidato());
         jsonObject.put("hidatoJugado",new JSONObject(jsonHidato));
         json = jsonObject.toString();
-        System.out.println(json);
         persistenciaPartida.guardaEnTxt(json,ficheroPartidas);
     }
 
@@ -175,7 +174,6 @@ public class PersistenciaCTRL {
         JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas);
         System.out.println(json);
         JSONObject hidatoJson = json.getJSONObject("hidatoJugado");
-        System.out.println(hidatoJson);
         Hidato hidatoJugado = creaHidatoDeseJSON(hidatoJson);
         Celda [][] tablero = obtenerTablero(json.getJSONArray("tablero"));
         Partida partida = creaPartida(hidatoJugado,tablero,json);
@@ -189,7 +187,6 @@ public class PersistenciaCTRL {
         partida.setColActual(json.getInt("colActual"));
         partida.setFilaActual(json.getInt("filaActual"));
         partida.setTiempoPartida(json.getInt("tiempoPartida"));
-        partida.setTiempoInicial(json.getInt("tiempoInicial"));
         partida.setTablero(tablero);
         partida.setNumPistas(json.getInt("numPistas"));
         partida.setN(json.getInt("n"));

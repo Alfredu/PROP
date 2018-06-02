@@ -1,7 +1,6 @@
 package com.hidatosdecarbono;
 
 import java.util.Stack;
-import static java.lang.Math.toIntExact;
 
 public class Partida {
     private Hidato hidatoJugado;
@@ -15,7 +14,7 @@ public class Partida {
     private int colActual;
     private int numPistas = 0;
     private long tiempoInicial;
-    private long tiempoPartida;
+    private long tiempoPartida = 0;
     private Jugador jugadorPartida;
 
     public Partida(Hidato hidato, Jugador jugadorAJugar){
@@ -191,7 +190,7 @@ public class Partida {
     public boolean acabado(){
         if(n == grafoHidato.size()+1){
             tiempoPartida = tiempoPartida + (System.currentTimeMillis() - tiempoInicial);
-            int time = toIntExact(tiempoPartida);
+            int time = Math.toIntExact(tiempoPartida);
             hidatoJugado.entraRanking(jugadorPartida.getUsername(),time,numPistas);
             return true;
         }
