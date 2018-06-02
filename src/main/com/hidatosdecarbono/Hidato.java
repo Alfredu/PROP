@@ -12,6 +12,8 @@ public abstract class Hidato {
     private transient Node[][] nodo;
     private transient Graph grafo;
     private transient Ranking ranking;
+    private int nFilas;
+    private int nColumnas;
 
     /**
      * Asigna un id al Hidato
@@ -49,7 +51,7 @@ public abstract class Hidato {
      * @return Un integer que contiene el numero de filas del hidato
      */
     public int getNumFilas(){
-        return tablero.length;
+        return this.nFilas;
     }
 
     /**
@@ -57,7 +59,7 @@ public abstract class Hidato {
      * @return Un integer que contiene el numero de columnas del hidato
      */
     public int getNumColumnas(){
-        return tablero[0].length;
+        return this.nColumnas;
     }
 
     /**
@@ -96,6 +98,8 @@ public abstract class Hidato {
         tableroSolucion = new Celda[numFilas][numColumnas];
         nodo = new Node[numFilas][numColumnas];
         grafo = new Graph();
+        this.nFilas = numFilas;
+        this.nColumnas = numColumnas;
     }
 
     /**

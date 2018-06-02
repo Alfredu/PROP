@@ -37,10 +37,10 @@ public class LoginWindow {
                     if (logged) {
                         presentationCTRL.cambiaVentana("MainMenu");
                     } else {
-                        JOptionPane.showMessageDialog(mainPanel, "ERROR! CONTRASENYA INCORRECTA", "ERRROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(mainPanel, "ERROR! CONTRASENYA INCORRECTA", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (InvalidUserException e) {
-                    JOptionPane.showMessageDialog(mainPanel, "ERROR! L'USUARI NO EXISTEIX", "ERRROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(mainPanel, "ERROR! L'USUARI NO EXISTEIX", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

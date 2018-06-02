@@ -69,14 +69,14 @@ public class RegisterWindow {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (!contrasenya.getText().equals(contrasenyaConfirmation.getText())) {
                     JOptionPane.showMessageDialog(mainPanel, "ERROR! LES DUES CONTRASENYES" +
-                            "NO COINCIDEIXEN", "ERRROR", JOptionPane.ERROR_MESSAGE);
+                            "NO COINCIDEIXEN", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
                     boolean created = logInCTRL.altaJugador(nomUsuari.getText(), contrasenya.getText());
                     if (created) {
                         presentationCTRL.cambiaVentana("MainMenu");
                     } else {
                         JOptionPane.showMessageDialog(mainPanel, "ERROR! L'USUARI " +
-                                "JA EXISTEIX", "ERRROR", JOptionPane.ERROR_MESSAGE);
+                                "JA EXISTEIX", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                 }
 

@@ -120,7 +120,8 @@ public class UserInterface {
             tipo = TipoHidato.HEXGONAL;
         }
         try {
-            tieneSolucion = creadorHidatosCTRL.creaHidatoPropuesto(tipo, numFilas, numColumnas, adj, celdas);
+            creadorHidatosCTRL.creaHidatoPropuesto(tipo, numFilas, numColumnas, adj);
+            tieneSolucion = creadorHidatosCTRL.añadirCeldasHidato(celdas);
             ArrayList<String> print = creadorHidatosCTRL.printHidato();
             for(int i = 0; i < print.size(); i++){
                 System.out.println(print.get(i));

@@ -8,10 +8,18 @@ public class CreadorHidatosCTRL {
     private Hidato hidatoCreado;
     private PersistenciaCTRL persistenciaCTRL;
 
+
     public CreadorHidatosCTRL(PersistenciaCTRL persistenciaCTRL){
         this.persistenciaCTRL = persistenciaCTRL;
     }
 
+    public int getnFilasHidato(){
+        return hidatoCreado.getNumFilas();
+    }
+
+    public int getnColsHidato(){
+        return hidatoCreado.getNumColumnas();
+    }
     /**
      * Devuelve el hidato creado.
      * @return Un Hidato
@@ -26,27 +34,20 @@ public class CreadorHidatosCTRL {
      * @param numFilas Un integer con el numero de filas del hidato a crear
      * @param numColumnas Un integer con el numero de columnas del hidato a crear
      * @param tipoAdyacencia Un enum TipoAdyacencia que contiene el tipo de la adyacencia del hidato a crear
-     * @param celdas Un array de strings que contiene las celdas del hidato a crear
      * @return Un boolean que indica si el hidato propuesto tiene o no solución
      */
-    public boolean creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdyacencia, ArrayList <String> celdas) throws IllegalArgumentException{
+    public void creaHidatoPropuesto(TipoHidato tipoHidato, int numFilas, int numColumnas, TipoAdyacencia tipoAdyacencia) throws IllegalArgumentException{
         if(tipoHidato.equals(TipoHidato.CUADRADO)) {
             hidatoCreado = new HidatoCuadrado(numFilas, numColumnas, tipoAdyacencia);
-            añadirCeldasHidato(celdas);
         }
 
         else if(tipoHidato.equals(TipoHidato.HEXGONAL)){
             hidatoCreado = new HidatoHexagonal(numFilas, numColumnas, tipoAdyacencia);
-            añadirCeldasHidato(celdas);
         }
         else if(tipoHidato.equals(TipoHidato.TRIANGULAR)){
             hidatoCreado = new HidatoTriangular(numFilas, numColumnas, tipoAdyacencia);
-            añadirCeldasHidato(celdas);
         }
-        hidatoCreado.decideDificultad();
 
-
-        return hidatoCreado.tieneSolucion();
     }
 
     public void creaHidatoPorDificultad(Dificultad dificultad){
@@ -105,7 +106,7 @@ public class CreadorHidatosCTRL {
      *
      * @param celdas ArrayList de Strings, cada entrada contiene la codificación en carácteres de una fila de Celdas.
      */
-    private void añadirCeldasHidato(ArrayList <String> celdas) {
+    public boolean añadirCeldasHidato(ArrayList <String> celdas) {
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
         for (int i = 0; i < files; i++) {
@@ -122,6 +123,9 @@ public class CreadorHidatosCTRL {
                 }
             }
         }
+
+        hidatoCreado.decideDificultad();
+        return hidatoCreado.tieneSolucion();
     }
 
 

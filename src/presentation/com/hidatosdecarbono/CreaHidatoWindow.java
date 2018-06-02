@@ -8,15 +8,71 @@ import java.awt.event.ActionListener;
 public class CreaHidatoWindow {
     private JPanel mainPanel;
     private JButton enrereButton;
-    private JComboBox comboBox1;
-    private JTextField textField1;
+    private JComboBox tipusHidatoComboBox;
+    private JTextField numFiles;
     private JButton creaHidatoButton;
+    private JComboBox tipusAdjacenciaComboBox;
+    private JTextField numColumnes;
+    private int nFilas;
+    private int nCols;
 
-    public CreaHidatoWindow(PresentationCTRL presentationCTRL) {
+    public int getnFilas() {
+        return nFilas;
+    }
+
+    public int getnCols() {
+        return nCols;
+    }
+
+    public CreaHidatoWindow(PresentationCTRL presentationCTRL, CreadorHidatosCTRL creadorCtrl) {
         enrereButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 presentationCTRL.cambiaVentana("MainMenu");
+            }
+        });
+        tipusHidatoComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (tipusHidatoComboBox.getSelectedItem().toString().equals("Hexagonal")) {
+                    tipusAdjacenciaComboBox.removeItem("Costat i Vèrtex");
+                } else {
+                    if (tipusAdjacenciaComboBox.getItemCount() == 1) {
+                        tipusAdjacenciaComboBox.addItem("Costat i Vèrtex");
+                    }
+                }
+            }
+        });
+        creaHidatoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (numColumnes.getText().isEmpty() || numFiles.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(mainPanel, "INFORMACIÓ INCOMPLETA! " +
+                                    "INTRODUEIX UN NÚMERO DE FILES I DE COLUMNES",
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    nFilas = Integer.parseInt(numFiles.getText());
+                    nCols = Integer.parseInt(numColumnes.getText());
+                    TipoAdyacencia adyacencia;
+                    TipoHidato tipoHidato;
+
+                    if (tipusHidatoComboBox.getSelectedItem().toString().equals("Quadrat")) {
+                        tipoHidato = TipoHidato.CUADRADO;
+                    } else if (tipusHidatoComboBox.getSelectedItem().toString().equals("Triangular")) {
+                        tipoHidato = TipoHidato.TRIANGULAR;
+
+                    } else {
+                        tipoHidato = TipoHidato.HEXGONAL;
+                    }
+
+                    if (tipusAdjacenciaComboBox.getSelectedItem().toString().equals("Costat")) {
+                        adyacencia = TipoAdyacencia.LADO;
+                    } else {
+                        adyacencia = TipoAdyacencia.LADOYVERTICE;
+                    }
+                    creadorCtrl.creaHidatoPropuesto(tipoHidato, nFilas, nCols, adyacencia);
+                    presentationCTRL.cambiaVentana("InputHidatoWindow");
+                }
             }
         });
     }
@@ -46,28 +102,27 @@ public class CreaHidatoWindow {
         panel1.setPreferredSize(new Dimension(400, 400));
         mainPanel.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel1.setBorder(BorderFactory.createTitledBorder(""));
-        comboBox1 = new JComboBox();
+        tipusHidatoComboBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Quadrat");
         defaultComboBoxModel1.addElement("Triangular");
         defaultComboBoxModel1.addElement("Hexagonal");
-        comboBox1.setModel(defaultComboBoxModel1);
-        panel1.add(comboBox1, new com.intellij.uiDesigner.core.GridConstraints(2, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
-        final JComboBox comboBox2 = new JComboBox();
+        tipusHidatoComboBox.setModel(defaultComboBoxModel1);
+        panel1.add(tipusHidatoComboBox, new com.intellij.uiDesigner.core.GridConstraints(2, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
+        tipusAdjacenciaComboBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("Costat");
-        defaultComboBoxModel2.addElement("Vèrtex");
         defaultComboBoxModel2.addElement("Costat i Vèrtex");
-        comboBox2.setModel(defaultComboBoxModel2);
-        panel1.add(comboBox2, new com.intellij.uiDesigner.core.GridConstraints(3, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
+        tipusAdjacenciaComboBox.setModel(defaultComboBoxModel2);
+        panel1.add(tipusAdjacenciaComboBox, new com.intellij.uiDesigner.core.GridConstraints(3, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
         panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 3, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, 1, 1, new Dimension(25, -1), new Dimension(25, -1), null, 0, false));
         enrereButton = new JButton();
         enrereButton.setText("Enrere");
         panel1.add(enrereButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, -1), new Dimension(50, -1), null, 0, false));
-        final JTextField textField2 = new JTextField();
-        textField2.setText("");
-        panel1.add(textField2, new com.intellij.uiDesigner.core.GridConstraints(5, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
+        numColumnes = new JTextField();
+        numColumnes.setText("");
+        panel1.add(numColumnes, new com.intellij.uiDesigner.core.GridConstraints(5, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Tipus Hidato");
         panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 18), null, 0, false));
@@ -80,9 +135,9 @@ public class CreaHidatoWindow {
         final JLabel label4 = new JLabel();
         label4.setText("Número de columnes");
         panel1.add(label4, new com.intellij.uiDesigner.core.GridConstraints(5, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 18), null, 0, false));
-        textField1 = new JTextField();
-        textField1.setText("");
-        panel1.add(textField1, new com.intellij.uiDesigner.core.GridConstraints(4, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
+        numFiles = new JTextField();
+        numFiles.setText("");
+        panel1.add(numFiles, new com.intellij.uiDesigner.core.GridConstraints(4, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(69, 30), null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
         panel1.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(7, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, 1, 1, new Dimension(50, -1), new Dimension(50, -1), null, 0, false));
         creaHidatoButton = new JButton();

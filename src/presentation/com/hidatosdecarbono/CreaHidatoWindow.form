@@ -22,9 +22,9 @@
         </properties>
         <border type="none" title=""/>
         <children>
-          <component id="b1450" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="b1450" class="javax.swing.JComboBox" binding="tipusHidatoComboBox">
             <constraints>
-              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="69" height="30"/>
               </grid>
             </constraints>
@@ -36,7 +36,7 @@
               </model>
             </properties>
           </component>
-          <component id="7eede" class="javax.swing.JComboBox" default-binding="true">
+          <component id="7eede" class="javax.swing.JComboBox" binding="tipusAdjacenciaComboBox">
             <constraints>
               <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="69" height="30"/>
@@ -45,7 +45,6 @@
             <properties>
               <model>
                 <item value="Costat"/>
-                <item value="Vèrtex"/>
                 <item value="Costat i Vèrtex"/>
               </model>
             </properties>
@@ -69,7 +68,7 @@
               <text value="Enrere"/>
             </properties>
           </component>
-          <component id="4cee9" class="javax.swing.JTextField" default-binding="true">
+          <component id="4cee9" class="javax.swing.JTextField" binding="numColumnes">
             <constraints>
               <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="69" height="30"/>
@@ -119,7 +118,7 @@
               <text value="Número de columnes"/>
             </properties>
           </component>
-          <component id="438d6" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="438d6" class="javax.swing.JTextField" binding="numFiles">
             <constraints>
               <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="69" height="30"/>

@@ -8,11 +8,13 @@ public class PresentationCTRL {
 
     private DomainFactory domini;
     private JFrame frame;
+    private CreadorHidatosCTRL creadorHidatos;
     PresentationCTRL(){
         domini = new DomainFactory();
         frame = new JFrame("HIDATOS DE CARBONO");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        creadorHidatos = domini.getControladorCreador();
         try{
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         }
@@ -22,10 +24,10 @@ public class PresentationCTRL {
 
     }
 
-
     private void loadVentana(Container cont){
         frame.setContentPane(cont);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -49,8 +51,13 @@ public class PresentationCTRL {
                 cont = new JugaWindow(this).$$$getRootComponent$$$();
                 break;
             case "CreaHidatoWindow":
-                cont = new CreaHidatoWindow(this).$$$getRootComponent$$$();
+                cont = new CreaHidatoWindow(this, creadorHidatos).$$$getRootComponent$$$();
                 break;
+            case "InputHidatoWindow":
+                cont = new InputHidatoWindow(this,
+                        creadorHidatos).$$$getRootComponent$$$();
+                break;
+
 
 
         }
