@@ -2,6 +2,7 @@ package com.hidatosdecarbono;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 
 public class PresentationCTRL {
 
@@ -16,22 +17,11 @@ public class PresentationCTRL {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         }
         catch (Exception e){
-            //TODO manage aquesta excepcio
+            //ignored
         }
 
     }
 
-    public void runFirstMenu(){
-        loadVentana(
-                new FirstWindow(this).$$$getRootComponent$$$()
-        );
-    }
-
-    public void runLogin(){
-        loadVentana(
-                new LoginLayout(domini.getLogInCTRL(), this).$$$getRootComponent$$$()
-        );
-    }
 
     private void loadVentana(Container cont){
         frame.setContentPane(cont);
@@ -39,11 +29,39 @@ public class PresentationCTRL {
         frame.setVisible(true);
     }
 
-    public void runMainMenu(){
-        loadVentana(new MainMenu(this).$$$getRootComponent$$$());
-        frame.pack();
-        frame.setVisible(true);
+    public void cambiaVentana(String nombre){
+        Container cont = null;
+
+        switch (nombre){
+            case "FirstMenu":
+                cont = new FirstWindow(this).$$$getRootComponent$$$();
+                break;
+            case "LoginWindow":
+                cont = new LoginWindow(domini.getLogInCTRL(), this).$$$getRootComponent$$$();
+                break;
+            case "RegisterWindow":
+                cont = new RegisterWindow(domini.getLogInCTRL(), this).$$$getRootComponent$$$();
+                break;
+            case "MainMenu":
+                cont = new MainMenu(this).$$$getRootComponent$$$();
+                break;
+            case "JugaWindow":
+                cont = new JugaWindow(this).$$$getRootComponent$$$();
+                break;
+            case "CreaHidatoWindow":
+                cont = new CreaHidatoWindow(this).$$$getRootComponent$$$();
+                break;
+
+
+        }
+
+        if(cont != null){
+            loadVentana(cont);
+        }
     }
 
 
+    public void cierraVentana() {
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED));
+    }
 }

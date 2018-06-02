@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class LoginLayout {
+public class LoginWindow {
     private JTextField nomUsuari;
     private JPasswordField contrasenya;
     private JButton loginButton;
@@ -16,25 +16,38 @@ public class LoginLayout {
     private JButton enrereButton;
     private LogInCTRL login;
 
-    public LoginLayout(LogInCTRL logInCTRL, PresentationCTRL presentationCTRL) {
+    public LoginWindow(LogInCTRL logInCTRL, PresentationCTRL presentationCTRL) {
         login = logInCTRL;
         $$$setupUI$$$();
+        SwingUtilities.invokeLater(new Runnable() {
+
+            //Aixo s'executa des del thread principal quan tot s'ha cargat per evitar que peti
+            //Fa que es pugui escriure directament i que l'enter sigui com apretar el boto.
+            public void run() {
+                nomUsuari.requestFocus();
+                mainPanel.getRootPane().setDefaultButton(loginButton);
+            }
+        });
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                boolean logged = login.altaJugador(nomUsuari.getText(), contrasenya.getText());
-                   if(logged) {
-                       presentationCTRL.runMainMenu();
-                   }
-                   else{
-                    JOptionPane.showMessageDialog(mainPanel, "ERROR! L'USUARI JA EXISTEIX", "ERRROR", JOptionPane.ERROR_MESSAGE);
+                try {
+                    boolean logged = login.logIn(nomUsuari.getText(), contrasenya.getText());
+                    if (logged) {
+                        presentationCTRL.cambiaVentana("MainMenu");
+                    } else {
+                        JOptionPane.showMessageDialog(mainPanel, "ERROR! CONTRASENYA INCORRECTA", "ERRROR", JOptionPane.ERROR_MESSAGE);
                     }
+                } catch (InvalidUserException e) {
+                    JOptionPane.showMessageDialog(mainPanel, "ERROR! L'USUARI NO EXISTEIX", "ERRROR", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         enrereButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                presentationCTRL.runFirstMenu();
+                presentationCTRL.cambiaVentana("FirstMenu");
             }
         });
 
@@ -42,11 +55,33 @@ public class LoginLayout {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 super.keyTyped(keyEvent);
+                if (keyEvent.getKeyChar() == KeyEvent.VK_ESCAPE) {
+                    mainPanel.requestFocus();
+                }
                 if (!nomUsuari.getText().equals("")) {
                     System.out.println("HOLI");
                     loginButton.setEnabled(true);
                 } else {
                     loginButton.setEnabled(false);
+                }
+            }
+        });
+
+        contrasenya.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+                super.keyTyped(keyEvent);
+                if (keyEvent.getKeyChar() == KeyEvent.VK_ESCAPE) {
+                    mainPanel.requestFocus();
+                }
+            }
+        });
+        mainPanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+                super.keyTyped(keyEvent);
+                if (keyEvent.getKeyChar() == KeyEvent.VK_ESCAPE) {
+                    enrereButton.doClick();
                 }
             }
         });

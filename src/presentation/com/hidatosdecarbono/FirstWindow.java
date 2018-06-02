@@ -2,8 +2,7 @@ package com.hidatosdecarbono;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class FirstWindow {
     private JButton loginBtn;
@@ -14,13 +13,22 @@ public class FirstWindow {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                presentationCTRL.runLogin();
+                presentationCTRL.cambiaVentana("LoginWindow");
             }
         });
         registerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                presentationCTRL.cambiaVentana("RegisterWindow");
+            }
+        });
+        mainPanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+                super.keyTyped(keyEvent);
+                if (keyEvent.getKeyChar() == KeyEvent.VK_ESCAPE) {
+                    presentationCTRL.cierraVentana();
+                }
             }
         });
     }
@@ -45,11 +53,13 @@ public class FirstWindow {
         mainPanel.setPreferredSize(new Dimension(400, 400));
         registerBtn = new JButton();
         registerBtn.setHorizontalTextPosition(0);
+        registerBtn.setRequestFocusEnabled(false);
         registerBtn.setText("Registra Usuari");
         registerBtn.setVerticalAlignment(0);
         mainPanel.add(registerBtn, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 4, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         loginBtn = new JButton();
         loginBtn.setHorizontalTextPosition(0);
+        loginBtn.setRequestFocusEnabled(false);
         loginBtn.setText("Login");
         mainPanel.add(loginBtn, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 4, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         final JLabel label1 = new JLabel();
