@@ -5,9 +5,43 @@ import java.awt.geom.Area;
 
 public class HidatoCell {
 
-    TipoCelda tipo;
-    Area area;
-    double height, width;
+    private TipoCelda tipo;
+    private Area area;
+    private int value;
+
+    public void setTipo(TipoCelda tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    private double height, width;
     public HidatoCell(TipoCelda tipo, Area area){
         this.tipo = tipo;
         this.area = area;

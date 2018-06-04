@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class HidatoPane extends JPanel {
-    private int nCols, nRows,preferredWidth,getPreferredHeigth;
+    protected int nCols, nRows,preferredWidth, getPreferredHeight;
 
     protected List<HidatoCell> cells = new ArrayList<>();
     private HidatoCell highlighted;
 
     public HidatoPane(int nRows, int nCols,
-                      int preferredWidth, int getPreferredHeigth){
+                      int preferredWidth, int getPreferredHeight){
         this.preferredWidth = preferredWidth;
-        this.getPreferredHeigth = getPreferredHeigth;
+        this.getPreferredHeight = getPreferredHeight;
         this.nCols = nCols;
         this.nRows = nRows;
 
@@ -25,7 +25,7 @@ public abstract class HidatoPane extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 highlighted = null;
                 for (HidatoCell cell : cells) {
-                    if (cell.area.contains(e.getPoint())) {
+                    if (cell.getArea().contains(e.getPoint())) {
                         highlighted = cell;
                         break;
                     }
@@ -47,20 +47,20 @@ public abstract class HidatoPane extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
-        if (highlighted != null && highlighted.tipo == TipoCelda.VARIABLE) {
+        if (highlighted != null && highlighted.getTipo() == TipoCelda.VARIABLE) {
             g2d.setColor(Color.GREEN);
-            g2d.fill(highlighted.area);
+            g2d.fill(highlighted.getArea());
         }
         g2d.setColor(Color.BLACK);
         int i=0;
         for (HidatoCell cell : cells) {
-            if(cell.tipo == TipoCelda.FIJA) {
-                g2d.draw(cell.area);
+            if(cell.getTipo() == TipoCelda.FIJA) {
+                g2d.draw(cell.getArea());
                 cell.setValue(""+i, g2d);
             }
-            else if(cell.tipo == TipoCelda.AGUJERO){
+            else if(cell.getTipo() == TipoCelda.AGUJERO){
                 g2d.setColor(Color.black);
-                g2d.fill(cell.area);
+                g2d.fill(cell.getArea());
             }
             i++;
 
