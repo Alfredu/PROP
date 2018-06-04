@@ -118,25 +118,36 @@ public class CreadorHidatosCTRL {
     public boolean añadirCeldasHidato(ArrayList <String> celdas) {
         int files = hidatoCreado.getNumFilas();
         int columnes = hidatoCreado.getNumColumnas();
+
+        boolean tieneUno = false;  //para comprovar si ha introducido la casilla con un 1
+
         for (int i = 0; i < files; i++) {
             String fila = celdas.get(i);
             String[] celda = fila.split(",");
             for (int j = 0; j < columnes; j++) {
 
+                //cojemos el tipo de celda que contiene esa posición del string
                 TipoCelda tipus = stringToCelda(celda[j]);
+
+                //si la celda no es fija, no tendrá valor
                 if(!tipus.equals(TipoCelda.FIJA)){
                     hidatoCreado.nuevaCelda(tipus,i,j);
                 }
+                //si es fija, tiene valor y por lo tanto tenemos que cojer el valor numerico del string
                 else{
                     hidatoCreado.nuevaCelda(tipus,i,j,Integer.valueOf(celda[j]));
+                    if(Integer.valueOf(celda[j]) == 1) tieneUno = true;
                 }
             }
         }
-
         hidatoCreado.decideDificultad();
-        return hidatoCreado.tieneSolucion();
+        //devolvemos si el hidato tiene solucion
+        return (tieneUno && hidatoCreado.tieneSolucion());
     }
 
+    public void guardaHidato(){
+        persistenciaCTRL.guardaHidato(hidatoCreado);
+    }
 
     private TipoCelda stringToCelda(String s){
         if(s.equals("*")) return TipoCelda.AGUJERO;
@@ -164,9 +175,14 @@ public class CreadorHidatosCTRL {
         return result;
     }
 
+    /**
+     * Devuelve la representación del hidato creado
+     * @return Un objeto tipo HidatoRep que contiene la representación del hidato creado
+     */
+
     public HidatoRep getRepresentacionHidato(){
         HidatoRep rep = new HidatoRep();
-        rep.setParams(hidatoCreado.getId(), hidatoCreado.getNumColumnas(), hidatoCreado.getNumFilas(),
+        rep.setParams(0, hidatoCreado.getNumColumnas(), hidatoCreado.getNumFilas(),
                 hidatoCreado.getTipoHidato(), hidatoCreado.getAdyacencia());
 
         for(int i=0;i<hidatoCreado.getNumFilas();i++){
