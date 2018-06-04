@@ -18,15 +18,11 @@ public class DomainFactory {
     }
 
     public CreadorHidatosCTRL getControladorCreador() {
-        creadorHidatosCTRL = new CreadorHidatosCTRL(persistenciaCTRL);
+        jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
+        creadorHidatosCTRL = new CreadorHidatosCTRL(persistenciaCTRL, jugarHidatosCTRL, logInCTRL);
         return creadorHidatosCTRL;
     }
 
-    public JugarHidatosCTRL getControladorJugarHidatoCreado(){
-        jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
-        jugarHidatosCTRL.inicializa(creadorHidatosCTRL.getHidatoCreado(), logInCTRL.getJugador());
-        return jugarHidatosCTRL;
-    }
 
     public JugarHidatosCTRL getControladorJugarHidatoPausado() throws IndexOutOfBoundsException{
         jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);

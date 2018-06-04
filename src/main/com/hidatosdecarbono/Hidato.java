@@ -352,6 +352,13 @@ public abstract class Hidato {
 
     }
 
+    /**
+     * Genera un hidato aleatorio de una dificultad concreta
+     * @param nCasillas -> numero de casillas totales
+     * @param d -> dificultad del hidato
+     * Una vez terminada la ejecución, el hidato sobre el que se invoca el metodo esta inicializado con un hidato de dificultad d
+     */
+
     public void generaAleatorioPorDificultad(int nCasillas, Dificultad d){
         this.dificultad = d;
         int agujeros = nCasillas%10;

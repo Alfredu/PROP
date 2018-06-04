@@ -260,7 +260,7 @@ public class UserInterface {
         System.out.println("Desea jugar el Hidato? (Y/N)");
         opt = reader.next();
         if(opt.equals("Y") || opt.equals("y")){
-            juegaPartida(domini.getControladorJugarHidatoCreado());
+            juegaPartida(creadorHidatosCTRL.getControladorPartida());
         }
     }
 
