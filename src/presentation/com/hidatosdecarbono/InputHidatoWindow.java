@@ -39,6 +39,8 @@ public class InputHidatoWindow {
                 else {
                     controladorCreador.añadirCeldasHidato(new ArrayList<String>(Arrays.asList(files)));
                     controladorCreador.printSolucion();
+
+
                 }
             }
         });

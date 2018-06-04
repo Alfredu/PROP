@@ -13,7 +13,7 @@ public abstract class HidatoPane extends JPanel {
     protected List<HidatoCell> cells = new ArrayList<>();
     private HidatoCell highlighted;
 
-    public HidatoPane(int nRows, int nCols,
+    protected HidatoPane(int nRows, int nCols,
                       int preferredWidth, int getPreferredHeight){
         this.preferredWidth = preferredWidth;
         this.getPreferredHeight = getPreferredHeight;

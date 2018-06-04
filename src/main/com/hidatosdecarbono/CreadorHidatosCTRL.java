@@ -164,6 +164,19 @@ public class CreadorHidatosCTRL {
         return result;
     }
 
+    public HidatoRep getRepresentacionHidato(){
+        HidatoRep rep = new HidatoRep();
+        rep.setParams(hidatoCreado.getId(), hidatoCreado.getNumColumnas(), hidatoCreado.getNumFilas(),
+                hidatoCreado.getTipoHidato(), hidatoCreado.getAdyacencia());
+
+        for(int i=0;i<hidatoCreado.getNumFilas();i++){
+            for(int j=0;j<hidatoCreado.getNumColumnas();j++){
+                rep.tablero[i][j] = celdaToString(hidatoCreado.getCeldaTablero(i,j));
+            }
+        }
+        return rep;
+    }
+
     /**
      * Devuelve un array de strings que contiene la solución del hidato del controlador
      */
