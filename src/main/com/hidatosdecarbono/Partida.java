@@ -1,5 +1,8 @@
 package com.hidatosdecarbono;
 
+import org.omg.CORBA.TIMEOUT;
+
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class Partida {
@@ -12,6 +15,7 @@ public class Partida {
     private int n = 2;
     private int filaActual;
     private int colActual;
+    private ArrayList<Pista> pistas;
     private int numPistas = 0;
     private long tiempoInicial;
     private long tiempoPartida = 0;
@@ -32,6 +36,7 @@ public class Partida {
 
         hidatoJugado.creaGrafo(grafoHidato,nodes,tableroSolucion);
         movimientos = new Stack<Movimiento>();
+        pistas = new ArrayList<>();
         inicializarFilaColumna();
         clearTableroSolucion();
 
@@ -42,23 +47,35 @@ public class Partida {
     /**
      * Pide una pista para determinar el próximo movimiento y lo efectua. De no haberlo, devuelve false.
      * @return true si se ha encontrado siguiente movimiento. false si no.
+     * @param tipoPista
      */
-    public boolean pidePista(){
+    public boolean pidePista(TipoPista tipoPista){
         numPistas++;
         clearTableroSolucion();
-        if(grafoHidato.esSolucionable()){
-            //return la casella on estigui n
-            int i = 0;
-            for(Celda [] fila: tableroSolucion){
-                int j=0;
-                for(Celda celda : fila){
-                    if(celda.getValor() == n){
-                        mueve(i,j);
-                        return true;
+        boolean solucionable = grafoHidato.esSolucionable();
+        if(tipoPista.equals(TipoPista.SIGUIENTE_CASILLA)) {
+            pistas.add(new PistaSiguienteCasilla());
+            if (solucionable) {
+                //return la casella on estigui n
+                int i = 0;
+                for (Celda[] fila : tableroSolucion) {
+                    int j = 0;
+                    for (Celda celda : fila) {
+                        if (celda.getValor() == n) {
+                            mueve(i, j);
+                            return true;
+                        }
+                        j++;
                     }
-                    j++;
+                    i++;
                 }
-                i++;
+            }
+        }
+        else if(tipoPista.equals(TipoPista.CAMINO_CORRECTO)){
+            if(solucionable) return true;
+        }
+        else if(tipoPista.equals(TipoPista.FIJA_ALEATORIA)){
+            if(solucionable){
             }
         }
         return false;

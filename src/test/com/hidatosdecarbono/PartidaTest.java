@@ -96,11 +96,11 @@ public class PartidaTest {
         assertTrue(partida.mueve(1, 3));
 
         //pedir pista devolvera true y pondra un 3 en 0,2
-        assertTrue(partida.pidePista());
+        assertTrue(partida.pidePista(TipoPista.SIGUIENTE_CASILLA));
         assertEquals(3, tauler[0][2].getValor());
 
         //pedir pista devuelve true porque estamos en un camino con solucion
-        assertTrue(partida.pidePista());
+        assertTrue(partida.pidePista(TipoPista.SIGUIENTE_CASILLA));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class PartidaTest {
         assertTrue(partida.mueve(0, 2));
 
         //pedir pista devolvera false entonces, porque no existe casilla siguiente ya que el camino no tiene solucion
-        assertTrue(!partida.pidePista());
+        assertTrue(!partida.pidePista(TipoPista.SIGUIENTE_CASILLA));
     }
 
 

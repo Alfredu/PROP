@@ -68,8 +68,8 @@ public class JugarHidatosCTRL {
         return partida.moonwalk();
     }
 
-    public boolean pidePista(){
-        return partida.pidePista();
+    public boolean pidePista(TipoPista tipoPista){
+        return partida.pidePista(tipoPista);
     }
 
 

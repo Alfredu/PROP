@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import org.omg.CORBA.TIMEOUT;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -277,7 +279,19 @@ public class UserInterface {
                 jugarHidatosCTRL.retroceder();
             }
             else if(opcio.equals("P")||opcio.equals("p")){
-                if(!jugarHidatosCTRL.pidePista()){
+                System.out.println("Seleccione el tipo de pista: S = Siguiente casilla, C = comprovar camino correcto y F = celda fija aleatoria");
+                opcio = reader.next();
+                boolean found = false;
+                if(opcio.equals("S") || opcio.equals("s")){
+                    found = jugarHidatosCTRL.pidePista(TipoPista.SIGUIENTE_CASILLA);
+                }
+                else if(opcio.equals("C") || opcio.equals("c")){
+                    found = jugarHidatosCTRL.pidePista(TipoPista.CAMINO_CORRECTO);
+                }
+                else if(opcio.equals("F") || opcio.equals("f")){
+                    found = jugarHidatosCTRL.pidePista(TipoPista.FIJA_ALEATORIA);
+                }
+                if(!found){
                     System.out.println("No hay movimiento posible en este camino, prueve a retroceder");
                 }
             }
@@ -290,7 +304,7 @@ public class UserInterface {
                         end = true;
                     }
                 }
-                else{
+                else {
                     jugarHidatosCTRL.pausa();
                     end = true;
                 }
