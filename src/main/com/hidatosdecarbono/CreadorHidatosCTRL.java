@@ -7,10 +7,14 @@ public class CreadorHidatosCTRL {
 
     private Hidato hidatoCreado;
     private PersistenciaCTRL persistenciaCTRL;
+    private JugarHidatosCTRL jugarHidatosCTRL;
+    private LogInCTRL logInCTRL;
 
 
-    public CreadorHidatosCTRL(PersistenciaCTRL persistenciaCTRL){
+    public CreadorHidatosCTRL(PersistenciaCTRL persistenciaCTRL, JugarHidatosCTRL jugarHidatosCTRL, LogInCTRL logInCTRL){
         this.persistenciaCTRL = persistenciaCTRL;
+        this.jugarHidatosCTRL = jugarHidatosCTRL;
+        this.logInCTRL = logInCTRL;
     }
 
     public int getnFilasHidato(){
@@ -100,6 +104,11 @@ public class CreadorHidatosCTRL {
         else return "Hexagonal";
     }
 
+    public JugarHidatosCTRL getControladorPartida(){
+        jugarHidatosCTRL.inicializa(hidatoCreado,logInCTRL.getJugador());
+        return jugarHidatosCTRL;
+    }
+
     /**
      * Crea las Celdas del Hidato interpretando los caracteres que codifican los distintos tipos de Celda.
      * No se comprueba que el <i>input</i> sea válido.
@@ -156,7 +165,7 @@ public class CreadorHidatosCTRL {
     }
 
     /**
-     * Imprime por pantalla la solución del hidato del controlador
+     * Devuelve un array de strings que contiene la solución del hidato del controlador
      */
     public ArrayList<String> printSolucion(){
 
