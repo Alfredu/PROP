@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import org.omg.CORBA.ARG_IN;
+
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -35,14 +37,14 @@ public class UserInterface {
             else if (opt == 3) añadirPorDificultad();
             else if(opt == 4) logIn();
             else if(opt == 5) consultarRankings();
-            else if(opt == 6){
-                try{
+            else if(opt == 6) {
+                try {
                     juegaPartida(domini.getControladorJugarHidatoPausado());
-                }
-                catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e) {
                     System.out.println("No hi ha partida guardada");
                 }
             }
+            else if(opt == 7) seleccionaHidato();
             else end = true;
         }
     }
@@ -258,6 +260,12 @@ public class UserInterface {
                 System.out.println(print.get(i));
             }
         }
+        System.out.println("Quiere guardar este hidato? (Y/N)");
+        opt = reader.next();
+        if(opt.equals("Y") || opt.equals("y")){
+            creadorHidatosCTRL.guardaHidato();
+            System.out.println("Hidato guardado");
+        }
         System.out.println("Desea jugar el Hidato? (Y/N)");
         opt = reader.next();
         if(opt.equals("Y") || opt.equals("y")){
@@ -362,6 +370,46 @@ public class UserInterface {
         catch (NoSuchFileException e){
             System.out.println("NO HI HA CAP ENTRADA PER AQUEST RANKING");
         }
+    }
+
+    private void seleccionaHidato(){
+        SeleccionarHidatosCTRL seleccionarHidatosCTRL = domini.getSeleccionarHidatosCTRL();
+        System.out.println("Seleccione la dificultad de los hidatos a mostrar: F = facil, M = mediana, D = dificil");
+        Scanner reader = new Scanner(System.in);
+        String opt = reader.next();
+        ArrayList<HidatoRep> hidatosSelecionados = new ArrayList<>();
+        if(opt.equals("f") || opt.equals("F")){
+            hidatosSelecionados = seleccionarHidatosCTRL.getHidatosDificultad(Dificultad.FACIL);
+        }
+        else if(opt.equals("M") || opt.equals("m")){
+            hidatosSelecionados = seleccionarHidatosCTRL.getHidatosDificultad(Dificultad.MEDIO);
+        }
+        else if(opt.equals("D") || opt.equals("d")){
+            hidatosSelecionados = seleccionarHidatosCTRL.getHidatosDificultad(Dificultad.DIFICIL);
+        }
+        else{
+            System.out.println("Dificultad mal introducida, reintentar? (Y/N)");
+            opt = reader.next();
+            if(opt.equals("Y") || opt.equals("y")) seleccionaHidato();
+        }
+        int i = 1;
+        for(HidatoRep hidatoActual : hidatosSelecionados){
+            System.out.print("Hidato numero: ");
+            System.out.println(i);
+            System.out.print("Id: ");
+            System.out.println(hidatoActual.id);
+            System.out.print("Numero de filas: ");
+            System.out.print(hidatoActual.nFilas);
+            System.out.print("   Numero de columnas: ");
+            System.out.println(hidatoActual.nColumnas);
+            System.out.println("Forma del hidato: " + hidatoActual.forma);
+            System.out.println("Adyacencia del hidato: " + hidatoActual.adyacencia);
+            System.out.println("------------------------");
+        }
+
+        System.out.println("Seleccione el hidato a jugar de la lista introduciendo su Id");
+        int id = reader.nextInt();
+        juegaPartida(seleccionarHidatosCTRL.getControladorPartida(id));
     }
 
 

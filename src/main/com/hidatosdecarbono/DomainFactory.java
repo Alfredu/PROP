@@ -6,6 +6,7 @@ public class DomainFactory {
     private CreadorHidatosCTRL creadorHidatosCTRL;
     private JugarHidatosCTRL jugarHidatosCTRL;
     private ConsultarRankingCTRL rankingCTRL;
+    private SeleccionarHidatosCTRL seleccionarHidatosCTRL;
 
 
     public DomainFactory(){
@@ -34,5 +35,11 @@ public class DomainFactory {
     public ConsultarRankingCTRL getRankingCTRL(Dificultad dificultad) {
         rankingCTRL = new ConsultarRankingCTRL(persistenciaCTRL, dificultad);
         return rankingCTRL;
+    }
+
+    public SeleccionarHidatosCTRL getSeleccionarHidatosCTRL(){
+        jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
+        seleccionarHidatosCTRL = new SeleccionarHidatosCTRL(persistenciaCTRL, jugarHidatosCTRL, logInCTRL);
+        return seleccionarHidatosCTRL;
     }
 }

@@ -18,37 +18,30 @@ public class SeleccionarHidatosCTRL {
         this.logInCTRL = logInCTRL;
     }
 
-    public ArrayList<HidatoRep> getHidatosDificultad(String dificultat){
+    public ArrayList<HidatoRep> getHidatosDificultad(Dificultad dificultad){
         ArrayList<HidatoRep> hidatosDificultat = new ArrayList<>();
 
-        //seleccionem els hidatos a obtenir segons la dificultat
-        if(dificultat.equals("F")){
-            hidatos = persistenciaCTRL.obtenColeccionHidatos(Dificultad.FACIL);
-        }
-        else if(dificultat.equals("M")){
-            hidatos = persistenciaCTRL.obtenColeccionHidatos(Dificultad.MEDIO);
-        }
-        else if(dificultat.equals("D")){
-            hidatos = persistenciaCTRL.obtenColeccionHidatos(Dificultad.DIFICIL);
-        }
-        keys = hidatos.keySet().toArray(new Integer[0]);
+        hidatos = persistenciaCTRL.obtenColeccionHidatos(dificultad);
+        if(hidatos != null) {
+            keys = hidatos.keySet().toArray(new Integer[0]);
 
-        //iterem sobre els hidatos i en generem la representació de cadascun d'ells
-        for(int it = 0; it < keys.length; it++){
-            HidatoRep hidatoActualRep = new HidatoRep();
-            Hidato hidatoActual = hidatos.get(keys[it]);
-            int nColumnes = hidatoActual.getNumColumnas();
-            int nFiles = hidatoActual.getNumFilas();
+            //iterem sobre els hidatos i en generem la representació de cadascun d'ells
+            for (int it = 0; it < keys.length; it++) {
+                HidatoRep hidatoActualRep = new HidatoRep();
+                Hidato hidatoActual = hidatos.get(keys[it]);
+                int nColumnes = hidatoActual.getNumColumnas();
+                int nFiles = hidatoActual.getNumFilas();
 
-            hidatoActualRep.setParams(keys[it],nColumnes,nFiles,
-                    hidatoActual.getTipoHidato(), hidatoActual.getAdyacencia());
+                hidatoActualRep.setParams(keys[it], nColumnes, nFiles,
+                        hidatoActual.getTipoHidato(), hidatoActual.getAdyacencia());
 
-            for(int i = 0; i < nFiles; i++){
-                for(int j = 0; j < nColumnes; j++){
-                    hidatoActualRep.tablero[i][j] = celdaToString(hidatoActual.getCeldaTablero(i,j));
+                for (int i = 0; i < nFiles; i++) {
+                    for (int j = 0; j < nColumnes; j++) {
+                        hidatoActualRep.tablero[i][j] = celdaToString(hidatoActual.getCeldaTablero(i, j));
+                    }
                 }
+                hidatosDificultat.add(hidatoActualRep);
             }
-            hidatosDificultat.add(hidatoActualRep);
         }
         return hidatosDificultat;
     }

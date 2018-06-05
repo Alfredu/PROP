@@ -131,7 +131,6 @@ public class PersistenciaCTRL {
                 json = persistenciaHidato.obtenHidato(id,ficheroHidatosDificil);
                 break;
         }
-        System.out.println(json);
         return creaHidatoDeseJSON(json);
     }
 
@@ -173,7 +172,6 @@ public class PersistenciaCTRL {
     public Partida obtenPartida() throws IndexOutOfBoundsException{
         Gson gson = new Gson();
         JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas);
-        System.out.println(json);
         JSONObject hidatoJson = json.getJSONObject("hidatoJugado");
         Hidato hidatoJugado = creaHidatoDeseJSON(hidatoJson);
         Celda [][] tablero = obtenerTablero(json.getJSONArray("tablero"));
