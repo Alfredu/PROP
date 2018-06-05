@@ -6,17 +6,16 @@ import java.awt.geom.GeneralPath;
 
 public class HexagonalHidatoPane extends HidatoPane {
 
-    public HexagonalHidatoPane(int nRows, int nCols,
-                               int preferredWidth, int getPreferredHeight){
-        super(nRows, nCols, preferredWidth, getPreferredHeight);
+    public HexagonalHidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight){
+        super(rep, preferredWidth, preferredHeight);
     }
     @Override
     protected void putCells(){
 
         GeneralPath path = new GeneralPath();
 
-        double rowHeight = (getHeight() / nRows);
-        double colWidth = getWidth() / nCols;
+        double rowHeight = (getHeight() / rep.nFilas);
+        double colWidth = getWidth() / rep.nColumnas;
 
         double size = Math.min(rowHeight, colWidth) / 2d;
 
@@ -42,20 +41,17 @@ public class HexagonalHidatoPane extends HidatoPane {
 
         cells.clear();
         double yPos = size / 2d;
-        for (int row = 0; row < nRows; row++) {
+        for (int row = 0; row < rep.nFilas; row++) {
             double offset = (width / 2d);
             if (row % 2 == 0) {
                 offset = 0;
             }
             double xPos = offset;
-            for (int col = 0; col < nCols; col++) {
+            for (int col = 0; col < rep.nColumnas; col++) {
                 AffineTransform at = AffineTransform.getTranslateInstance(xPos + (size * 0.38 ), yPos);
                 Area area = new Area(path);
                 area = area.createTransformedArea(at);
-                TipoCelda tipo = TipoCelda.FIJA;
-                HidatoCell cell = new HidatoCell(tipo, area);
-                cell.setHeight(height);
-                cell.setWidth(width);
+                HidatoCell cell = cellFromBoard(row, col, area);
                 cells.add(cell);
                 xPos += width;
             }

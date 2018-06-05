@@ -13,7 +13,7 @@ public class CreadorHidatosCTRL {
 
     public CreadorHidatosCTRL(PersistenciaCTRL persistenciaCTRL, JugarHidatosCTRL jugarHidatosCTRL, LogInCTRL logInCTRL){
         this.persistenciaCTRL = persistenciaCTRL;
-        this.jugarHidatosCTRL = jugarHidatosCTRL;
+            this.jugarHidatosCTRL = jugarHidatosCTRL;
         this.logInCTRL = logInCTRL;
     }
 

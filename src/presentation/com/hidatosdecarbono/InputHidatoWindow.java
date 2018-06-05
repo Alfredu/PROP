@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,12 +15,8 @@ public class InputHidatoWindow {
     private JTextArea inputHidato;
     private JButton creaHidatoButton;
     private JButton enrereButton;
-    int nFilas, nCols;
 
     public InputHidatoWindow(PresentationCTRL presentationCTRL, CreadorHidatosCTRL controladorCreador) {
-        this.nFilas = nFilas;
-        this.nCols = nCols;
-
         enrereButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -28,17 +26,54 @@ public class InputHidatoWindow {
         creaHidatoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String text = inputHidato.getText();
+                //Treu espais del final i borra espais dintre del text por si acaso.
+                String text = inputHidato.getText().replace(" ", "").trim();
                 String[] files = text.split("\n");
-                if (files.length != controladorCreador.getnColsHidato()) {
+                boolean cellsOk = true;
+                //Comprova numero de columnes
+                for (String linia : files) {
+                    if (linia.split(",").length != controladorCreador.getnColsHidato()) {
+                        cellsOk = false;
+                        break;
+                    }
+                }
+                if (!cellsOk) {
+                    JOptionPane.showMessageDialog(mainPanel, "EL NÚMERO DE COLUMNES NO COINCIDEIX AMB LES DEL HIDATO",
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else if (files.length != controladorCreador.getnFilasHidato()) {
                     JOptionPane.showMessageDialog(mainPanel, "EL NÚMERO DE FILES NO COINCIDEIX AMB LES DEL HIDATO",
                             "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-                //TODO Check for column number errors and sanitize input
+                } else {
+                    boolean created = controladorCreador.añadirCeldasHidato(new ArrayList<String>(Arrays.asList(files)));
+                    if (created) {
+                        Object[] opcionsSolució = {"Sí", "No"};
+                        int res = JOptionPane.showOptionDialog(mainPanel, "Hidato creat correctament!\nVols veure la solució?",
+                                "CREACIÓ CORRECTA", JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[0]);
 
-                else {
-                    controladorCreador.añadirCeldasHidato(new ArrayList<String>(Arrays.asList(files)));
-                    controladorCreador.printSolucion();
+                        if (res == JOptionPane.YES_OPTION) {
+
+                        } else {
+                            Object[] opcionsJugar = {"Guardar l'Hidato", "Jugar l'Hidato", "Descartar l'Hidato"};
+                            res = JOptionPane.showOptionDialog(mainPanel, "Què vols fer a continuació?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_CANCEL_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE, null, opcionsJugar, opcionsJugar[1]);
+
+                            if (res == JOptionPane.YES_OPTION) {
+                                //Guardar
+                                controladorCreador.guardaHidato();
+                                presentationCTRL.cambiaVentana("MainMenu");
+                            } else if (res == JOptionPane.NO_OPTION) {
+                                //Jugar
+                                presentationCTRL.cambiaVentana("JugaPartidaWindow");
+                            } else {
+                                //Descartar
+                                presentationCTRL.cambiaVentana("MainMenu");
+                            }
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(mainPanel, "L'HIDATO INTRODUÏT NO TÉ SOLUCIÓ", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
 
 
                 }

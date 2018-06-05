@@ -251,4 +251,6 @@ public class Partida {
         this.tiempoPartida = tiempoPartida;
     }
 
+    public long getTiempoPartida(){return System.currentTimeMillis() - this.tiempoInicial;}
+
 }

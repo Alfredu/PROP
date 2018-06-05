@@ -4,21 +4,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class HidatoPane extends JPanel {
-    protected int nCols, nRows,preferredWidth, getPreferredHeight;
+    protected int preferredWidth, preferredHeight;
+    protected HidatoRep rep;
 
     protected List<HidatoCell> cells = new ArrayList<>();
     private HidatoCell highlighted;
 
-    protected HidatoPane(int nRows, int nCols,
-                      int preferredWidth, int getPreferredHeight){
+    protected HidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight){
         this.preferredWidth = preferredWidth;
-        this.getPreferredHeight = getPreferredHeight;
-        this.nCols = nCols;
-        this.nRows = nRows;
+        this.preferredHeight = preferredHeight;
+        this.rep = rep;
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -52,24 +52,57 @@ public abstract class HidatoPane extends JPanel {
             g2d.fill(highlighted.getArea());
         }
         g2d.setColor(Color.BLACK);
-        int i=0;
         for (HidatoCell cell : cells) {
             if(cell.getTipo() == TipoCelda.FIJA) {
                 g2d.draw(cell.getArea());
-                cell.setValue(""+i, g2d);
+                cell.setValue(""+cell.getValue(), g2d);
             }
             else if(cell.getTipo() == TipoCelda.AGUJERO){
                 g2d.setColor(Color.black);
                 g2d.fill(cell.getArea());
             }
-            i++;
+            else if(cell.getTipo() == TipoCelda.VARIABLE){
+                g2d.draw(cell.getArea());
+                if(cell.getValue()!= 0){
+                    cell.setValue(""+cell.getValue(), g2d);
+                }
+            }
+            else{
+                //Si es invisible pues ya tal.
+            }
 
         }
         g2d.dispose();
     }
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(400, 400);
+        return new Dimension(preferredWidth, preferredHeight);
+    }
+
+    /**
+     * Crea una nueva celda para dibujar en la vista a partir de la representacion del Hidato
+     * @param i Fila de la celda
+     * @param j Columna de la celda
+     * @return Una nueva HidatoCell para pintar.
+     */
+    protected HidatoCell cellFromBoard(int i, int j, Area area){
+        String cell = rep.tablero[i][j];
+        HidatoCell celda = null;
+        if(cell.equals("?")){
+            celda = new HidatoCell(TipoCelda.VARIABLE, area, 0);
+        }
+        else if(cell.equals("*")){
+            celda = new HidatoCell(TipoCelda.AGUJERO, area, 0);
+        }
+
+        else if(cell.equals("#")){
+            celda = new HidatoCell(TipoCelda.INVISIBLE, area, 0);
+        }
+        else{
+            celda = new HidatoCell(TipoCelda.FIJA, area, Integer.parseInt(cell));
+        }
+
+        return celda;
     }
 
 }

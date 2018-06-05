@@ -6,21 +6,21 @@ import java.awt.geom.GeneralPath;
 
 public class SquareHidatoPane extends HidatoPane{
 
-    public SquareHidatoPane(int nRows, int nCols,
-                               int preferredWidth, int getPreferredHeight){
-        super(nRows, nCols, preferredWidth, getPreferredHeight);
+    public SquareHidatoPane(HidatoRep rep,
+                               int preferredWidth, int preferredHeight){
+        super(rep, preferredWidth, preferredHeight);
     }
 
     @Override
     protected void putCells() {
         GeneralPath path = new GeneralPath();
 
-        double rowHeight = getHeight() * 1.14f / nRows;
-        double colWidth = getWidth() / nCols;
+        double rowHeight = getHeight()*0.98/ rep.nFilas;
+        double colWidth = getWidth() * 1.2 / rep.nColumnas;
 
         double size = Math.min(rowHeight, colWidth) / 2d;
 
-        double centerX = size / 2d;
+        double centerX = size / 2d + getWidth()*0.08;
         double centerY = size / 2d;
 
         double width = 2 * size;
@@ -37,15 +37,14 @@ public class SquareHidatoPane extends HidatoPane{
         path.closePath();
         cells.clear();
         double yPos = size / 40d ;
-        for (int row = 0; row < nRows; row++) {
+        for (int row = 0; row < rep.nFilas; row++) {
             double offset = 0;
             double xPos = offset;
-            for (int col = 0; col < nCols; col++) {
+            for (int col = 0; col < rep.nColumnas; col++) {
                 AffineTransform at = AffineTransform.getTranslateInstance(xPos, yPos);
                 Area area = new Area(path);
                 area = area.createTransformedArea(at);
-                TipoCelda tipo = TipoCelda.FIJA;
-                cells.add(new HidatoCell(tipo, area));
+                cells.add(cellFromBoard(row, col, area));
                 xPos += width;
             }
             yPos += height;

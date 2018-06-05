@@ -57,7 +57,27 @@ public class PresentationCTRL {
                 cont = new InputHidatoWindow(this,
                         creadorHidatos).$$$getRootComponent$$$();
                 break;
+            case "JugaPartidaWindow":
+                if(creadorHidatos.getRepresentacionHidato().forma == TipoHidato.CUADRADO){
+                    cont = new PlayHidatoWindow(
+                            new SquareHidatoPane(creadorHidatos.getRepresentacionHidato(),
+                                    600, 500)
+                    ).$$$getRootComponent$$$();
+                }
+                else if(creadorHidatos.getRepresentacionHidato().forma == TipoHidato.TRIANGULAR){
+                    cont = new PlayHidatoWindow(
+                            new TriangularHidatoPane(creadorHidatos.getRepresentacionHidato(),
+                                    600, 500)
+                    ).$$$getRootComponent$$$();
+                }
+                else{
+                    cont = new PlayHidatoWindow(
+                            new HexagonalHidatoPane(creadorHidatos.getRepresentacionHidato(),
+                                    600, 500)
+                    ).$$$getRootComponent$$$();
+                }
 
+                break;
 
 
         }

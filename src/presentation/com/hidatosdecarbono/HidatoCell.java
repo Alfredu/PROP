@@ -42,9 +42,10 @@ public class HidatoCell {
     }
 
     private double height, width;
-    public HidatoCell(TipoCelda tipo, Area area){
+    public HidatoCell(TipoCelda tipo, Area area, int value){
         this.tipo = tipo;
         this.area = area;
+        this.value = value;
     }
 
     public Area getArea(){

@@ -72,6 +72,7 @@ public class JugarHidatosCTRL {
         return partida.pidePista(tipoPista);
     }
 
+    public long getTiempoPartida(){return partida.getTiempoPartida();}
 
     public void printTablero(){
         Celda[][] tablero = partida.getTablero();
