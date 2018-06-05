@@ -2,6 +2,7 @@ package com.hidatosdecarbono;
 
 import org.omg.CORBA.TIMEOUT;
 
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -324,10 +325,13 @@ public class UserInterface {
         if(finalitzada) {
             System.out.println("Partida acabada!");
             jugarHidatosCTRL.printTablero();
-            System.out.println("Desea consultar el ranking? (Y/N)");
+            System.out.println("Desea consultar el ranking de esta dificultad? (Y/N)");
             String opt = reader.next();
             if (opt.equals("Y") || opt.equals("y")) {
-                jugarHidatosCTRL.ranking();
+                ArrayList<String> entrades = jugarHidatosCTRL.ranking();
+                for (String entrada : entrades) {
+                    System.out.println(entrada);
+                }
             }
         }
 
@@ -343,11 +347,16 @@ public class UserInterface {
         else dificultad = Dificultad.DIFICIL;
 
         ConsultarRankingCTRL rankingCTRL = domini.getRankingCTRL(dificultad);
-        ArrayList<String> entrades = rankingCTRL.getEntradasRanking();
-        for(String entrada : entrades){
-            System.out.println(entrada);
+        try {
+            ArrayList<String> entrades = rankingCTRL.getEntradasRanking();
+            for (String entrada : entrades) {
+                System.out.println(entrada);
+            }
+            System.out.println();
         }
-        System.out.println();
+        catch (NoSuchFileException e){
+            System.out.println("NO HI HA CAP ENTRADA PER AQUEST RANKING");
+        }
     }
 
 

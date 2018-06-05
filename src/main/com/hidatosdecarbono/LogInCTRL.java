@@ -30,6 +30,16 @@ public class LogInCTRL {
         return true;
         
     }
+
+    /**
+     * Autentifica el jugador en el sistema si el username i la contraseña coinciden con las de algun usuario dado de alta
+     * Devuelve true si el username i la contraseña coinciden, false en el caso de que el usuario exista pero la constraseña sea erronea
+     * y lanza una exepcion si ese username no pertence a ningún jugador
+     * @param username El username del jugador
+     * @param pass La contraseña de ese jugador
+     * @return True en caso que se autentifique correctamente, false si la contraseña introducida no es la misma que la guardada
+     * @throws InvalidUserException Se lanza si el username no coincide con el de ningún jugador dado de alta
+     */
     
     public boolean logIn(String username, String pass) throws InvalidUserException{
         Jugador login = persistencia.obtenJugador(username);

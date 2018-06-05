@@ -27,7 +27,7 @@ public class Ranking {
      * Añade una nueva EntradaRanking al Ranking y las reordena por puntuacion
      * @param username Un string que contiene el username del jugador
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
-     * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
+     * @param
      */
     public void addEntradaRanking(String username, int tiempo ,ArrayList<Pista> pistas) {
         EntradaRanking entradaRanking = new EntradaRanking(username,tiempo,pistas);

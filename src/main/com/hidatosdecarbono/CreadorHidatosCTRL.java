@@ -54,6 +54,12 @@ public class CreadorHidatosCTRL {
 
     }
 
+    /**
+     * Constructora de un hidato aleatorio por dificultad, el atributo hidatoCreado queda inicialitzado a un hidato aleatorio
+     * de la dificultad especificada.
+     * @param dificultad La dificultad del hidato a crear
+     */
+
     public void creaHidatoPorDificultad(Dificultad dificultad){
         int forma = ThreadLocalRandom.current().nextInt(0, 3);
         int adj = ThreadLocalRandom.current().nextInt(0, 2);
@@ -74,6 +80,15 @@ public class CreadorHidatosCTRL {
         hidatoCreado.generaAleatorioPorDificultad(celdas,dificultad);
 
     }
+
+    /**
+     * Crea un hidato aleatorio con las restricciones que le imponen los parametros del metodo
+     * @param tipoHidato La topologia del hidato a crear
+     * @param numCeldas El número de celdas totales que tendrá el hidato
+     * @param numCeldasFijas El número de celdas con valor fijo del hidato
+     * @param numCeldasAgujero El número de celdas bloqueadas/agujeros del hidato
+     * @param tipoAdyacencia EL tipo de adyacencia del hidato
+     */
 
     public void creaHidatoAleatorio(TipoHidato tipoHidato,int numCeldas,int numCeldasFijas,int numCeldasAgujero, TipoAdyacencia tipoAdyacencia){
         if(tipoHidato == TipoHidato.CUADRADO) {
@@ -103,6 +118,11 @@ public class CreadorHidatosCTRL {
         else if(forma.equals(TipoHidato.TRIANGULAR)) return "Triangular";
         else return "Hexagonal";
     }
+
+    /**
+     * Devuelve el controlador de partida asociado al hidato que se ha creado con anterioridad
+     * @return Un objeto del tipo JugarHidatosCTRL con una partida asociada al hidatoCreado y al jugador actual
+     */
 
     public JugarHidatosCTRL getControladorPartida(){
         jugarHidatosCTRL.inicializa(hidatoCreado,logInCTRL.getJugador());
