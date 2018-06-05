@@ -3,6 +3,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.nio.file.NoSuchFileException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +80,7 @@ public class PersistenciaCTRL {
         }
     }
 
-    public Ranking obtenRanking(Dificultad dificultad){
+    public Ranking obtenRanking(Dificultad dificultad) throws NoSuchFileException {
         Gson gson = new Gson();
         String json = null;
         switch (dificultad){

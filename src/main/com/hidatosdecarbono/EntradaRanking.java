@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import java.util.ArrayList;
+
 public class EntradaRanking implements Comparable{
     private String username;
     private int puntuacion;
@@ -8,11 +10,11 @@ public class EntradaRanking implements Comparable{
      * Constructora para una EntradaRanking
      * @param username Un string que contiene el username del jugador de la nueva entradaRanking
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
-     * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
+     * @param pistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
      */
-    public EntradaRanking(String username, int tiempo ,int numPistas) {
+    public EntradaRanking(String username, int tiempo , ArrayList<Pista> pistas) {
         this.username = username;
-        this.puntuacion = calculaPuntuacion(tiempo,numPistas);
+        this.puntuacion = calculaPuntuacion(tiempo, calculaPenalizacion(pistas));
     }
 
     /**
@@ -21,8 +23,21 @@ public class EntradaRanking implements Comparable{
      * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
      * @return puntuacion Un integer que contiene la puntuacion correspondiente a la nueva entradaRanking
      */
-    private int calculaPuntuacion(int tiempo, int numPistas) {
-        return  Math.floorDiv(10000000,(tiempo+60*numPistas));
+    private int calculaPuntuacion(int tiempo, int penalizacion) {
+        return  Math.floorDiv(10000000,(tiempo+penalizacion));
+    }
+
+    /**
+     * Devuelve la penalización a aplicar en base a las pistas utilizadas
+     * @param pistas
+     * @return
+     */
+    private int calculaPenalizacion(ArrayList<Pista> pistas){
+        int penalitzacio = 0;
+        for(Pista pista : pistas){
+            penalitzacio =+ pista.getPenalitzacio();
+        }
+        return penalitzacio;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.hidatosdecarbono;
 
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 
 public class JugarHidatosCTRL {
@@ -20,7 +21,14 @@ public class JugarHidatosCTRL {
         this.partida = partida;
         hidatoJugado = partida.getHidatoJugado();
         Dificultad d = hidatoJugado.getDificultad();
-        hidatoJugado.asociaRanking(persistencia.obtenRanking(d));
+        try {
+            hidatoJugado.asociaRanking(persistencia.obtenRanking(d));
+        }
+        catch (NoSuchFileException e){
+            Ranking r = new Ranking();
+            persistencia.guardaRanking(r,d);
+            hidatoJugado.asociaRanking(r);
+        }
     }
 
     public boolean mueve(int i, int j){

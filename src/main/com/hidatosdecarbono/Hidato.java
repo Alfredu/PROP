@@ -204,10 +204,10 @@ public abstract class Hidato {
      * Añade una entrada al Ranking de ese hidato
      * @param username String con el Nombre de usuario del jugador de la entrada
      * @param tiempo Integer Tiempo que ha tardado el jugador en acabar la partida
-     * @param numPistas Integer con el Numero de Pistas que ha usado
+     * @param pistas Array list con los objetos de tipo Pista que representan todas las pistas usadas
      */
-    public void entraRanking(String username, int tiempo, int numPistas){
-        ranking.addEntradaRanking(username,tiempo,numPistas);
+    public void entraRanking(String username, int tiempo, ArrayList<Pista> pistas){
+        ranking.addEntradaRanking(username,tiempo,pistas);
     }
 
     /**

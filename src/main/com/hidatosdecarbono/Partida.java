@@ -226,7 +226,7 @@ public class Partida {
         if(n == grafoHidato.size()+1){
             tiempoPartida = tiempoPartida + (System.currentTimeMillis() - tiempoInicial);
             int time = Math.toIntExact(tiempoPartida);
-            hidatoJugado.entraRanking(jugadorPartida.getUsername(),time,numPistas);
+            hidatoJugado.entraRanking(jugadorPartida.getUsername(),time,pistas);
             return true;
         }
         return false;

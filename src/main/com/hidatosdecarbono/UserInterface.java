@@ -343,7 +343,10 @@ public class UserInterface {
         else dificultad = Dificultad.DIFICIL;
 
         ConsultarRankingCTRL rankingCTRL = domini.getRankingCTRL(dificultad);
-        rankingCTRL.getEntradasRanking();
+        ArrayList<String> entrades = rankingCTRL.getEntradasRanking();
+        for(String entrada : entrades){
+            System.out.println(entrada);
+        }
         System.out.println();
     }
 
