@@ -102,30 +102,41 @@ public class JugarHidatosCTRL {
         return partida.moonwalk();
     }
 
+    /**
+     * Pide una pista del tipo especificado en el parametro del metodo y se le devuelve si se ha podido dar la pista
+     * @param tipoPista
+     * @return True si la pista se ha dado correctamente y false en caso de que no se pueda dar
+     */
+
     public boolean pidePista(TipoPista tipoPista){
         return partida.pidePista(tipoPista);
     }
 
     public long getTiempoPartida(){return partida.getTiempoPartida();}
 
-    public void printTablero(){
+    /**
+     * Devuelve una representación en formato String del estado del tablero de la partida actual
+     * @return Una matriz de strings (String[][]) con el contenido del tablero en formato string
+     */
+    public String[][] getTablero(){
         Celda[][] tablero = partida.getTablero();
         int files = tablero.length;
         int columnes = tablero[0].length;
-        String celes;
+        String celes[][] = new String[tablero.length][tablero[0].length];
         for (int i = 0; i < files; i++) {
-            celes = String.valueOf(i);
-            celes = celes.concat("|");
             for (int j = 0; j < columnes; j++) {
                 Celda c = tablero[i][j];
-                celes = celes.concat(celdaToString(c));
-                celes = celes.concat(" ");
+                celes[i][j] = celdaToString(c);
+
             }
-            System.out.println(celes);
         }
+        return celes;
     }
 
-
+    /**
+     * Devuelve un ArrayList de Strings con las entradas del ranking de la dificultad del hidato que se ha terminado de jugar
+     * @return Un ArrayList donde cada String representa una entrada del ranking de la dificultat del hidato jugado
+     */
     public ArrayList<String> ranking(){
         ArrayList<String> rankingRepr = new ArrayList<>();
 

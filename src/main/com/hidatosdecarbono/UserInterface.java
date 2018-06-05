@@ -1,7 +1,5 @@
 package com.hidatosdecarbono;
 
-import org.omg.CORBA.TIMEOUT;
-
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -274,7 +272,14 @@ public class UserInterface {
         System.out.println(" pulse R para retroceder una casilla, pulse P para pedir una pista (se coloca la siguiente casilla de forma automatica o pulse S para parar la partida (STOP)");
         boolean finalitzada = false;
         while (!end){
-            jugarHidatosCTRL.printTablero();
+            String[][] celes = jugarHidatosCTRL.getTablero();
+            for(int i = 0; i < celes.length; i++){
+                System.out.print(String.valueOf(i) + "|");
+                for (int j = 0; j < celes[0].length; j++){
+                    System.out.print(celes[i][j] + ",");
+                }
+                System.out.println();
+            }
             String opcio = reader.next();
             if(opcio.equals("R")||opcio.equals("r")){
                 jugarHidatosCTRL.retroceder();
@@ -324,7 +329,7 @@ public class UserInterface {
         }
         if(finalitzada) {
             System.out.println("Partida acabada!");
-            jugarHidatosCTRL.printTablero();
+            jugarHidatosCTRL.getTablero();
             System.out.println("Desea consultar el ranking de esta dificultad? (Y/N)");
             String opt = reader.next();
             if (opt.equals("Y") || opt.equals("y")) {
