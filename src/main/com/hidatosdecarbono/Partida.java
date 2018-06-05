@@ -4,6 +4,7 @@ import org.omg.CORBA.TIMEOUT;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Partida {
     private Hidato hidatoJugado;
@@ -72,10 +73,27 @@ public class Partida {
             }
         }
         else if(tipoPista.equals(TipoPista.CAMINO_CORRECTO)){
+            pistas.add(new PistaCaminoCorrecto());
             if(solucionable) return true;
         }
         else if(tipoPista.equals(TipoPista.FIJA_ALEATORIA)){
+            pistas.add(new PistaFijaAleatoria());
             if(solucionable){
+                ArrayList<Celda> vacias = new ArrayList<>();
+                ArrayList<Celda> soluciones = new ArrayList<>();
+                for(int i = 0; i < tablero.length; i++){
+                    for(int j = 0; j < tablero[i].length; j++){
+                        if(tablero[i][j].esVacia()){
+                            vacias.add(tablero[i][j]);
+                            soluciones.add(tableroSolucion[i][j]);
+                        }
+                    }
+                }
+                int random = ThreadLocalRandom.current().nextInt(0, vacias.size());
+                int valor = soluciones.get(random).getValor();
+                vacias.get(random).setValor(valor);
+                vacias.get(random).setTipo(TipoCelda.FIJA);
+                return true;
             }
         }
         return false;
