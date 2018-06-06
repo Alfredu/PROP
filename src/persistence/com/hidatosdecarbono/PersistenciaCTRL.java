@@ -35,7 +35,7 @@ public class PersistenciaCTRL {
     }
 
     /**
-     * Guarda un nuevo jugador de forma persistente.
+     * Guarda un nuevo jugador de forma persistente en un fichero con nombre jugadores.txt
      * @param jugador Un Jugador que contiene el username y la contraseña
      * @throws InvalidUserException si el username del Jugador pasado por parametro ya existia.
      */
@@ -63,7 +63,11 @@ public class PersistenciaCTRL {
         return gson.fromJson(json,Jugador.class);
     }
 
-
+    /**
+     * Guarda un Ranking de forma persistente en un fichero con nombre rankingFacil.txt,rankingMedio.txt o rankingDificil.txt en funcion del parametro de dificultad
+     * @param ranking Un Ranking que contiene el ranking a guardar
+     * @param dificultad Un enum Dificultad que contiene la dificultad del ranking para saber guardarlo en uno u otro fichero.
+     */
     public void guardaRanking (Ranking ranking,Dificultad dificultad) {
         Gson gson = new Gson();
         String json = gson.toJson(ranking);
@@ -80,6 +84,12 @@ public class PersistenciaCTRL {
         }
     }
 
+    /**
+     * Obtiene el Ranking de la dificultad indicada por parámetro a partir del fichero de persistencia
+     * @param dificultad Un enum Dificultad que contiene la dificultad del ranking que se quiere obtener
+     * @return ranking Un Ranking que contiene el ranking de la dificultad indicada
+     * @throws NoSuchFileException si no existe un fichero que contenga el ranking de esa dificultad
+     */
     public Ranking obtenRanking(Dificultad dificultad) throws NoSuchFileException {
         Gson gson = new Gson();
         String json = null;
@@ -99,6 +109,10 @@ public class PersistenciaCTRL {
         return ranking;
     }
 
+    /**
+     * Guarda un Hidato en un fichero de persistencia con nombre hidatosFacil.txt, hidatosMedio.txt o hidatosDificil.txt segun la dificultad del hidato
+     * @param hidato Un Hidato que contiene el hidato a guardar
+     */
     public void guardaHidato (Hidato hidato){
         Gson gson = new Gson();
         String json = gson.toJson(hidato);
@@ -117,6 +131,12 @@ public class PersistenciaCTRL {
         }
     }
 
+    /**
+     * Obtiene un Hidato a partir de su id y la dificultad indicados por parametro
+     * @param id Un int que contiene el id que identifica al hidato que se quiere obtener
+     * @param dificultad Un enum Dificultad que contiene la dificultad del hidato que se quiere obtener
+     * @return hidato Un Hidato
+     */
     public Hidato obtenHidato (int id,Dificultad dificultad){
         Gson gson = new Gson();
         JSONObject json = null;

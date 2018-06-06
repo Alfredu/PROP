@@ -42,7 +42,9 @@ public class PersistenciaHidatoTest {
                "\"adyacencia\":\"LADOYVERTICE\"," +
                "\"id\":0," +
                "\"tablero\":[[{\"tipo\":\"INVISIBLE\",\"valor\":0},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"INVISIBLE\",\"valor\":0}],[{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"FIJA\",\"valor\":1},{\"tipo\":\"VARIABLE\",\"valor\":0}],[{\"tipo\":\"FIJA\",\"valor\":7},{\"tipo\":\"VARIABLE\",\"valor\":0},{\"tipo\":\"FIJA\",\"valor\":9},{\"tipo\":\"INVISIBLE\",\"valor\":0}]]," +
-               "\"dificultad\":\"DIFICIL\"}"};
+               "\"nFilas\":3," +
+               "\"dificultad\":\"DIFICIL\"," +
+               "\"nColumnas\":4}"};
        assertTrue(mismoTextoEnFichero(texto,"hidatosDificil.txt"));
     }
 
