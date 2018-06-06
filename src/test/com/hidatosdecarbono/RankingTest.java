@@ -1,4 +1,4 @@
-/*
+
 package com.hidatosdecarbono;
 
 import org.junit.Before;
@@ -26,25 +26,6 @@ public class RankingTest {
     }
 
     @Test
-    public void encuentraMejorEntradaUsuario() throws InvalidUserException {
-        ranking.addEntradaRanking("user1",15*60,1);
-        ranking.addEntradaRanking("user1",10*60,6);
-        assertEquals("La mejor puntuacion de user1 es 1041",10000000/(15*60+1*60),ranking.getEntradaUsuario("user1").getPuntuacion());
-    }
-    @Test
-    public void encuentraTop3MejoresEntradas() throws InvalidParameterException {
-        ranking.addEntradaRanking("user1", 10 * 60, 1);
-        ranking.addEntradaRanking( "user2", 11 * 60, 1);
-        ranking.addEntradaRanking( "user3", 12 * 60, 1);
-        ranking.addEntradaRanking( "user1", 13 * 60, 1);
-        ranking.addEntradaRanking("user1", 9 * 60, 1);
-        ArrayList<EntradaRanking> topMejores = ranking.getTopEntradaUsuario(3);
-        assertEquals("Primero",10000000/(9*60+60),topMejores.get(0).getPuntuacion());
-        assertEquals("Segundo",10000000/(10*60+60),topMejores.get(1).getPuntuacion());
-        assertEquals("Tercero",10000000/(11*60+60),topMejores.get(2).getPuntuacion());
-    }
-
-    @Test
     public void entradasCorrectamenteOrdenadasPorPuntuacion() throws InvalidUserException {
         ranking.addEntradaRanking("user1",10*60,1);
         ranking.addEntradaRanking("user2",7*60,1);
@@ -57,13 +38,6 @@ public class RankingTest {
     }
 
 
-
-    @Test(expected = InvalidUserException.class)
-    public void lanzaInvalidUserSiNoExisteElUsuarioEnRanking() throws InvalidUserException {
-        ranking.addEntradaRanking("user1", 15 * 60, 1);
-        ranking.getEntradaUsuario("invalidUser");
-    }
-
     @Test
     public void topContieneEntradasVaciasSiSePidenMasEntradasDeLasExistentes() throws InvalidParameterException {
         ranking.addEntradaRanking( "user1", 10 * 60, 1);
@@ -73,11 +47,21 @@ public class RankingTest {
         assertEquals(null,topMejores.get(3).getUsername());
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void lanzaIllegalStateSiConsultaMejorPuntuacionEnRankingVacio() throws InvalidUserException {
-        ranking.getMejorPuntuacionRanking();
+    @Test
+    public void guardaYDevuelveEntradasRankingCorrectamente(){
+        EntradaRanking entrada0 = new EntradaRanking("user1", 60,25);
+        EntradaRanking entrada1 = new EntradaRanking("user2", 100,10);
+        ranking.addEntradaRanking( "user1", 60, 25);
+        ranking.addEntradaRanking( "user2", 100, 10);
+        ArrayList<EntradaRanking> entradas = ranking.getEntradasRanking();
+        assertEquals(entrada0.getUsername(),entradas.get(0).getUsername());
+        assertEquals(entrada0.getPuntuacion(),entradas.get(0).getPuntuacion());
+
+        assertEquals(entrada1.getUsername(),entradas.get(1).getUsername());
+        assertEquals(entrada1.getPuntuacion(),entradas.get(1).getPuntuacion());
+
+
+
     }
 
-
 }
-*/

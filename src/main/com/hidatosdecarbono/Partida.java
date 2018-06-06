@@ -54,7 +54,7 @@ public class Partida {
         clearTableroSolucion();
         boolean solucionable = grafoHidato.esSolucionable();
         if(tipoPista.equals(TipoPista.SIGUIENTE_CASILLA)) {
-            penalizacion+= new PistaSiguienteCasilla().getPenalitzacio();
+            penalizacion+= 40;
             if (solucionable) {
                 //return la casella on estigui n
                 int i = 0;
@@ -72,11 +72,11 @@ public class Partida {
             }
         }
         else if(tipoPista.equals(TipoPista.CAMINO_CORRECTO)){
-            penalizacion+= new PistaCaminoCorrecto().getPenalitzacio();
+            penalizacion+= 10;
             if(solucionable) return true;
         }
         else if(tipoPista.equals(TipoPista.FIJA_ALEATORIA)){
-            penalizacion+= new PistaFijaAleatoria().getPenalitzacio();
+            penalizacion+= 25;
             if(solucionable){
                 ArrayList<Celda> vacias = new ArrayList<>();
                 ArrayList<Celda> soluciones = new ArrayList<>();
@@ -98,6 +98,10 @@ public class Partida {
             }
         }
         return false;
+    }
+
+    public Jugador getJugadorPartida(){
+        return jugadorPartida;
     }
 
     /**
@@ -266,7 +270,8 @@ public class Partida {
         this.tiempoPartida = tiempoPartida;
     }
 
-    public long getTiempoPartida(){return System.currentTimeMillis() - this.tiempoInicial;}
+    public int getTiempoPartida(){
+        return Math.toIntExact(tiempoPartida + (System.currentTimeMillis() - this.tiempoInicial));}
 
     public void setPenalizacion(int penalizacion) {
         this.penalizacion = penalizacion;

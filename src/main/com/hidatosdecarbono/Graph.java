@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Graph {
     private HashMap<Integer,Node> graph;
+    private int cont = 0;
 
     /**
      * Creadora por defecto. Crea un Grafo vacío.
@@ -102,31 +103,33 @@ public class Graph {
                 //Si el nodo visitado es vacío establecemos el valor.
                 if (celdaNodo.esVacia()) celdaNodo.setValor(nActual);
 
+                if (checkDistancias(node)) {
 
-                boolean found = false;
-                //Si found vale true sabemos que nodoEncontrado tiene valor.
-                //Este null es para saltarnos el error del compilador.
+                    boolean found = false;
+                    //Si found vale true sabemos que nodoEncontrado tiene valor.
+                    //Este null es para saltarnos el error del compilador.
 
-                //buscar si i+1 ja esta colocat
-                Node nodoEncontrado = null;
-                for (Node nodo : node.getAdyacentes()) {
-                    if (nodo.getCelda().getValor() == nActual + 1) {
-                        found = true;
-                        nodoEncontrado = nodo;
-                        break;
-                    }
-                }
-                if (found) {
-                    boolean res = hacerMovimiento(nodoEncontrado, nActual + 1, nMax, visitados);
-                    if (res) return true;
-                }
-
-                //si no, intentar colocarlo a tots els adjacents buits
-                else {
+                    //buscar si i+1 ja esta colocat
+                    Node nodoEncontrado = null;
                     for (Node nodo : node.getAdyacentes()) {
-                        if (nodo.getCelda().esVacia()) {
-                            boolean res = hacerMovimiento(nodo, nActual + 1, nMax, visitados);
-                            if (res) return true;
+                        if (nodo.getCelda().getValor() == nActual + 1) {
+                            found = true;
+                            nodoEncontrado = nodo;
+                            break;
+                        }
+                    }
+                    if (found) {
+                        boolean res = hacerMovimiento(nodoEncontrado, nActual + 1, nMax, visitados);
+                        if (res) return true;
+                    }
+
+                    //si no, intentar colocarlo a tots els adjacents buits
+                    else {
+                        for (Node nodo : node.getAdyacentes()) {
+                            if (nodo.getCelda().esVacia()) {
+                                boolean res = hacerMovimiento(nodo, nActual + 1, nMax, visitados);
+                                if (res) return true;
+                            }
                         }
                     }
                 }
@@ -138,7 +141,6 @@ public class Graph {
     }
 
     private boolean hacerMovimientoCrear(Node node, int nActual, int nMax, boolean[] visitados){
-
         Celda celdaNodo = node.getCelda();
         int ultimoValor = celdaNodo.getValor();
         visitados[node.getId()] = true;
@@ -166,7 +168,7 @@ public class Graph {
                     int iterador = (it+rand)%size;
                     Node nodo = adyacentes.get(iterador);
                     if (nodo.getCelda().esVacia() && !visitados[nodo.getId()]) {
-                        boolean res = hacerMovimiento(nodo, nActual + 1, nMax, visitados);
+                        boolean res = hacerMovimientoCrear(nodo, nActual + 1, nMax, visitados);
                             if (res) return true;
                     }
                 }

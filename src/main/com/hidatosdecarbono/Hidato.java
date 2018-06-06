@@ -365,7 +365,7 @@ public abstract class Hidato {
         int fijas = 5;
         if(dificultad.equals(Dificultad.FACIL)){
             if(nCasillas < 16){
-                fijas = ThreadLocalRandom.current().nextInt(3, 12);
+                fijas = ThreadLocalRandom.current().nextInt(2, 8);
             }
             if(nCasillas - agujeros < 30){
                 if (adyacencia.equals(TipoAdyacencia.LADO)){
@@ -375,7 +375,7 @@ public abstract class Hidato {
                     fijas = getFijasPercentaje(nCasillas - agujeros, 65, 85);
                 }
             }
-            else if(nCasillas - agujeros < 50){
+            else if(nCasillas - agujeros < 60){
                 if (adyacencia.equals(TipoAdyacencia.LADO)){
                     fijas = getFijasPercentaje(nCasillas - agujeros, 75, 85);
                 }
@@ -393,7 +393,7 @@ public abstract class Hidato {
                     fijas = getFijasPercentaje(nCasillas - agujeros, 35, 65);
                 }
             }
-            else if(nCasillas - agujeros < 50){
+            else if(nCasillas - agujeros < 60){
                 if (adyacencia.equals(TipoAdyacencia.LADO)){
                     fijas = getFijasPercentaje(nCasillas - agujeros, 40, 75);
                 }
@@ -411,7 +411,7 @@ public abstract class Hidato {
                     fijas = getFijasPercentaje(nCasillas - agujeros, 10, 35);
                 }
             }
-            else if(nCasillas - agujeros < 50){
+            else if(nCasillas - agujeros < 60){
                 if (adyacencia.equals(TipoAdyacencia.LADO)){
                     fijas = getFijasPercentaje(nCasillas - agujeros, 15, 40);
                 }
