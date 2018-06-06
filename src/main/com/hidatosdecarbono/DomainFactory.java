@@ -24,10 +24,9 @@ public class DomainFactory {
         return creadorHidatosCTRL;
     }
 
-
     public JugarHidatosCTRL getControladorJugarHidatoPausado() throws IndexOutOfBoundsException{
         jugarHidatosCTRL = new JugarHidatosCTRL(persistenciaCTRL);
-        Partida partida = persistenciaCTRL.obtenPartida();
+        Partida partida = persistenciaCTRL.obtenPartida(logInCTRL.getJugador().getUsername());
         jugarHidatosCTRL.setPartida(partida);
         return jugarHidatosCTRL;
     }

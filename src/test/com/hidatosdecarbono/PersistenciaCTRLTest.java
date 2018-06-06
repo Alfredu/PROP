@@ -221,7 +221,7 @@ public class PersistenciaCTRLTest {
         //ponemos el 4 en la casilla al lado del 3 situada en 0,1
         partida.mueve(0, 1);
         persistenciaCTRL.guardaPartida(partida);
-        Partida partidaRestaurada = persistenciaCTRL.obtenPartida();
+        Partida partidaRestaurada = persistenciaCTRL.obtenPartida("Test");
         partidaRestaurada.moonwalk();
         assertTrue(partidaRestaurada.mueve(0, 1));
         assertEquals(4, partidaRestaurada.getTablero()[0][1].getValor());

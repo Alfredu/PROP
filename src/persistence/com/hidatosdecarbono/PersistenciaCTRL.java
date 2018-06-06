@@ -23,7 +23,7 @@ public class PersistenciaCTRL {
     private final String ficheroRankingFacil = "rankingFacil.txt";
     private final String ficheroRankingMedio = "rankingMedio.txt";
     private final String ficheroRankingDificil = "rankingDificil.txt";
-    private final String ficheroPartidas = "partidas.txt";
+    private final String ficheroPartidas = "partidas";
     /**
      * Constructora por defecto.Crea las instancias de las clases de persistencia.
      */
@@ -188,6 +188,7 @@ public class PersistenciaCTRL {
      * @param partida Una Partida que contiene la partida que se quiere guardar
      */
     public void guardaPartida (Partida partida){
+        String username = partida.getJugadorPartida().getUsername().concat(".txt");
         Gson gson = new Gson();
         String json = gson.toJson(partida);
         JSONObject jsonObject = new JSONObject(json);
@@ -195,7 +196,8 @@ public class PersistenciaCTRL {
         jsonHidato = añadeTipoHidato(jsonHidato,partida.getHidatoJugado().getTipoHidato());
         jsonObject.put("hidatoJugado",new JSONObject(jsonHidato));
         json = jsonObject.toString();
-        persistenciaPartida.guardaEnTxt(json,ficheroPartidas);
+        System.out.println(ficheroPartidas.concat("/" + username));
+        persistenciaPartida.guardaEnTxt(json,ficheroPartidas.concat("/"+ username));
     }
 
     /**
@@ -203,9 +205,10 @@ public class PersistenciaCTRL {
      * @return partida Una Partida que contiene la partida guardada en la persistencia
      * @throws IndexOutOfBoundsException si no existe ninguna partida
      */
-    public Partida obtenPartida() throws IndexOutOfBoundsException{
+    public Partida obtenPartida(String username) throws IndexOutOfBoundsException{
+        username = username.concat(".txt");
         Gson gson = new Gson();
-        JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas);
+        JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas.concat("/"+ username));
         JSONObject hidatoJson = json.getJSONObject("hidatoJugado");
         Hidato hidatoJugado = creaHidatoDeseJSON(hidatoJson);
         Celda [][] tablero = obtenerTablero(json.getJSONArray("tablero"));

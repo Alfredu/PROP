@@ -74,7 +74,7 @@ public class JugarHidatosCTRL {
     public boolean compruebaPausada(){
         Partida p;
         try{
-            p = persistencia.obtenPartida();
+            p = persistencia.obtenPartida(partida.getJugadorPartida().getUsername());
             persistencia.guardaPartida(p);
         }
         catch (IndexOutOfBoundsException e){

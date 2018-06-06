@@ -100,6 +100,10 @@ public class Partida {
         return false;
     }
 
+    public Jugador getJugadorPartida(){
+        return jugadorPartida;
+    }
+
     /**
      * Devuelve el Hidato que se está jugando
      * @return El Hidato en juego.
