@@ -93,6 +93,7 @@ public class Partida {
                 int valor = soluciones.get(random).getValor();
                 vacias.get(random).setValor(valor);
                 vacias.get(random).setTipo(TipoCelda.FIJA);
+                checkSiguiente();
                 return true;
             }
         }
