@@ -69,7 +69,7 @@ public class PlayHidatoWindow {
 
                     if (success) {
                         hidatoPane1.rep.tablero = controladorPartida.getTablero();
-                        hidatoPane1.updateBoard(true);
+                        hidatoPane1.updateBoard(false);
                     } else {
                         JOptionPane.showMessageDialog(mainPanel, "No hi ha cap camí correcte!", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
