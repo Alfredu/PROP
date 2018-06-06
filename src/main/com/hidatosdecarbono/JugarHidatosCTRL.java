@@ -104,7 +104,7 @@ public class JugarHidatosCTRL {
 
     /**
      * Pide una pista del tipo especificado en el parametro del metodo y se le devuelve si se ha podido dar la pista
-     * @param tipoPista
+     * @param tipoPista El tipo de pista que decide el usuario
      * @return True si la pista se ha dado correctamente y false en caso de que no se pueda dar
      */
 
@@ -112,7 +112,7 @@ public class JugarHidatosCTRL {
         return partida.pidePista(tipoPista);
     }
 
-    public long getTiempoPartida(){return partida.getTiempoPartida();}
+    public int getTiempoPartida(){return partida.getTiempoPartida();}
 
     /**
      * Devuelve una representación en formato String del estado del tablero de la partida actual
@@ -155,7 +155,6 @@ public class JugarHidatosCTRL {
 
         return rankingRepr;
     }
-
 
     private String celdaToString(Celda c){
         if(c.getTipo().equals(TipoCelda.AGUJERO)) return "*";
