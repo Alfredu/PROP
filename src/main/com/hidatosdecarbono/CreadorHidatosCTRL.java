@@ -69,7 +69,7 @@ public class CreadorHidatosCTRL {
             celdas = ThreadLocalRandom.current().nextInt(9, 40);
         }
         else{
-            celdas = ThreadLocalRandom.current().nextInt(16, 50);
+            celdas = ThreadLocalRandom.current().nextInt(16, 55);
         }
 
         if(forma == 0 && adj == 0) hidatoCreado = new HidatoCuadrado(celdas, TipoAdyacencia.LADO);
