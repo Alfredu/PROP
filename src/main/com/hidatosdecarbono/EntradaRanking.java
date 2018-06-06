@@ -10,7 +10,7 @@ public class EntradaRanking implements Comparable{
      * Constructora para una EntradaRanking
      * @param username Un string que contiene el username del jugador de la nueva entradaRanking
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
-     * @param pistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
+     * @param penalizacion Un integer que contiene la penalizacion acumulada por el jugador durante la partida
      */
     public EntradaRanking(String username, int tiempo , int penalizacion) {
         this.username = username;
