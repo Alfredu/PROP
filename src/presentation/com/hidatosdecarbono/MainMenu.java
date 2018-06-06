@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,7 +43,18 @@ public class MainMenu {
         creaHidatoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                presentationCTRL.cambiaVentana("CreaHidatoWindow");
+                Object[] opcions = {"Añadir Hidato manualmente", "Añadir Hidato aleatorio", "Añadir Hidato por dificultad"};
+                int res = JOptionPane.showOptionDialog(mainPanel, "Escull forma de crear l'Hidato",
+                        "CREAR HIDATO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        null, opcions, null);
+
+                if (res == JOptionPane.YES_OPTION) {
+                    presentationCTRL.cambiaVentana("CreaHidatoWindow");
+                } else if (res == JOptionPane.NO_OPTION) {
+                    presentationCTRL.cambiaVentana("InputRandomHidatoWindow");
+                } else if (res == JOptionPane.CANCEL_OPTION) {
+
+                }
             }
         });
     }

@@ -56,6 +56,9 @@ public class PresentationCTRL {
             case "CreaHidatoWindow":
                 cont = new CreaHidatoWindow(this, creadorHidatos).$$$getRootComponent$$$();
                 break;
+            case "InputRandomHidatoWindow":
+                cont = new InputRandomHidatoWindow(this, creadorHidatos).$$$getRootComponent$$$();
+                break;
             case "InputHidatoWindow":
                 cont = new InputHidatoWindow(this,
                         creadorHidatos).$$$getRootComponent$$$();
@@ -71,6 +74,7 @@ public class PresentationCTRL {
                         false), creadorHidatos, this).$$$getRootComponent$$$();
 
                 break;
+
 
 
         }
