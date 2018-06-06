@@ -308,6 +308,7 @@ public class UserInterface {
                 if(!found){
                     System.out.println("No hay movimiento posible en este camino, prueve a retroceder");
                 }
+                finalitzada = end = jugarHidatosCTRL.acabada();
             }
             else if(opcio.equals("s") || opcio.equals("S")){
                 if(jugarHidatosCTRL.compruebaPausada()){
