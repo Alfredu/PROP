@@ -1,7 +1,1 @@
-{"username":"eloi","password":"1234"}
-{"username":"","password":""}
-{"username":"eloii","password":"123"}
-{"username":"aleix","password":""}
-{"username":"marta","password":"1234"}
-{"username":"nico","password":"123"}
-{"username":"jose","password":"1234"}
+{"username":"nico","password":"1234"}

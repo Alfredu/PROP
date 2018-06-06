@@ -206,7 +206,7 @@ public abstract class Hidato {
      * @param tiempo Integer Tiempo que ha tardado el jugador en acabar la partida
      * @param pistas Array list con los objetos de tipo Pista que representan todas las pistas usadas
      */
-    public void entraRanking(String username, int tiempo, ArrayList<Pista> pistas){
+    public void entraRanking(String username, int tiempo, int pistas){
         ranking.addEntradaRanking(username,tiempo,pistas);
     }
 

@@ -35,7 +35,7 @@ public class PersistenciaCTRL {
     }
 
     /**
-     * Guarda un nuevo jugador de forma persistente.
+     * Guarda un nuevo jugador de forma persistente en un fichero con nombre jugadores.txt
      * @param jugador Un Jugador que contiene el username y la contraseña
      * @throws InvalidUserException si el username del Jugador pasado por parametro ya existia.
      */
@@ -63,7 +63,11 @@ public class PersistenciaCTRL {
         return gson.fromJson(json,Jugador.class);
     }
 
-
+    /**
+     * Guarda un Ranking de forma persistente en un fichero con nombre rankingFacil.txt,rankingMedio.txt o rankingDificil.txt en funcion del parametro de dificultad
+     * @param ranking Un Ranking que contiene el ranking a guardar
+     * @param dificultad Un enum Dificultad que contiene la dificultad del ranking para saber guardarlo en uno u otro fichero.
+     */
     public void guardaRanking (Ranking ranking,Dificultad dificultad) {
         Gson gson = new Gson();
         String json = gson.toJson(ranking);
@@ -80,6 +84,12 @@ public class PersistenciaCTRL {
         }
     }
 
+    /**
+     * Obtiene el Ranking de la dificultad indicada por parámetro a partir del fichero de persistencia
+     * @param dificultad Un enum Dificultad que contiene la dificultad del ranking que se quiere obtener
+     * @return ranking Un Ranking que contiene el ranking de la dificultad indicada
+     * @throws NoSuchFileException si no existe un fichero que contenga el ranking de esa dificultad
+     */
     public Ranking obtenRanking(Dificultad dificultad) throws NoSuchFileException {
         Gson gson = new Gson();
         String json = null;
@@ -99,6 +109,10 @@ public class PersistenciaCTRL {
         return ranking;
     }
 
+    /**
+     * Guarda un Hidato en un fichero de persistencia con nombre hidatosFacil.txt, hidatosMedio.txt o hidatosDificil.txt segun la dificultad del hidato
+     * @param hidato Un Hidato que contiene el hidato a guardar
+     */
     public void guardaHidato (Hidato hidato){
         Gson gson = new Gson();
         String json = gson.toJson(hidato);
@@ -117,6 +131,12 @@ public class PersistenciaCTRL {
         }
     }
 
+    /**
+     * Obtiene un Hidato a partir de su id y la dificultad indicados por parametro
+     * @param id Un int que contiene el id que identifica al hidato que se quiere obtener
+     * @param dificultad Un enum Dificultad que contiene la dificultad del hidato que se quiere obtener
+     * @return hidato Un Hidato
+     */
     public Hidato obtenHidato (int id,Dificultad dificultad){
         Gson gson = new Gson();
         JSONObject json = null;
@@ -134,6 +154,11 @@ public class PersistenciaCTRL {
         return creaHidatoDeseJSON(json);
     }
 
+    /**
+     * Devuelve un HashMap que representa la coleccion de hidatos de la dificultad indicada por parametro
+     * @param dificultad Un enum Dificultad que contiene la dificultad de la coleccion de hidatos que se quiere obtener
+     * @return hasMap Un HashMap<Integer, Hidato> con key el id del hidato y que contiene hidatos de la dificultad indicada en el parametro
+     */
     public HashMap<Integer, Hidato> obtenColeccionHidatos (Dificultad dificultad){
         Gson gson = new Gson();
         ArrayList<JSONObject> jsonArray = null;
@@ -158,6 +183,10 @@ public class PersistenciaCTRL {
         return null;
     }
 
+    /**
+     * Guarda una unica partida de forma persistente en un fichero con nombre partidas.txt
+     * @param partida Una Partida que contiene la partida que se quiere guardar
+     */
     public void guardaPartida (Partida partida){
         Gson gson = new Gson();
         String json = gson.toJson(partida);
@@ -169,6 +198,11 @@ public class PersistenciaCTRL {
         persistenciaPartida.guardaEnTxt(json,ficheroPartidas);
     }
 
+    /**
+     * Obtiene la partida guardada en la persistencia
+     * @return partida Una Partida que contiene la partida guardada en la persistencia
+     * @throws IndexOutOfBoundsException si no existe ninguna partida
+     */
     public Partida obtenPartida() throws IndexOutOfBoundsException{
         Gson gson = new Gson();
         JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas);
@@ -187,8 +221,14 @@ public class PersistenciaCTRL {
         partida.setFilaActual(json.getInt("filaActual"));
         partida.setTiempoPartida(json.getInt("tiempoPartida"));
         partida.setTablero(tablero);
+        partida.setPenalizacion(json.getInt("penalizacion"));
         partida.setNumPistas(json.getInt("numPistas"));
         partida.setN(json.getInt("n"));
+        setMovimientosPartida(json, partida);
+        return partida;
+    }
+
+    private void setMovimientosPartida(JSONObject json, Partida partida) {
         Stack<Movimiento> movimientos = new Stack<>();
         JSONArray arrayMovimientos = json.getJSONArray("movimientos");
         for (int i = 0; i < arrayMovimientos.length() ; i++) {
@@ -196,7 +236,6 @@ public class PersistenciaCTRL {
             movimientos.push(m);
         }
         partida.setMovimientos(movimientos);
-        return partida;
     }
 
 

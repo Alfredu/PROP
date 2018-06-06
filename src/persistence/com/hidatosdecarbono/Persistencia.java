@@ -15,6 +15,8 @@ public class Persistencia {
      * sino lo crea y añade el nuevo contenido.
      * @param json Un String que contiene la informacion a guardar de forma persistente
      * @param nombreFichero Un String que contiene el nombre del fichero de persistencia
+     * @param concatenar Un boolean: true indica que se debe concatenar el texto a guardar con el contenido del fichero, false indica sobreescribirlo
+     *
      */
    public void guardaEnTxt(String json, String nombreFichero, boolean concatenar){
        try{
@@ -31,7 +33,12 @@ public class Persistencia {
        }
    }
 
-    public void eliminaTxt(String nombreFichero){
+
+    /**
+     * Elimina el fichero con el nombre indicado en el parametro, situado en persistencia/ (path relativo del proyecto)
+     * @param nombreFichero Un String que contiene el nombre del fichero a eliminar
+     */
+   public void eliminaTxt(String nombreFichero){
         File file =new File("persistencia/"+nombreFichero);
         file.delete();
     }
