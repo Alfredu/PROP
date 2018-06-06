@@ -1,0 +1,1 @@
+{"entradasRanking":[{"username":"aleix","puntuacion":21551},{"username":"aleix","puntuacion":1890},{"username":"aleix","puntuacion":1838},{"username":"aleix","puntuacion":1268},{"username":"nico","puntuacion":782},{"username":"jose","puntuacion":603},{"username":"aleix","puntuacion":598},{"username":"aleix","puntuacion":235}]}
