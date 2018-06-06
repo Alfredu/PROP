@@ -62,7 +62,7 @@ public class PresentationCTRL {
                 break;
             case "JugaPartidaWindow":
                     cont = new PlayHidatoWindow(creaHidatoPane(creadorHidatos.getRepresentacionHidato().forma,
-                            true)).$$$getRootComponent$$$();
+                            true), creadorHidatos.getControladorPartida(), this).$$$getRootComponent$$$();
                 break;
 
             case "MostraSolucioWindow":

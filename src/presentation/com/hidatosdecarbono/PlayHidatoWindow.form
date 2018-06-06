@@ -36,7 +36,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Guarda"/>
+          <text value="Pausa"/>
         </properties>
       </component>
       <component id="a6cf" class="javax.swing.JLabel" binding="timeElapsed">

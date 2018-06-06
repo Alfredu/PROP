@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 public class PlayHidatoWindow {
     private HidatoPane hidatoPane1;
+    private JugarHidatosCTRL controladorPartida;
+    private PresentationCTRL presentationCTRL;
     private JButton pistaButton;
     private JLabel timeElapsed;
     private JButton guardaPartidaButton;
@@ -14,8 +16,10 @@ public class PlayHidatoWindow {
     private Timer timer;
     int i;
 
-    public PlayHidatoWindow(HidatoPane pane) {
+    public PlayHidatoWindow(HidatoPane pane, JugarHidatosCTRL controladorPartida, PresentationCTRL presentationCTRL) {
         this.hidatoPane1 = pane;
+        this.controladorPartida = controladorPartida;
+        this.presentationCTRL = presentationCTRL;
         $$$setupUI$$$();
         timer = new Timer(1000, new ActionListener() {
             @Override
@@ -25,6 +29,13 @@ public class PlayHidatoWindow {
             }
         });
         //timer.start();
+        guardaPartidaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controladorPartida.pausa();
+                presentationCTRL.cambiaVentana("MainMenu");
+            }
+        });
     }
 
     public void createUIComponents() {
@@ -48,7 +59,7 @@ public class PlayHidatoWindow {
         pistaButton.setText("Pista");
         mainPanel.add(pistaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), new Dimension(100, -1), 0, false));
         guardaPartidaButton = new JButton();
-        guardaPartidaButton.setText("Guarda");
+        guardaPartidaButton.setText("Pausa");
         mainPanel.add(guardaPartidaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), new Dimension(100, -1), 0, false));
         timeElapsed = new JLabel();
         timeElapsed.setText("");
