@@ -154,6 +154,11 @@ public class PersistenciaCTRL {
         return creaHidatoDeseJSON(json);
     }
 
+    /**
+     * Devuelve un HashMap que representa la coleccion de hidatos de la dificultad indicada por parametro
+     * @param dificultad Un enum Dificultad que contiene la dificultad de la coleccion de hidatos que se quiere obtener
+     * @return hasMap Un HashMap<Integer, Hidato> con key el id del hidato y que contiene hidatos de la dificultad indicada en el parametro
+     */
     public HashMap<Integer, Hidato> obtenColeccionHidatos (Dificultad dificultad){
         Gson gson = new Gson();
         ArrayList<JSONObject> jsonArray = null;
@@ -178,6 +183,10 @@ public class PersistenciaCTRL {
         return null;
     }
 
+    /**
+     * Guarda una unica partida de forma persistente en un fichero con nombre partidas.txt
+     * @param partida Una Partida que contiene la partida que se quiere guardar
+     */
     public void guardaPartida (Partida partida){
         Gson gson = new Gson();
         String json = gson.toJson(partida);
@@ -189,6 +198,11 @@ public class PersistenciaCTRL {
         persistenciaPartida.guardaEnTxt(json,ficheroPartidas);
     }
 
+    /**
+     * Obtiene la partida guardada en la persistencia
+     * @return partida Una Partida que contiene la partida guardada en la persistencia
+     * @throws IndexOutOfBoundsException si no existe ninguna partida
+     */
     public Partida obtenPartida() throws IndexOutOfBoundsException{
         Gson gson = new Gson();
         JSONObject json = persistenciaPartida.obtenPartida(ficheroPartidas);

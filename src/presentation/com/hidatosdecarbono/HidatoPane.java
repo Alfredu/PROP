@@ -62,6 +62,8 @@ public abstract class HidatoPane extends JPanel {
                             if(jugaCtrl.acabada()){
                                 repaint();
                                 JOptionPane.showMessageDialog(null, "PARTIDA ACABADA!", "FELICITATS", JOptionPane.INFORMATION_MESSAGE);
+
+                                //TODO oferirRanking
                             }
                         }
                         else{
@@ -142,6 +144,32 @@ public abstract class HidatoPane extends JPanel {
         }
 
         return celda;
+    }
+
+    public void updateBoard(boolean nuevaFija){
+        int pos=0;
+        for(HidatoCell cell : cells){
+
+            if(cell.getTipo() == TipoCelda.VARIABLE || cell.getTipo() == TipoCelda.FIJA){
+                String newValueString = rep.tablero[pos/rep.nColumnas][pos%rep.nColumnas];
+                int newValue;
+                if(newValueString.equals("?")){
+                    newValue = 0;
+                }
+                else{
+                    newValue = Integer.parseInt(newValueString);
+                }
+                if(cell.getValue() != newValue){
+                    cell.setValue(newValue);
+                    if(nuevaFija){
+                        cell.setTipo(TipoCelda.FIJA);
+                    }
+                }
+            }
+
+            pos++;
+        }
+        repaint();
     }
 
 }

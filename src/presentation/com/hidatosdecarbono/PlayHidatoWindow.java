@@ -36,6 +36,52 @@ public class PlayHidatoWindow {
                 presentationCTRL.cambiaVentana("MainMenu");
             }
         });
+        pistaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Object[] opcionsSolució = {"Comprova el camí actual: " +
+                        "Penalització: 10", "Insereix una casella fixa: " +
+                        "Penalització: 50", "Insereix la següent casella: " +
+                        "Penalització: 60"};
+
+                int res = JOptionPane.showOptionDialog(mainPanel, "Quin tipus de pista vols?",
+                        "ESCULL PISTA", JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, null);
+
+                boolean success;
+                if (res == JOptionPane.YES_OPTION) {
+                    success = controladorPartida.pidePista(TipoPista.CAMINO_CORRECTO);
+                    if (success) {
+                        JOptionPane.showMessageDialog(mainPanel, "Vas bé caneló!", "VAS BÉ", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(mainPanel, "No hi ha cap camí correcte!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else if (res == JOptionPane.NO_OPTION) {
+                    success = controladorPartida.pidePista(TipoPista.FIJA_ALEATORIA);
+                    if (success) {
+                        hidatoPane1.rep.tablero = controladorPartida.getTablero();
+                        hidatoPane1.updateBoard(true);
+                    } else {
+                        JOptionPane.showMessageDialog(mainPanel, "No hi ha cap camí correcte!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    success = controladorPartida.pidePista(TipoPista.SIGUIENTE_CASILLA);
+
+                    if (success) {
+                        hidatoPane1.rep.tablero = controladorPartida.getTablero();
+                        hidatoPane1.updateBoard(true);
+                    } else {
+                        JOptionPane.showMessageDialog(mainPanel, "No hi ha cap camí correcte!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                if (controladorPartida.acabada()) {
+                    hidatoPane1.repaint();
+                    JOptionPane.showMessageDialog(null, "PARTIDA ACABADA!", "FELICITATS", JOptionPane.INFORMATION_MESSAGE);
+
+
+                }
+            }
+        });
     }
 
     public void createUIComponents() {
