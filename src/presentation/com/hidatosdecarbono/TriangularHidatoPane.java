@@ -6,8 +6,8 @@ import java.awt.geom.GeneralPath;
 
 public class TriangularHidatoPane extends HidatoPane {
 
-    public TriangularHidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight) {
-        super(rep, preferredWidth, preferredHeight);
+    public TriangularHidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight, JugarHidatosCTRL jugaCtrl, boolean playable) {
+        super(rep, preferredWidth, preferredHeight, jugaCtrl, playable);
     }
 
     @Override

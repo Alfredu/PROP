@@ -4,11 +4,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 
-public class SquareHidatoPane extends HidatoPane{
+public class SquareHidatoPane extends HidatoPane {
 
     public SquareHidatoPane(HidatoRep rep,
-                               int preferredWidth, int preferredHeight){
-        super(rep, preferredWidth, preferredHeight);
+                            int preferredWidth, int preferredHeight, JugarHidatosCTRL jugaCtrl, boolean playable){
+        super(rep, preferredWidth, preferredHeight, jugaCtrl, playable);
     }
 
     @Override

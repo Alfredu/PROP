@@ -11,28 +11,67 @@ import java.util.List;
 public abstract class HidatoPane extends JPanel {
     protected int preferredWidth, preferredHeight;
     protected HidatoRep rep;
+    private JugarHidatosCTRL jugaCtrl;
 
     protected List<HidatoCell> cells = new ArrayList<>();
     private HidatoCell highlighted;
 
-    protected HidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight){
+    protected HidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight, JugarHidatosCTRL jugaCtrl, boolean playable){
         this.preferredWidth = preferredWidth;
         this.preferredHeight = preferredHeight;
         this.rep = rep;
+        this.jugaCtrl = jugaCtrl;
 
-        addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                highlighted = null;
-                for (HidatoCell cell : cells) {
-                    if (cell.getArea().contains(e.getPoint())) {
-                        highlighted = cell;
-                        break;
+        if(playable){
+            addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    highlighted = null;
+                    for (HidatoCell cell : cells) {
+                        if (cell.getArea().contains(e.getPoint())) {
+                            highlighted = cell;
+                            break;
+                        }
+                    }
+                    repaint();
+                }
+            });
+
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent mouseEvent) {
+                    super.mouseClicked(mouseEvent);
+                    HidatoCell clickedCell = null;
+                    int pos=0;
+                    for(HidatoCell cell : cells){
+                        if(cell.getArea().contains(mouseEvent.getPoint())){
+                            clickedCell = cell;
+                            break;
+                        }
+                        pos++;
+                    }
+                    if(clickedCell != null && clickedCell.getTipo() == TipoCelda.VARIABLE && clickedCell.getValue() == 0){
+                        int i = pos/rep.nColumnas;
+                        int j = pos%rep.nColumnas;
+                        boolean move = jugaCtrl.mueve(i, j);
+
+                        if(move){
+                            rep.tablero = jugaCtrl.getTablero();
+                            clickedCell.setValue(Integer.parseInt(rep.tablero[i][j]));
+
+                            if(jugaCtrl.acabada()){
+                                repaint();
+                                JOptionPane.showMessageDialog(null, "PARTIDA ACABADA!", "FELICITATS", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "MOVIMENT ERRONI","ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
-                repaint();
-            }
-        });
+            });
+        }
+
 
     }
 

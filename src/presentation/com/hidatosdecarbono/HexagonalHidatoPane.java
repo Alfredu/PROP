@@ -6,8 +6,8 @@ import java.awt.geom.GeneralPath;
 
 public class HexagonalHidatoPane extends HidatoPane {
 
-    public HexagonalHidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight){
-        super(rep, preferredWidth, preferredHeight);
+    public HexagonalHidatoPane(HidatoRep rep, int preferredWidth, int preferredHeight, JugarHidatosCTRL jugaCtrl, boolean playable){
+        super(rep, preferredWidth, preferredHeight, jugaCtrl, playable);
     }
     @Override
     protected void putCells(){

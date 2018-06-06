@@ -52,21 +52,23 @@ public class InputHidatoWindow {
                                 JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[0]);
 
                         if (res == JOptionPane.YES_OPTION) {
+                            presentationCTRL.cambiaVentana("MostraSolucioWindow");
 
                         } else {
-                            Object[] opcionsJugar = {"Guardar l'Hidato", "Jugar l'Hidato", "Descartar l'Hidato"};
-                            res = JOptionPane.showOptionDialog(mainPanel, "Què vols fer a continuació?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_CANCEL_OPTION,
-                                    JOptionPane.QUESTION_MESSAGE, null, opcionsJugar, opcionsJugar[1]);
+                            res = JOptionPane.showOptionDialog(mainPanel, "Vols guardar l'Hidato?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[1]);
 
                             if (res == JOptionPane.YES_OPTION) {
                                 //Guardar
                                 controladorCreador.guardaHidato();
-                                presentationCTRL.cambiaVentana("MainMenu");
-                            } else if (res == JOptionPane.NO_OPTION) {
-                                //Jugar
+                            }
+
+                            res = JOptionPane.showOptionDialog(mainPanel, "Vols Jugar l'Hidato?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[1]);
+
+                            if (res == JOptionPane.YES_OPTION) {
                                 presentationCTRL.cambiaVentana("JugaPartidaWindow");
                             } else {
-                                //Descartar
                                 presentationCTRL.cambiaVentana("MainMenu");
                             }
                         }

@@ -24,7 +24,7 @@ public class PlayHidatoWindow {
                 timeElapsed.setText("" + i);
             }
         });
-        timer.start();
+        //timer.start();
     }
 
     public void createUIComponents() {

@@ -9,12 +9,13 @@ public class PresentationCTRL {
     private DomainFactory domini;
     private JFrame frame;
     private CreadorHidatosCTRL creadorHidatos;
+    private LogInCTRL logInCTRL;
     PresentationCTRL(){
         domini = new DomainFactory();
         frame = new JFrame("HIDATOS DE CARBONO");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        creadorHidatos = domini.getControladorCreador();
+        logInCTRL = domini.getLogInCTRL();
         try{
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         }
@@ -37,14 +38,16 @@ public class PresentationCTRL {
         switch (nombre){
             case "FirstMenu":
                 cont = new FirstWindow(this).$$$getRootComponent$$$();
+                logInCTRL = domini.getLogInCTRL();
                 break;
             case "LoginWindow":
-                cont = new LoginWindow(domini.getLogInCTRL(), this).$$$getRootComponent$$$();
+                cont = new LoginWindow(logInCTRL, this).$$$getRootComponent$$$();
                 break;
             case "RegisterWindow":
-                cont = new RegisterWindow(domini.getLogInCTRL(), this).$$$getRootComponent$$$();
+                cont = new RegisterWindow(logInCTRL, this).$$$getRootComponent$$$();
                 break;
             case "MainMenu":
+                creadorHidatos = domini.getControladorCreador();
                 cont = new MainMenu(this).$$$getRootComponent$$$();
                 break;
             case "JugaWindow":
@@ -58,24 +61,14 @@ public class PresentationCTRL {
                         creadorHidatos).$$$getRootComponent$$$();
                 break;
             case "JugaPartidaWindow":
-                if(creadorHidatos.getRepresentacionHidato().forma == TipoHidato.CUADRADO){
-                    cont = new PlayHidatoWindow(
-                            new SquareHidatoPane(creadorHidatos.getRepresentacionHidato(),
-                                    600, 500)
-                    ).$$$getRootComponent$$$();
-                }
-                else if(creadorHidatos.getRepresentacionHidato().forma == TipoHidato.TRIANGULAR){
-                    cont = new PlayHidatoWindow(
-                            new TriangularHidatoPane(creadorHidatos.getRepresentacionHidato(),
-                                    600, 500)
-                    ).$$$getRootComponent$$$();
-                }
-                else{
-                    cont = new PlayHidatoWindow(
-                            new HexagonalHidatoPane(creadorHidatos.getRepresentacionHidato(),
-                                    600, 500)
-                    ).$$$getRootComponent$$$();
-                }
+                    cont = new PlayHidatoWindow(creaHidatoPane(creadorHidatos.getRepresentacionHidato().forma,
+                            true)).$$$getRootComponent$$$();
+                break;
+
+            case "MostraSolucioWindow":
+
+                cont = new ShowSolutionWindow(creaHidatoPane(creadorHidatos.getRepresentacionSolucion().forma,
+                        false), creadorHidatos, this).$$$getRootComponent$$$();
 
                 break;
 
@@ -90,5 +83,29 @@ public class PresentationCTRL {
 
     public void cierraVentana() {
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED));
+    }
+
+    private HidatoPane creaHidatoPane(TipoHidato forma, boolean playable){
+        HidatoPane pane;
+        int width = 600;
+        int height = 500;
+        HidatoRep rep;
+        if(playable) rep = creadorHidatos.getRepresentacionHidato();
+        else rep = creadorHidatos.getRepresentacionSolucion();
+        if(forma == TipoHidato.CUADRADO){
+            pane = new SquareHidatoPane(rep,
+                    width, height, creadorHidatos.getControladorPartida(), playable);
+        }
+
+        else if(forma == TipoHidato.TRIANGULAR){
+            pane = new TriangularHidatoPane(rep,
+                    width, height, creadorHidatos.getControladorPartida(), playable);
+        }
+        else{
+            pane = new HexagonalHidatoPane(rep,
+                    width, height, creadorHidatos.getControladorPartida(), playable);
+        }
+
+        return pane;
     }
 }

@@ -1,5 +1,6 @@
 package com.hidatosdecarbono;
 
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -79,6 +80,7 @@ public class CreadorHidatosCTRL {
 
         hidatoCreado.generaAleatorioPorDificultad(celdas,dificultad);
 
+        asociaRanking();
     }
 
     /**
@@ -104,6 +106,7 @@ public class CreadorHidatosCTRL {
         }
         hidatoCreado.generaTableroAleatorio(numCeldas,numCeldasAgujero,numCeldasFijas);
         hidatoCreado.decideDificultad();
+        asociaRanking();
     }
 
     public String adyacenciaHidato(){
@@ -162,6 +165,7 @@ public class CreadorHidatosCTRL {
         }
         hidatoCreado.decideDificultad();
         //devolvemos si el hidato tiene solucion
+        asociaRanking();
         return (tieneUno && hidatoCreado.tieneSolucion());
     }
 
@@ -213,6 +217,20 @@ public class CreadorHidatosCTRL {
         return rep;
     }
 
+    public HidatoRep getRepresentacionSolucion(){
+        //TODO encapsular amb laltra funcio un altre dia
+        HidatoRep rep = new HidatoRep();
+        rep.setParams(0, hidatoCreado.getNumColumnas(), hidatoCreado.getNumFilas(),
+                hidatoCreado.getTipoHidato(), hidatoCreado.getAdyacencia());
+
+        for(int i=0;i<hidatoCreado.getNumFilas();i++){
+            for(int j=0;j<hidatoCreado.getNumColumnas();j++){
+                rep.tablero[i][j] = celdaToString(hidatoCreado.getCeldaTableroSolucion(i,j));
+            }
+        }
+        return rep;
+    }
+
     /**
      * Devuelve un array de strings que contiene la solución del hidato del controlador
      */
@@ -241,6 +259,17 @@ public class CreadorHidatosCTRL {
             else return "?";
         }
         else return String.valueOf(c.getValor());
+    }
+
+    private void asociaRanking(){
+        try {
+            hidatoCreado.asociaRanking(persistenciaCTRL.obtenRanking(hidatoCreado.getDificultad()));
+        }
+        catch (NoSuchFileException e){
+            Ranking r = new Ranking();
+            persistenciaCTRL.guardaRanking(r,hidatoCreado.getDificultad());
+            hidatoCreado.asociaRanking(r);
+        }
     }
 
 
