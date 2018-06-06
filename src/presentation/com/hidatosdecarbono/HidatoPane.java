@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -50,24 +52,40 @@ public abstract class HidatoPane extends JPanel {
                         }
                         pos++;
                     }
-                    if(clickedCell != null && clickedCell.getTipo() == TipoCelda.VARIABLE && clickedCell.getValue() == 0){
-                        int i = pos/rep.nColumnas;
-                        int j = pos%rep.nColumnas;
-                        boolean move = jugaCtrl.mueve(i, j);
-
+                    if(SwingUtilities.isRightMouseButton(mouseEvent)){
+                        boolean move = jugaCtrl.retroceder();
                         if(move){
                             rep.tablero = jugaCtrl.getTablero();
-                            clickedCell.setValue(Integer.parseInt(rep.tablero[i][j]));
-
-                            if(jugaCtrl.acabada()){
-                                repaint();
-                                JOptionPane.showMessageDialog(null, "PARTIDA ACABADA!", "FELICITATS", JOptionPane.INFORMATION_MESSAGE);
-
-                                //TODO oferirRanking
-                            }
+                            updateBoard(false);
+                            repaint();
                         }
                         else{
-                            JOptionPane.showMessageDialog(null, "MOVIMENT ERRONI","ERROR", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "NO ES POT RETROCEDIR","ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    else if(SwingUtilities.isLeftMouseButton(mouseEvent)){
+                        if(clickedCell != null && clickedCell.getTipo() == TipoCelda.VARIABLE && clickedCell.getValue() == 0){
+                            int i = pos/rep.nColumnas;
+                            int j = pos%rep.nColumnas;
+                            boolean move = jugaCtrl.mueve(i, j);
+
+                            if(move){
+                                rep.tablero = jugaCtrl.getTablero();
+                                clickedCell.setValue(Integer.parseInt(rep.tablero[i][j]));
+
+                                if(jugaCtrl.acabada()){
+                                    repaint();
+                                    Object[] opcions = {"Veure Ranking", "Anar al menú"};
+                                    JOptionPane.showOptionDialog(null, "PARTIDA ACABADA!\nQuè vols fer a continuació?",
+                                            "FELICITATS", JOptionPane.YES_NO_OPTION,
+                                            JOptionPane.QUESTION_MESSAGE, null, opcions, null);
+
+                                    //TODO oferirRanking
+                                }
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "MOVIMENT ERRONI","ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
                 }
