@@ -28,10 +28,10 @@ public class Ranking {
      * @param
      * @param username Un string que contiene el username del jugador
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
-     * @param pistas
+     * @param penalizacion
      */
-    public void addEntradaRanking(String username, int tiempo , int pistas) {
-        EntradaRanking entradaRanking = new EntradaRanking(username,tiempo,pistas);
+    public void addEntradaRanking(String username, int tiempo , int penalizacion) {
+        EntradaRanking entradaRanking = new EntradaRanking(username,tiempo,penalizacion);
         this.entradasRanking.add(entradaRanking);
         Collections.sort(entradasRanking);
     }
