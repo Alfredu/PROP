@@ -207,8 +207,14 @@ public class PersistenciaCTRL {
         partida.setFilaActual(json.getInt("filaActual"));
         partida.setTiempoPartida(json.getInt("tiempoPartida"));
         partida.setTablero(tablero);
+        partida.setPenalizacion(json.getInt("penalizacion"));
         partida.setNumPistas(json.getInt("numPistas"));
         partida.setN(json.getInt("n"));
+        setMovimientosPartida(json, partida);
+        return partida;
+    }
+
+    private void setMovimientosPartida(JSONObject json, Partida partida) {
         Stack<Movimiento> movimientos = new Stack<>();
         JSONArray arrayMovimientos = json.getJSONArray("movimientos");
         for (int i = 0; i < arrayMovimientos.length() ; i++) {
@@ -216,7 +222,6 @@ public class PersistenciaCTRL {
             movimientos.push(m);
         }
         partida.setMovimientos(movimientos);
-        return partida;
     }
 
 

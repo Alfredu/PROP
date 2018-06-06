@@ -16,7 +16,7 @@ public class Partida {
     private int n = 2;
     private int filaActual;
     private int colActual;
-    private ArrayList<Pista> pistas;
+    private int penalizacion =0;
     private int numPistas = 0;
     private long tiempoInicial;
     private long tiempoPartida = 0;
@@ -37,7 +37,6 @@ public class Partida {
 
         hidatoJugado.creaGrafo(grafoHidato,nodes,tableroSolucion);
         movimientos = new Stack<Movimiento>();
-        pistas = new ArrayList<>();
         inicializarFilaColumna();
         clearTableroSolucion();
 
@@ -55,7 +54,7 @@ public class Partida {
         clearTableroSolucion();
         boolean solucionable = grafoHidato.esSolucionable();
         if(tipoPista.equals(TipoPista.SIGUIENTE_CASILLA)) {
-            pistas.add(new PistaSiguienteCasilla());
+            penalizacion+= new PistaSiguienteCasilla().getPenalitzacio();
             if (solucionable) {
                 //return la casella on estigui n
                 int i = 0;
@@ -73,11 +72,11 @@ public class Partida {
             }
         }
         else if(tipoPista.equals(TipoPista.CAMINO_CORRECTO)){
-            pistas.add(new PistaCaminoCorrecto());
+            penalizacion+= new PistaCaminoCorrecto().getPenalitzacio();
             if(solucionable) return true;
         }
         else if(tipoPista.equals(TipoPista.FIJA_ALEATORIA)){
-            pistas.add(new PistaFijaAleatoria());
+            penalizacion+= new PistaFijaAleatoria().getPenalitzacio();
             if(solucionable){
                 ArrayList<Celda> vacias = new ArrayList<>();
                 ArrayList<Celda> soluciones = new ArrayList<>();
@@ -226,7 +225,7 @@ public class Partida {
         if(n == grafoHidato.size()+1){
             tiempoPartida = tiempoPartida + (System.currentTimeMillis() - tiempoInicial);
             int time = Math.toIntExact(tiempoPartida);
-            hidatoJugado.entraRanking(jugadorPartida.getUsername(),time,pistas);
+            hidatoJugado.entraRanking(jugadorPartida.getUsername(),time,penalizacion);
             return true;
         }
         return false;
@@ -261,14 +260,14 @@ public class Partida {
         this.numPistas = numPistas;
     }
 
-    public void setTiempoInicial(long tiempoInicial) {
-        this.tiempoInicial = tiempoInicial;
-    }
-
     public void setTiempoPartida(long tiempoPartida) {
         this.tiempoPartida = tiempoPartida;
     }
 
     public long getTiempoPartida(){return System.currentTimeMillis() - this.tiempoInicial;}
+
+    public void setPenalizacion(int penalizacion) {
+        this.penalizacion = penalizacion;
+    }
 
 }

@@ -12,33 +12,21 @@ public class EntradaRanking implements Comparable{
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
      * @param pistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
      */
-    public EntradaRanking(String username, int tiempo , ArrayList<Pista> pistas) {
+    public EntradaRanking(String username, int tiempo , int penalizacion) {
         this.username = username;
-        this.puntuacion = calculaPuntuacion(tiempo, calculaPenalizacion(pistas));
+        this.puntuacion = calculaPuntuacion(tiempo, penalizacion);
     }
 
     /**
      * Devuelve la puntuacion calculada a partir del tiempo y el numero de pistas
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
-     * @param numPistas Un integer que contiene el numero de pistas que ha utilizado el jugador durante la partida
+     * @param penalizacion Un integer que contiene la penalizacion total de las pistas utilizdas
      * @return puntuacion Un integer que contiene la puntuacion correspondiente a la nueva entradaRanking
      */
     private int calculaPuntuacion(int tiempo, int penalizacion) {
         return  Math.floorDiv(10000000,(tiempo+penalizacion));
     }
 
-    /**
-     * Devuelve la penalización a aplicar en base a las pistas utilizadas
-     * @param pistas
-     * @return
-     */
-    private int calculaPenalizacion(ArrayList<Pista> pistas){
-        int penalitzacio = 0;
-        for(Pista pista : pistas){
-            penalitzacio =+ pista.getPenalitzacio();
-        }
-        return penalitzacio;
-    }
 
     /**
      * Devuelve la puntuación de la entradaRanking

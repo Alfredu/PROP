@@ -33,7 +33,7 @@ public class PersistenciaPartidaTest {
     @After
     public void tearDown() throws Exception {
         File file = new File("persistencia/partidas.txt");
-        file.delete();
+        //file.delete();
     }
 
     @Test
