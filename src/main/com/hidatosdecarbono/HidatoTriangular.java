@@ -60,7 +60,38 @@ public class HidatoTriangular extends Hidato {
             if(i>0 && nodes[i-1][j].noEsVacio()) lista.add(nodes[i-1][j]);
         }
         if(this.getAdyacencia() == TipoAdyacencia.LADOYVERTICE){
-            //TODO no necesario para la primera entrega. Si sobra tiempo.
+            if(haciaArriba){
+                //Casillas adyacentes al vertice superior
+                if(i > 0 && nodes[i-1][j].noEsVacio()) lista.add(nodes[i-1][j]);
+                if(i > 0 && j > 0 && nodes[i-1][j-1].noEsVacio()) lista.add(nodes[i-1][j-1]);
+                if(i > 0 && j < nCols-1 && nodes[i-1][j+1].noEsVacio()) lista.add(nodes[i-1][j+1]);
+
+                //Casillas adyacentes al vertice inferior izquierdo
+                if (j > 1 && nodes[i][j-2].noEsVacio()) lista.add(nodes[i][j-2]);
+                if (j > 1 && i < nFilas-1 && nodes[i+1][j-2].noEsVacio()) lista.add(nodes[i+1][j-2]);
+                if (j > 0 && i < nFilas-1 && nodes[i+1][j-1].noEsVacio()) lista.add(nodes[i+1][j-1]);
+
+                //Casillas adyacentes al vertice inferior derecho
+                if(j < nCols -2 && nodes[i][j+2].noEsVacio()) lista.add(nodes[i][j+2]);
+                if(j < nCols -2 && i < nFilas-1 && nodes[i+1][j+2].noEsVacio()) lista.add(nodes[i+1][j+2]);
+                if(j < nCols -1 && i < nFilas-1 && nodes[i+1][j+1].noEsVacio()) lista.add(nodes[i+1][j+1]);
+            }
+            else{
+                //Casillas adyacentes al vertice inferior
+                if(i < nFilas-1 && nodes[i+1][j].noEsVacio()) lista.add(nodes[i+1][j]);
+                if(i < nFilas-1 && j > 0 && nodes[i+1][j-1].noEsVacio()) lista.add(nodes[i+1][j-1]);
+                if(i < nFilas-1 && j < nCols-1 && nodes[i+1][j+1].noEsVacio()) lista.add(nodes[i+1][j+1]);
+
+                //Casillas adyacentes al vertice superior izquierdo
+                if (j > 1 && nodes[i][j-2].noEsVacio()) lista.add(nodes[i][j-2]);
+                if (j > 1 && i > 0 && nodes[i-1][j-2].noEsVacio()) lista.add(nodes[i-1][j-2]);
+                if (j > 0 && i > 0 && nodes[i-1][j-1].noEsVacio()) lista.add(nodes[i-1][j-1]);
+
+                //Casillas adyacentes al vertice superior derecho
+                if(j < nCols -2 && nodes[i][j+2].noEsVacio()) lista.add(nodes[i][j+2]);
+                if(j < nCols -2 && i > 0 && nodes[i-1][j+2].noEsVacio()) lista.add(nodes[i-1][j+2]);
+                if(j < nCols -1 && i > 0 && nodes[i-1][j+1].noEsVacio()) lista.add(nodes[i-1][j+1]);
+            }
         }
         return lista;
     }
