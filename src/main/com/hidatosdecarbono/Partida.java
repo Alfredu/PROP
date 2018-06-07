@@ -21,6 +21,7 @@ public class Partida {
     private long tiempoInicial;
     private long tiempoPartida = 0;
     private Jugador jugadorPartida;
+    private HidatoRep rep;
 
     public Partida(Hidato hidato, Jugador jugadorAJugar){
         this.tiempoInicial = System.currentTimeMillis();
@@ -277,4 +278,11 @@ public class Partida {
         this.penalizacion = penalizacion;
     }
 
+    public void setRep(HidatoRep rep) {
+        this.rep = rep;
+    }
+
+    public HidatoRep getRep() {
+        return rep;
+    }
 }

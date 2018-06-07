@@ -31,7 +31,7 @@ public class MainMenu {
         consultaRankingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                presentationCTRL.cambiaVentana("ShowRankingWindow");
             }
         });
         jugaUnaPartidaButton.addActionListener(new ActionListener() {

@@ -34,6 +34,7 @@ public class PlayHidatoWindow {
         guardaPartidaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                controladorPartida.guardaRepresentacionHidato(hidatoPane1.rep);
                 controladorPartida.pausa();
                 presentationCTRL.cambiaVentana("MainMenu");
             }

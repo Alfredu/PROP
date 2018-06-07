@@ -3,6 +3,8 @@ package com.hidatosdecarbono;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
 
 public class PresentationCTRL {
 
@@ -11,6 +13,7 @@ public class PresentationCTRL {
     private CreadorHidatosCTRL creadorHidatos;
     private LogInCTRL logInCTRL;
     private JugarHidatosCTRL jugarHidatosPausaCtrl;
+    private ConsultarRankingCTRL consultarRankingCTRL;
     PresentationCTRL(){
         domini = new DomainFactory();
         frame = new JFrame("HIDATOS DE CARBONO");
@@ -69,22 +72,22 @@ public class PresentationCTRL {
                 cont = new InputHidatoByDifficultyWindow(this, creadorHidatos).$$$getRootComponent$$$();
                 break;
             case "JugaPartidaWindow":
-                    cont = new PlayHidatoWindow(creaHidatoPane(creadorHidatos.getRepresentacionHidato().forma,
-                            true), creadorHidatos.getControladorPartida(), this).$$$getRootComponent$$$();
+                    cont = new PlayHidatoWindow(creaHidatoPane(creadorHidatos.getRepresentacionHidato(),
+                            true,creadorHidatos.getControladorPartida()), creadorHidatos.getControladorPartida(), this).$$$getRootComponent$$$();
                 break;
 
             case "ReanudarHidatoWindow":
-                    cont = new PlayHidatoWindow(creaHidatoPane(TipoHidato.CUADRADO, true), jugarHidatosPausaCtrl, this).$$$getRootComponent$$$();
+                    cont = new PlayHidatoWindow(creaHidatoPane(jugarHidatosPausaCtrl.getRepresentacionHidato(), true, jugarHidatosPausaCtrl), jugarHidatosPausaCtrl, this).$$$getRootComponent$$$();
                     break;
             case "MostraSolucioWindow":
 
-                cont = new ShowSolutionWindow(creaHidatoPane(creadorHidatos.getRepresentacionSolucion().forma,
-                        false), creadorHidatos, this).$$$getRootComponent$$$();
+                cont = new ShowSolutionWindow(creaHidatoPane(creadorHidatos.getRepresentacionSolucion(),
+                        false,creadorHidatos.getControladorPartida()), creadorHidatos, this).$$$getRootComponent$$$();
 
                 break;
-
-
-
+            case "ShowRankingWindow":
+                cont = new ShowRankingWindow(this).$$$getRootComponent$$$();
+                break;
 
         }
 
@@ -98,25 +101,22 @@ public class PresentationCTRL {
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED));
     }
 
-    private HidatoPane creaHidatoPane(TipoHidato forma, boolean playable){
+    private HidatoPane creaHidatoPane(HidatoRep rep, boolean playable, JugarHidatosCTRL controladorPartida){
         HidatoPane pane;
         int width = 600;
         int height = 500;
-        HidatoRep rep;
-        if(playable) rep = creadorHidatos.getRepresentacionHidato();
-        else rep = creadorHidatos.getRepresentacionSolucion();
-        if(forma == TipoHidato.CUADRADO){
+        if(rep.forma == TipoHidato.CUADRADO){
             pane = new SquareHidatoPane(rep,
-                    width, height, creadorHidatos.getControladorPartida(), playable);
+                    width, height, controladorPartida, playable);
         }
 
-        else if(forma == TipoHidato.TRIANGULAR){
+        else if(rep.forma == TipoHidato.TRIANGULAR){
             pane = new TriangularHidatoPane(rep,
-                    width, height, creadorHidatos.getControladorPartida(), playable);
+                    width, height, controladorPartida, playable);
         }
         else{
             pane = new HexagonalHidatoPane(rep,
-                    width, height, creadorHidatos.getControladorPartida(), playable);
+                    width, height, controladorPartida, playable);
         }
 
         return pane;
@@ -130,5 +130,9 @@ public class PresentationCTRL {
         catch(IndexOutOfBoundsException e){
             return false;
         }
+    }
+
+    public ArrayList getEntradasRanking(Dificultad dificultat) throws NoSuchFileException {
+        return domini.getRankingCTRL(dificultat).getEntradasRanking();
     }
 }

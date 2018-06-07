@@ -7,6 +7,7 @@ public class JugarHidatosCTRL {
     private PersistenciaCTRL persistencia;
     private Partida partida;
     private Hidato hidatoJugado;
+    private HidatoRep rep;
 
     public JugarHidatosCTRL(PersistenciaCTRL persistencia){
         this.persistencia = persistencia;
@@ -164,5 +165,30 @@ public class JugarHidatosCTRL {
             else return "?";
         }
         else return String.valueOf(c.getValor());
+    }
+
+    public HidatoRep getRepresentacionHidato(){
+        if(this.partida.getRep() == null){
+            this.rep = new HidatoRep();
+            this.rep.setParams(0, hidatoJugado.getNumColumnas(), hidatoJugado.getNumFilas(),
+                    hidatoJugado.getTipoHidato(), hidatoJugado.getAdyacencia());
+
+            for(int i=0;i<partida.getHidatoJugado().getNumFilas();i++){
+                for(int j=0;j<partida.getHidatoJugado().getNumColumnas();j++){
+                    this.rep.tablero[i][j] = celdaToString(partida.getTablero()[i][j]);
+                }
+            }
+
+            return this.rep;
+
+        }
+        else{
+         return partida.getRep();
+        }
+
+    }
+
+    public void guardaRepresentacionHidato(HidatoRep rep) {
+        this.partida.setRep(rep);
     }
 }

@@ -169,6 +169,10 @@ public abstract class HidatoPane extends JPanel {
                 }
                 if(cell.getValue() != newValue){
                     cell.setValue(newValue);
+                    if(newValue == 0){
+                        cell.setTipo(TipoCelda.VARIABLE);
+                    }
+                    rep.tablero[pos/rep.nColumnas][pos%rep.nColumnas] = (newValue == 0) ? "?" : ""+newValue;
                     if(nuevaFija){
                         cell.setTipo(TipoCelda.FIJA);
                     }
