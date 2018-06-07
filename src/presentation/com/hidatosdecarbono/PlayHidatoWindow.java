@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PlayHidatoWindow {
     private HidatoPane hidatoPane1;
@@ -84,6 +86,30 @@ public class PlayHidatoWindow {
 
                     if (res == JOptionPane.YES_OPTION) {
                         //TODO Ranking
+                    } else {
+                        presentationCTRL.cambiaVentana("MainMenu");
+                    }
+                }
+            }
+        });
+
+        hidatoPane1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                super.mouseClicked(mouseEvent);
+
+                if (controladorPartida.acabada()) {
+                    hidatoPane1.repaint();
+                    hidatoPane1.removeMouseListener(this);
+                    Object[] opcions = {"Veure Ranking", "Anar al menú"};
+                    int res = JOptionPane.showOptionDialog(null, "PARTIDA ACABADA!\nQuè vols fer a continuació?",
+                            "FELICITATS", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null, opcions, null);
+
+                    //TODO oferirRanking
+
+                    if (res == JOptionPane.YES_OPTION) {
+
                     } else {
                         presentationCTRL.cambiaVentana("MainMenu");
                     }

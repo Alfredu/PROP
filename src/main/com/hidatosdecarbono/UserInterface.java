@@ -405,7 +405,7 @@ public class UserInterface {
             System.out.println(hidatoActual.nColumnas);
             System.out.println("Forma del hidato: " + hidatoActual.forma);
             System.out.println("Adyacencia del hidato: " + hidatoActual.adyacencia);
-            System.out.println("------------------------");
+            System.out.println("------------ ------------");
         }
 
         System.out.println("Seleccione el hidato a jugar de la lista introduciendo su Id");

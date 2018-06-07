@@ -53,7 +53,7 @@ public class MainMenu {
                 } else if (res == JOptionPane.NO_OPTION) {
                     presentationCTRL.cambiaVentana("InputRandomHidatoWindow");
                 } else if (res == JOptionPane.CANCEL_OPTION) {
-
+                    presentationCTRL.cambiaVentana("InputHidatoByDifficultyWindow");
                 }
             }
         });

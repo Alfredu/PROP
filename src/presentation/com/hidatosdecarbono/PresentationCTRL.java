@@ -10,6 +10,7 @@ public class PresentationCTRL {
     private JFrame frame;
     private CreadorHidatosCTRL creadorHidatos;
     private LogInCTRL logInCTRL;
+    private JugarHidatosCTRL jugarHidatosPausaCtrl;
     PresentationCTRL(){
         domini = new DomainFactory();
         frame = new JFrame("HIDATOS DE CARBONO");
@@ -63,17 +64,25 @@ public class PresentationCTRL {
                 cont = new InputHidatoWindow(this,
                         creadorHidatos).$$$getRootComponent$$$();
                 break;
+
+            case "InputHidatoByDifficultyWindow":
+                cont = new InputHidatoByDifficultyWindow(this, creadorHidatos).$$$getRootComponent$$$();
+                break;
             case "JugaPartidaWindow":
                     cont = new PlayHidatoWindow(creaHidatoPane(creadorHidatos.getRepresentacionHidato().forma,
                             true), creadorHidatos.getControladorPartida(), this).$$$getRootComponent$$$();
                 break;
 
+            case "ReanudarHidatoWindow":
+                    cont = new PlayHidatoWindow(creaHidatoPane(TipoHidato.CUADRADO, true), jugarHidatosPausaCtrl, this).$$$getRootComponent$$$();
+                    break;
             case "MostraSolucioWindow":
 
                 cont = new ShowSolutionWindow(creaHidatoPane(creadorHidatos.getRepresentacionSolucion().forma,
                         false), creadorHidatos, this).$$$getRootComponent$$$();
 
                 break;
+
 
 
 
@@ -111,5 +120,15 @@ public class PresentationCTRL {
         }
 
         return pane;
+    }
+
+    public boolean tryLoadSavedGame(){
+        try{
+            this.jugarHidatosPausaCtrl = domini.getControladorJugarHidatoPausado();
+            return true;
+        }
+        catch(IndexOutOfBoundsException e){
+            return false;
+        }
     }
 }

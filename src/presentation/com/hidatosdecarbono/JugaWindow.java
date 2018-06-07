@@ -1,5 +1,7 @@
 package com.hidatosdecarbono;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,22 @@ public class JugaWindow {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 presentationCTRL.cambiaVentana("MainMenu");
+            }
+        });
+        carregaPartidaExistentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        carregaPartidaExistentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (presentationCTRL.tryLoadSavedGame()) {
+                    presentationCTRL.cambiaVentana("ReanudarHidatoWindow");
+                } else {
+                    JOptionPane.showMessageDialog(mainPanel, "No hi ha cap partida guardada!", "ERROR!", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }

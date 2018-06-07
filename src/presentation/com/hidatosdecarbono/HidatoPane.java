@@ -72,16 +72,6 @@ public abstract class HidatoPane extends JPanel {
                             if(move){
                                 rep.tablero = jugaCtrl.getTablero();
                                 clickedCell.setValue(Integer.parseInt(rep.tablero[i][j]));
-
-                                if(jugaCtrl.acabada()){
-                                    repaint();
-                                    Object[] opcions = {"Veure Ranking", "Anar al menú"};
-                                    JOptionPane.showOptionDialog(null, "PARTIDA ACABADA!\nQuè vols fer a continuació?",
-                                            "FELICITATS", JOptionPane.YES_NO_OPTION,
-                                            JOptionPane.QUESTION_MESSAGE, null, opcions, null);
-
-                                    //TODO oferirRanking
-                                }
                             }
                             else{
                                 JOptionPane.showMessageDialog(null, "MOVIMENT ERRONI","ERROR", JOptionPane.ERROR_MESSAGE);
