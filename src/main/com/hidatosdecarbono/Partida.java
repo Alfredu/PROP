@@ -151,6 +151,12 @@ public class Partida {
      */
     public boolean mueve(int i, int j){
         if(i < 0 || i >= tablero.length || j < 0 || j >= tablero[i].length) return false;
+
+        for(int i1 = 0; i1 < tablero.length; i1++){
+            for (int j1 = 0; j1 < tablero[0].length; j1++){
+                if(tablero[i1][j1].getValor() == n) return false;
+            }
+        }
         if(tablero[i][j].esVacia() && grafoHidato.sonAdyacentes(nodes[i][j],nodes[filaActual][colActual])) {
             Movimiento m = new Movimiento(filaActual, colActual);
             movimientos.push(m);
