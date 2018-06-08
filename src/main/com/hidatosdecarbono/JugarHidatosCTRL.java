@@ -31,14 +31,6 @@ public class JugarHidatosCTRL {
         this.partida = partida;
         hidatoJugado = partida.getHidatoJugado();
         Dificultad d = hidatoJugado.getDificultad();
-        try {
-            hidatoJugado.asociaRanking(persistencia.obtenRanking(d));
-        }
-        catch (NoSuchFileException e){
-            Ranking r = new Ranking();
-            persistencia.guardaRanking(r,d);
-            hidatoJugado.asociaRanking(r);
-        }
     }
 
     /**

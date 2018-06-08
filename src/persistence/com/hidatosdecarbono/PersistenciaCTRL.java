@@ -269,6 +269,14 @@ public class PersistenciaCTRL {
         }
         hidato.setDificultad(dificultad);
         hidato.setTablero(tablero);
+        try {
+            hidato.asociaRanking(obtenRanking(dificultad));
+        }
+        catch (NoSuchFileException e){
+            Ranking r = new Ranking();
+            guardaRanking(r,dificultad);
+            hidato.asociaRanking(r);
+        }
         return hidato;
     }
 
