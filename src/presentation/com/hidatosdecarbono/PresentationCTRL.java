@@ -14,6 +14,7 @@ public class PresentationCTRL {
     private LogInCTRL logInCTRL;
     private JugarHidatosCTRL jugarHidatosPausaCtrl;
     private ConsultarRankingCTRL consultarRankingCTRL;
+    private SeleccionarHidatosCTRL seleccionarHidatosCTRL;
     PresentationCTRL(){
         domini = new DomainFactory();
         frame = new JFrame("HIDATOS DE CARBONO");
@@ -89,6 +90,11 @@ public class PresentationCTRL {
                 cont = new ShowRankingWindow(this).$$$getRootComponent$$$();
                 break;
 
+            case "ChoseHidatoWindow":
+                this.seleccionarHidatosCTRL = domini.getSeleccionarHidatosCTRL();
+                cont = new ChoseHidatoWindow(this, this.seleccionarHidatosCTRL).$$$getRootComponent$$$();
+                break;
+
         }
 
         if(cont != null){
@@ -135,4 +141,13 @@ public class PresentationCTRL {
     public ArrayList getEntradasRanking(Dificultad dificultat) throws NoSuchFileException {
         return domini.getRankingCTRL(dificultat).getEntradasRanking();
     }
+
+    public void seleccionaHidato(int id){
+        JugarHidatosCTRL jugarHidatosCTRL = this.seleccionarHidatosCTRL.getControladorPartida(id);
+        Container cont = new PlayHidatoWindow(creaHidatoPane(jugarHidatosCTRL.getRepresentacionHidato(), true,
+                jugarHidatosCTRL), jugarHidatosCTRL, this).$$$getRootComponent$$$();
+
+        loadVentana(cont);
+    }
+
 }

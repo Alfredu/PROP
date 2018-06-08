@@ -13,8 +13,10 @@ public class ShowRankingWindow {
     private JTextArea ranking;
     private JComboBox dificultatComboBox;
     private JPanel mainPanel;
+    private PresentationCTRL presentationCTRL;
 
     public ShowRankingWindow(PresentationCTRL presentationCTRL) {
+        this.presentationCTRL = presentationCTRL;
         enrereButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -24,32 +26,37 @@ public class ShowRankingWindow {
         dificultatComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
-                ranking.setText("");
-                String value = dificultatComboBox.getSelectedItem().toString();
-                Dificultad dificultad;
-                if (value.equals("Fàcil")) {
-                    dificultad = Dificultad.FACIL;
-                } else if (value.equals("Mitjana")) {
-                    dificultad = Dificultad.MEDIO;
-                } else {
-                    dificultad = Dificultad.DIFICIL;
-                }
-
-                try {
-                    ArrayList entrades = presentationCTRL.getEntradasRanking(dificultad);
-                    int i = 0;
-                    for (Object entrada : entrades) {
-                        ranking.append((String) entrada + "\n");
-                        if (i == 9) break;
-                        i++;
-                    }
-                } catch (NoSuchFileException e) {
-                    JOptionPane.showMessageDialog(mainPanel, "No hi ha entrades pel ranking d'Hidatos\n" +
-                            "de dificultat " + value.toLowerCase(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
+                setRankings();
             }
         });
+
+        setRankings();
+    }
+
+    public void setRankings() {
+        ranking.setText("");
+        String value = dificultatComboBox.getSelectedItem().toString();
+        Dificultad dificultad;
+        if (value.equals("Fàcil")) {
+            dificultad = Dificultad.FACIL;
+        } else if (value.equals("Mitjana")) {
+            dificultad = Dificultad.MEDIO;
+        } else {
+            dificultad = Dificultad.DIFICIL;
+        }
+
+        try {
+            ArrayList entrades = presentationCTRL.getEntradasRanking(dificultad);
+            int i = 0;
+            for (Object entrada : entrades) {
+                ranking.append((String) entrada + "\n");
+                if (i == 9) break;
+                i++;
+            }
+        } catch (NoSuchFileException e) {
+            JOptionPane.showMessageDialog(mainPanel, "No hi ha entrades pel ranking d'Hidatos\n" +
+                    "de dificultat " + value.toLowerCase(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     {

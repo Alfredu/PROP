@@ -24,17 +24,17 @@ public class JugaWindow {
         carregaPartidaExistentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
-            }
-        });
-        carregaPartidaExistentButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
                 if (presentationCTRL.tryLoadSavedGame()) {
                     presentationCTRL.cambiaVentana("ReanudarHidatoWindow");
                 } else {
                     JOptionPane.showMessageDialog(mainPanel, "No hi ha cap partida guardada!", "ERROR!", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+        creaPartidaNovaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                presentationCTRL.cambiaVentana("ChoseHidatoWindow");
             }
         });
     }

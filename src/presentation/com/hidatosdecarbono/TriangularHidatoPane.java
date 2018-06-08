@@ -14,8 +14,8 @@ public class TriangularHidatoPane extends HidatoPane {
     protected void putCells() {
         GeneralPath path = new GeneralPath();
 
-        double rowHeight = getHeight()/ rep.nFilas * 1.3;
-        double colWidth = getWidth() / rep.nColumnas * 1.3;
+        double rowHeight = getHeight()/ rep.nFilas;
+        double colWidth = getWidth() / rep.nColumnas;
 
         double size = Math.min(rowHeight, colWidth) / 2d;
 
