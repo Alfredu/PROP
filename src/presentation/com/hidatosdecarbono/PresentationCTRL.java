@@ -15,6 +15,7 @@ public class PresentationCTRL {
     private JugarHidatosCTRL jugarHidatosPausaCtrl;
     private ConsultarRankingCTRL consultarRankingCTRL;
     private SeleccionarHidatosCTRL seleccionarHidatosCTRL;
+    private Dificultad hidatoJugadoDificultad;
     PresentationCTRL(){
         domini = new DomainFactory();
         frame = new JFrame("HIDATOS DE CARBONO");
@@ -55,9 +56,6 @@ public class PresentationCTRL {
                 creadorHidatos = domini.getControladorCreador();
                 cont = new MainMenu(this).$$$getRootComponent$$$();
                 break;
-            case "JugaWindow":
-                cont = new JugaWindow(this).$$$getRootComponent$$$();
-                break;
             case "CreaHidatoWindow":
                 cont = new CreaHidatoWindow(this, creadorHidatos).$$$getRootComponent$$$();
                 break;
@@ -87,7 +85,7 @@ public class PresentationCTRL {
 
                 break;
             case "ShowRankingWindow":
-                cont = new ShowRankingWindow(this).$$$getRootComponent$$$();
+                cont = new ShowRankingWindow(this, null).$$$getRootComponent$$$();
                 break;
 
             case "ChoseHidatoWindow":
@@ -98,6 +96,10 @@ public class PresentationCTRL {
             case "ShowCreatedHidatoWindow":
                 cont = new ShowSolutionWindow(creaHidatoPane(creadorHidatos.getRepresentacionHidato(),
                         false, creadorHidatos.getControladorPartida()), creadorHidatos, this).$$$getRootComponent$$$();
+                break;
+
+            case "ShowRankingWindowAfter":
+                cont = new ShowRankingWindow(this, this.hidatoJugadoDificultad).$$$getRootComponent$$$();
                 break;
 
         }
@@ -155,4 +157,7 @@ public class PresentationCTRL {
         loadVentana(cont);
     }
 
+    public void setHidatoJugadoDificultad(Dificultad hidatoJugadoDificultad) {
+        this.hidatoJugadoDificultad = hidatoJugadoDificultad;
+    }
 }

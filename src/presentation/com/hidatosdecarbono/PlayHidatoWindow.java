@@ -71,7 +71,7 @@ public class PlayHidatoWindow {
                     } else {
                         JOptionPane.showMessageDialog(mainPanel, "No hi ha cap camí correcte!", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-                } else {
+                } else if (res == JOptionPane.CANCEL_OPTION) {
                     success = controladorPartida.pidePista(TipoPista.SIGUIENTE_CASILLA);
 
                     if (success) {
@@ -90,7 +90,8 @@ public class PlayHidatoWindow {
                             opcions, null);
 
                     if (res == JOptionPane.YES_OPTION) {
-                        //TODO Ranking
+                        presentationCTRL.setHidatoJugadoDificultad(controladorPartida.getDificultadHidatoJugado());
+                        presentationCTRL.cambiaVentana("ShowRankingWindowAfter");
                     } else {
                         presentationCTRL.cambiaVentana("MainMenu");
                     }
@@ -111,10 +112,9 @@ public class PlayHidatoWindow {
                             "FELICITATS", JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE, null, opcions, null);
 
-                    //TODO oferirRanking
-
                     if (res == JOptionPane.YES_OPTION) {
-
+                        presentationCTRL.setHidatoJugadoDificultad(controladorPartida.getDificultadHidatoJugado());
+                        presentationCTRL.cambiaVentana("ShowRankingWindowAfter");
                     } else {
                         presentationCTRL.cambiaVentana("MainMenu");
                     }

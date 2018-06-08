@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class InputRandomHidatoWindow {
     private final PresentationCTRL presentationCTRL;
@@ -23,6 +25,21 @@ public class InputRandomHidatoWindow {
         creaHidatoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                if (numForats.getText().isEmpty() || numCaselles.getText().isEmpty() || numFixes.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(mainPanel, "INFORMACIÓ INCOMPLETA! " +
+                                    "INTRODUEIX UN NÚMERO DE CASELLES, FORATS i CASELLES FIXES",
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!checkIsNumber(numForats.getText()) || !checkIsNumber(numCaselles.getText())
+                        || !checkIsNumber(numFixes.getText())) {
+                    JOptionPane.showMessageDialog(mainPanel, "FORMAT ERRONI! " +
+                                    "SI US PLAU, INTRODUEIX NÚMEROS",
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 int numCeldas = Integer.parseInt(numCaselles.getText());
                 int numFijas = Integer.parseInt(numFixes.getText());
                 int numAgujeros = Integer.parseInt(numForats.getText());
@@ -64,6 +81,18 @@ public class InputRandomHidatoWindow {
                 }
             }
         });
+
+        enrereButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                super.mouseClicked(mouseEvent);
+                presentationCTRL.cambiaVentana("MainMenu");
+            }
+        });
+    }
+
+    private boolean checkIsNumber(String s) {
+        return (s.compareToIgnoreCase("9") < 0 && s.compareToIgnoreCase("0") > 0);
     }
 
     {

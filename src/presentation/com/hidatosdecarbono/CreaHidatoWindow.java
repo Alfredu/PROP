@@ -51,6 +51,13 @@ public class CreaHidatoWindow {
                                     "INTRODUEIX UN NÚMERO DE FILES I DE COLUMNES",
                             "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
+
+                    if (!checkIsNumber(numFiles.getText()) || !checkIsNumber(numColumnes.getText())) {
+                        JOptionPane.showMessageDialog(mainPanel, "FORMAT ERRONI! " +
+                                        "SI US PLAU, INTRODUEIX NÚMEROS",
+                                "ERROR", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     nFilas = Integer.parseInt(numFiles.getText());
                     nCols = Integer.parseInt(numColumnes.getText());
                     TipoAdyacencia adyacencia;
@@ -75,6 +82,10 @@ public class CreaHidatoWindow {
                 }
             }
         });
+    }
+
+    private boolean checkIsNumber(String s) {
+        return (s.compareToIgnoreCase("9") < 0 && s.compareToIgnoreCase("0") > 0);
     }
 
     {

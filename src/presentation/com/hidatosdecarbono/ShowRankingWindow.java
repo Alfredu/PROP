@@ -15,7 +15,7 @@ public class ShowRankingWindow {
     private JPanel mainPanel;
     private PresentationCTRL presentationCTRL;
 
-    public ShowRankingWindow(PresentationCTRL presentationCTRL) {
+    public ShowRankingWindow(PresentationCTRL presentationCTRL, Dificultad dificultadDefecto) {
         this.presentationCTRL = presentationCTRL;
         enrereButton.addActionListener(new ActionListener() {
             @Override
@@ -29,6 +29,16 @@ public class ShowRankingWindow {
                 setRankings();
             }
         });
+
+        if (dificultadDefecto != null) {
+            if (dificultadDefecto == Dificultad.FACIL) {
+                dificultatComboBox.setSelectedIndex(0);
+            } else if (dificultadDefecto == Dificultad.MEDIO) {
+                dificultatComboBox.setSelectedIndex(1);
+            } else {
+                dificultatComboBox.setSelectedIndex(2);
+            }
+        }
 
         setRankings();
     }

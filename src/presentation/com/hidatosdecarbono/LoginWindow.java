@@ -59,7 +59,6 @@ public class LoginWindow {
                     mainPanel.requestFocus();
                 }
                 if (!nomUsuari.getText().equals("")) {
-                    System.out.println("HOLI");
                     loginButton.setEnabled(true);
                 } else {
                     loginButton.setEnabled(false);

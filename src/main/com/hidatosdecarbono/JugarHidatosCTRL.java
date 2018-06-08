@@ -183,4 +183,8 @@ public class JugarHidatosCTRL {
     public void guardaRepresentacionHidato(HidatoRep rep) {
         this.partida.setRep(rep);
     }
+
+    public Dificultad getDificultadHidatoJugado(){
+        return this.hidatoJugado.getDificultad();
+    }
 }

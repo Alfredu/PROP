@@ -32,9 +32,19 @@ public class InputHidatoWindow {
                 boolean cellsOk = true;
                 //Comprova numero de columnes
                 for (String linia : files) {
+
                     if (linia.split(",").length != controladorCreador.getnColsHidato()) {
                         cellsOk = false;
                         break;
+                    }
+                    for (String celda : linia.split(",")) {
+                        if (!checkIsNumber(celda) || !celda.equals("?") || !celda.equals("*") || !celda.equals("#")) {
+                            JOptionPane.showMessageDialog(mainPanel, "FORMAT ERRONI!  " +
+                                            "SI US PLAU, INTRODUEIX UN DELS SEGÜENTS SIMBOLS: \n"
+                                            + "?,{1..n}, # o *",
+                                    "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        return;
                     }
                 }
                 if (!cellsOk) {
@@ -81,6 +91,10 @@ public class InputHidatoWindow {
                 }
             }
         });
+    }
+
+    private boolean checkIsNumber(String s) {
+        return (s.compareToIgnoreCase("9") < 0 && s.compareToIgnoreCase("1") > 0);
     }
 
     {
