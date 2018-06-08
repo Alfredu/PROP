@@ -434,7 +434,7 @@ public abstract class Hidato {
         return ThreadLocalRandom.current().nextInt(minLimit, maxLimit);
     }
 
-    private float porcentaje(int nCeldas){
+    private float porcentaje(){
         float vacias = 0;
         float fijas = 0;
         for(int i = 0; i < tableroSolucion.length; i++){
@@ -444,14 +444,23 @@ public abstract class Hidato {
             }
         }
         float cells = vacias + fijas;
-        nCeldas = (int) cells;
-
         return (fijas/cells)*100;
     }
 
+    private int numCeldas(){
+        int celdas = 0;
+        for(int i = 0; i < tableroSolucion.length; i++){
+            for(int j=0; j < tableroSolucion[i].length; j++){
+                Celda c = getCeldaTablero(i,j);
+                if(c.getTipo().equals(TipoCelda.FIJA) || c.getTipo().equals(TipoCelda.VARIABLE) ) celdas++;
+            }
+        }
+        return celdas;
+    }
+
     public void decideDificultad(){
-        int nCeldas = 0;
-        float porcentajeFijas = porcentaje(nCeldas);
+        int nCeldas = numCeldas();
+        float porcentajeFijas = porcentaje();
 
         if(nCeldas < 15) dificultad = Dificultad.FACIL;
         else if(nCeldas < 30){
