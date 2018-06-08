@@ -207,7 +207,7 @@ public abstract class Hidato {
      * @param pistas Array list con los objetos de tipo Pista que representan todas las pistas usadas
      */
     public void entraRanking(String username, int tiempo, int pistas){
-        ranking.addEntradaRanking(username,tiempo,pistas);
+        ranking.addEntradaRanking(username,tiempo,pistas, dificultad);
     }
 
     /**
@@ -422,6 +422,11 @@ public abstract class Hidato {
         }
         generaTableroAleatorio(nCasillas,agujeros,fijas);
     }
+
+    /**
+     * Asocia el ranking pasado por parametro al parametro implicito, el hidato actual
+     * @param ranking Un objeto de tipo ranking que corresponde al ranking a asociar al parametro implicito
+     */
 
     public void asociaRanking(Ranking ranking){
         this.ranking = ranking;

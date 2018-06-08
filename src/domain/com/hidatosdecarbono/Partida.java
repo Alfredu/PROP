@@ -55,7 +55,7 @@ public class Partida {
         clearTableroSolucion();
         boolean solucionable = grafoHidato.esSolucionable();
         if(tipoPista.equals(TipoPista.SIGUIENTE_CASILLA)) {
-            penalizacion+= 40;
+            penalizacion+= 30;
             if (solucionable) {
                 //return la casella on estigui n
                 int i = 0;
@@ -77,7 +77,7 @@ public class Partida {
             if(solucionable) return true;
         }
         else if(tipoPista.equals(TipoPista.FIJA_ALEATORIA)){
-            penalizacion+= 25;
+            penalizacion+= 20;
             if(solucionable){
                 ArrayList<Celda> vacias = new ArrayList<>();
                 ArrayList<Celda> soluciones = new ArrayList<>();

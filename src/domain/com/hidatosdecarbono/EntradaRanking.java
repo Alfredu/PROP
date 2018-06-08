@@ -12,9 +12,9 @@ public class EntradaRanking implements Comparable{
      * @param tiempo Un integer que contiene el tiempo que el jugador ha tardado en resolver el hidato
      * @param penalizacion Un integer que contiene la penalizacion acumulada por el jugador durante la partida
      */
-    public EntradaRanking(String username, int tiempo , int penalizacion) {
+    public EntradaRanking(String username, int tiempo , int penalizacion, Dificultad dificultad) {
         this.username = username;
-        this.puntuacion = calculaPuntuacion(tiempo, penalizacion);
+        this.puntuacion = calculaPuntuacion(tiempo, penalizacion, dificultad);
     }
 
     /**
@@ -23,8 +23,11 @@ public class EntradaRanking implements Comparable{
      * @param penalizacion Un integer que contiene la penalizacion total de las pistas utilizdas
      * @return puntuacion Un integer que contiene la puntuacion correspondiente a la nueva entradaRanking
      */
-    private int calculaPuntuacion(int tiempo, int penalizacion) {
-        return  Math.floorDiv(10000000,(tiempo+penalizacion));
+    private int calculaPuntuacion(int tiempo, int penalizacion, Dificultad dificultad) {
+        int mult = 1;
+        if(dificultad.equals(Dificultad.MEDIO)) mult = 2;
+        else if(dificultad.equals(Dificultad.DIFICIL)) mult = 4;
+        return ((Math.floorDiv(10000000,(tiempo+penalizacion)))*mult);
     }
 
 

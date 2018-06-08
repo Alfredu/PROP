@@ -147,9 +147,9 @@ public class PersistenciaCTRLTest {
     @Test
     public void guardaRankingFacilOrdenadoCorrectamente() {
         Ranking ranking = new Ranking();
-        ranking.addEntradaRanking("User1",350,2*60);
-        ranking.addEntradaRanking("User2",355,2*60);
-        ranking.addEntradaRanking("User3",100,4*60);
+        ranking.addEntradaRanking("User1",350,2*60, Dificultad.FACIL);
+        ranking.addEntradaRanking("User2",355,2*60, Dificultad.FACIL);
+        ranking.addEntradaRanking("User3",100,4*60, Dificultad.FACIL);
         persistenciaCTRL.guardaRanking(ranking,Dificultad.FACIL);
         String[] texto = {"{\"entradasRanking\":[{\"username\":\"User3\",\"puntuacion\":29411},{\"username\":\"User1\",\"puntuacion\":21276},{\"username\":\"User2\",\"puntuacion\":21052}]}"};
         assertTrue("Se ha guardado el ranking facil corectamente",mismoTextoEnFichero(texto,"rankingFacil.txt"));
@@ -158,31 +158,39 @@ public class PersistenciaCTRLTest {
     @Test
     public void guardaRankingMedioOrdenadoCorrectamente() {
         Ranking ranking = new Ranking();
-        ranking.addEntradaRanking("User11",350,2*60);
-        ranking.addEntradaRanking("User22",355,2*60);
-        ranking.addEntradaRanking("User33",100,4*60);
+        ranking.addEntradaRanking("User11",350,2*60, Dificultad.MEDIO);
+        ranking.addEntradaRanking("User22",355,2*60, Dificultad.MEDIO);
+        ranking.addEntradaRanking("User33",100,4*60, Dificultad.MEDIO);
         persistenciaCTRL.guardaRanking(ranking,Dificultad.MEDIO);
-        String[] texto = {"{\"entradasRanking\":[{\"username\":\"User33\",\"puntuacion\":29411},{\"username\":\"User11\",\"puntuacion\":21276},{\"username\":\"User22\",\"puntuacion\":21052}]}"};
+
+        String[] texto = {"{\"entradasRanking\":[{\"username\":\"User33\",\"puntuacion\":58822},{\"username\":\"User11\",\"puntuacion\":42552},{\"username\":\"User22\",\"puntuacion\":42104}]}"};
         assertTrue("Se ha guardado el ranking medio corectamente",mismoTextoEnFichero(texto,"rankingMedio.txt"));
     }
 
     @Test
     public void guardaRankingDificillOrdenadoCorrectamente() {
         Ranking ranking = new Ranking();
-        ranking.addEntradaRanking("User100",350,120);
-        ranking.addEntradaRanking("User200",355,120);
-        ranking.addEntradaRanking("User300",100,240);
+        ranking.addEntradaRanking("User100",350,120, Dificultad.DIFICIL);
+        ranking.addEntradaRanking("User200",355,120, Dificultad.DIFICIL);
+        ranking.addEntradaRanking("User300",100,240, Dificultad.DIFICIL);
         persistenciaCTRL.guardaRanking(ranking,Dificultad.DIFICIL);
-        String[] texto = {"{\"entradasRanking\":[{\"username\":\"User300\",\"puntuacion\":29411},{\"username\":\"User100\",\"puntuacion\":21276},{\"username\":\"User200\",\"puntuacion\":21052}]}"};
+        ArrayList<EntradaRanking> entradaRankings = ranking.getEntradasRanking();
+        System.out.print(entradaRankings.get(0).getUsername() + " ");
+        System.out.println(entradaRankings.get(0).getPuntuacion());
+        System.out.print(entradaRankings.get(1).getUsername() + " ");
+        System.out.println(entradaRankings.get(1).getPuntuacion());
+        System.out.print(entradaRankings.get(2).getUsername() + " ");
+        System.out.println(entradaRankings.get(2).getPuntuacion());
+        String[] texto = {"{\"entradasRanking\":[{\"username\":\"User300\",\"puntuacion\":117644},{\"username\":\"User100\",\"puntuacion\":85104},{\"username\":\"User200\",\"puntuacion\":84208}]}"};
         assertTrue("Se ha guardado el ranking facil corectamente",mismoTextoEnFichero(texto,"rankingDificil.txt"));
     }
 
     @Test
     public void obtieneRankingDificillDesdeFicheroCorrectamente() throws NoSuchFileException {
         Ranking ranking = new Ranking();
-        ranking.addEntradaRanking("User100",350,2);
-        ranking.addEntradaRanking("User200",355,2);
-        ranking.addEntradaRanking("User300",100,4);
+        ranking.addEntradaRanking("User100",350,2, Dificultad.FACIL);
+        ranking.addEntradaRanking("User200",355,2, Dificultad.FACIL);
+        ranking.addEntradaRanking("User300",100,4, Dificultad.FACIL);
         persistenciaCTRL.guardaRanking(ranking,Dificultad.DIFICIL);
         Ranking retRanking = persistenciaCTRL.obtenRanking(Dificultad.DIFICIL);
         boolean sameRanking = false;
