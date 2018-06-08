@@ -95,7 +95,7 @@ public class InputHidatoWindow {
     }
 
     private boolean checkIsNumber(String s) {
-        return (s.compareToIgnoreCase("9") < 0 && s.compareToIgnoreCase("0") > 0);
+        return ((s.compareToIgnoreCase("9") < 0 || s.compareToIgnoreCase("9") == 0) && s.compareToIgnoreCase("0") > 0);
     }
 
     {
