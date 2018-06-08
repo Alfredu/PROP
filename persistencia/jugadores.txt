@@ -1,1 +1,6 @@
 {"username":"nico","password":"1234"}
+{"username":"raulete","password":"1234"}
+{"username":"claudia","password":"claudia"}
+{"username":"aleix","password":""}
+{"username":"guillem","password":"hola"}
+{"username":"al�ejo","password":"���"}

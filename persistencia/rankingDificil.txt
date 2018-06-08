@@ -1,1 +1,1 @@
-{"entradasRanking":[{"username":"user3","puntuacion":10000000},{"username":"user2","puntuacion":76923},{"username":"user1","puntuacion":45454},{"username":"user3","puntuacion":10638}]}
+{"entradasRanking":[{"username":"user3","puntuacion":10000000},{"username":"user2","puntuacion":76923},{"username":"user1","puntuacion":45454},{"username":"user3","puntuacion":10638},{"username":"aleix","puntuacion":577},{"username":"aleix","puntuacion":251}]}
