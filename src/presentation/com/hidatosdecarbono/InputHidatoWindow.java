@@ -38,13 +38,14 @@ public class InputHidatoWindow {
                         break;
                     }
                     for (String celda : linia.split(",")) {
-                        if (!checkIsNumber(celda) || !celda.equals("?") || !celda.equals("*") || !celda.equals("#")) {
+                        if (!checkIsNumber(celda) && !celda.equals("?") && !celda.equals("*") && !celda.equals("#")) {
                             JOptionPane.showMessageDialog(mainPanel, "FORMAT ERRONI!  " +
                                             "SI US PLAU, INTRODUEIX UN DELS SEGÜENTS SIMBOLS: \n"
                                             + "?,{1..n}, # o *",
                                     "ERROR", JOptionPane.ERROR_MESSAGE);
+
+                            return;
                         }
-                        return;
                     }
                 }
                 if (!cellsOk) {
@@ -94,7 +95,7 @@ public class InputHidatoWindow {
     }
 
     private boolean checkIsNumber(String s) {
-        return (s.compareToIgnoreCase("9") < 0 && s.compareToIgnoreCase("1") > 0);
+        return ((s.compareToIgnoreCase("9") < 0 || s.compareToIgnoreCase("9") == 0) && s.compareToIgnoreCase("0") > 0);
     }
 
     {
