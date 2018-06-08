@@ -12,10 +12,9 @@ import java.util.Arrays;
 
 public class InputHidatoWindow {
     private JPanel mainPanel;
-    private JTextArea inputHidato;
     private JButton creaHidatoButton;
     private JButton enrereButton;
-    private JTextArea textArea1;
+    private JTextArea inputHidato;
 
     public InputHidatoWindow(PresentationCTRL presentationCTRL, CreadorHidatosCTRL controladorCreador) {
         enrereButton.addActionListener(new ActionListener() {
