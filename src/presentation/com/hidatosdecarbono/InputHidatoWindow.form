@@ -29,7 +29,7 @@
               </grid>
             </constraints>
             <properties>
-              <font size="18"/>
+              <font/>
               <text value=""/>
             </properties>
           </component>
