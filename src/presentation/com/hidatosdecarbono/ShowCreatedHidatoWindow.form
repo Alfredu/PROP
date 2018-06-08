@@ -25,17 +25,6 @@
             <border type="none"/>
             <children/>
           </grid>
-          <component id="f1c2c" class="javax.swing.JButton" binding="okButton">
-            <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="100" height="-1"/>
-                <maximum-size width="100" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="OK"/>
-            </properties>
-          </component>
           <component id="4b20" class="javax.swing.JLabel" binding="timeElapsed">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -64,6 +53,18 @@
             </constraints>
             <properties>
               <text value="Label"/>
+            </properties>
+          </component>
+          <component id="f1c2c" class="javax.swing.JButton" binding="okButton">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="-1"/>
+                <maximum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <horizontalTextPosition value="11"/>
+              <text value="OK"/>
             </properties>
           </component>
         </children>
