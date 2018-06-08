@@ -30,11 +30,15 @@ public class PlayHidatoWindow {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                i++;
-                timeElapsed.setText("" + i);
+                int temps = controladorPartida.getTiempoPartida();
+                String crono = "Temps: " + ((temps / 1000) / 60) + ":" + ((temps / 1000) % 60);
+                timeElapsed.setText(crono);
             }
         });
-        //timer.start();
+        timer.start();
+        int temps = controladorPartida.getTiempoPartida();
+        String crono = "Temps: " + ((temps / 1000) / 60) + ":" + ((temps / 1000) % 60);
+        timeElapsed.setText(crono);
         guardaPartidaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -87,7 +91,7 @@ public class PlayHidatoWindow {
 
 
                     int temps = controladorPartida.getTiempoPartida();
-                    res = JOptionPane.showOptionDialog(null, "FELICITATS! HAS ACABAT EN " + temps + " segons\n" +
+                    res = JOptionPane.showOptionDialog(null, "FELICITATS! HAS ACABAT EN " + temps / 1000 + " segons\n" +
                                     "Què vols fer ara?", "FELICITATS", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             opcions, null);
 
@@ -110,8 +114,9 @@ public class PlayHidatoWindow {
                     hidatoPane1.repaint();
                     hidatoPane1.removeMouseListener(this);
                     Object[] opcions = {"Veure Ranking", "Anar al menú"};
-                    int temps = controladorPartida.getTiempoPartida();
-                    int res = JOptionPane.showOptionDialog(null, "FELICITATS! HAS ACABAT EN " + temps / 1000 + " SEGONS\n" +
+                    String temps = timeElapsed.getText().split("Temps: ")[1];
+                    int res = JOptionPane.showOptionDialog(null, "FELICITATS! HAS ACABAT EN " +
+                                    temps.split(":")[0] + " MINUTS I " + temps.split(":")[1] + " SEGONS\n" +
                                     "Què vols fer ara?", "FELICITATS", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             opcions, null);
 

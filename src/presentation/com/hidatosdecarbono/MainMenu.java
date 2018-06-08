@@ -39,7 +39,7 @@ public class MainMenu {
         creaHidatoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Object[] opcions = {"Añadir Hidato manualmente", "Añadir Hidato aleatorio", "Añadir Hidato por dificultad"};
+                Object[] opcions = {"Afegir Hidato manualment", "Afegir Hidato aleatori", "Afegir Hidato per dificultat"};
                 int res = JOptionPane.showOptionDialog(mainPanel, "Escull forma de crear l'Hidato",
                         "CREAR HIDATO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, opcions, null);
