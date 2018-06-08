@@ -95,6 +95,11 @@ public class PresentationCTRL {
                 cont = new ChoseHidatoWindow(this, this.seleccionarHidatosCTRL).$$$getRootComponent$$$();
                 break;
 
+            case "ShowCreatedHidatoWindow":
+                cont = new ShowSolutionWindow(creaHidatoPane(creadorHidatos.getRepresentacionHidato(),
+                        false, creadorHidatos.getControladorPartida()), creadorHidatos, this).$$$getRootComponent$$$();
+                break;
+
         }
 
         if(cont != null){

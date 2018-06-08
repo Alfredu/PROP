@@ -5,17 +5,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ShowSolutionWindow {
+public class ShowCreatedHidatoWindow {
     private HidatoPane hidatoPane1;
-    private final CreadorHidatosCTRL controladorCreador;
-    private final PresentationCTRL presentationCTRL;
     private JButton okButton;
     private JLabel timeElapsed;
     private JPanel mainPanel;
     private JLabel hidatoInfo;
+    private HidatoPane pane;
+    private final CreadorHidatosCTRL controladorCreador;
+    private final PresentationCTRL presentationCTRL;
 
-    public ShowSolutionWindow(HidatoPane pane, CreadorHidatosCTRL controladorCreador, PresentationCTRL presentationCTRL) {
-        this.hidatoPane1 = pane;
+    public ShowCreatedHidatoWindow(HidatoPane pane, CreadorHidatosCTRL controladorCreador, PresentationCTRL presentationCTRL) {
+        this.pane = pane;
         this.controladorCreador = controladorCreador;
         this.presentationCTRL = presentationCTRL;
         $$$setupUI$$$();
@@ -24,26 +25,32 @@ public class ShowSolutionWindow {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Object[] opcionsSolució = {"Sí", "No"};
-                int res = JOptionPane.showOptionDialog(mainPanel, "Vols guardar l'Hidato?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[1]);
+                int res = JOptionPane.showOptionDialog(mainPanel, "Vols veure la solució?", "I ARA?",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[0]);
 
                 if (res == JOptionPane.YES_OPTION) {
-                    //Guardar
-                    controladorCreador.guardaHidato();
-                }
-
-                res = JOptionPane.showOptionDialog(mainPanel, "Vols Jugar l'Hidato?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[1]);
-
-                if (res == JOptionPane.YES_OPTION) {
-                    presentationCTRL.cambiaVentana("JugaPartidaWindow");
+                    presentationCTRL.cambiaVentana("ShowSolutionWindow");
                 } else {
-                    presentationCTRL.cambiaVentana("MainMenu");
+                    res = JOptionPane.showOptionDialog(mainPanel, "Vols guardar l'Hidato?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[1]);
+
+                    if (res == JOptionPane.YES_OPTION) {
+                        //Guardar
+                        controladorCreador.guardaHidato();
+                    }
+
+                    res = JOptionPane.showOptionDialog(mainPanel, "Vols Jugar l'Hidato?", "CREACIÓ CORRECTA", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null, opcionsSolució, opcionsSolució[1]);
+
+                    if (res == JOptionPane.YES_OPTION) {
+                        presentationCTRL.cambiaVentana("JugaPartidaWindow");
+                    } else {
+                        presentationCTRL.cambiaVentana("MainMenu");
+                    }
                 }
             }
         });
     }
-
 
     public void createUIComponents() {
 
@@ -61,7 +68,7 @@ public class ShowSolutionWindow {
         mainPanel = new JPanel();
         mainPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(5, 3, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel1.add(hidatoPane1, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 2, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         okButton = new JButton();
@@ -72,6 +79,8 @@ public class ShowSolutionWindow {
         panel1.add(timeElapsed, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
         panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
+        panel1.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(4, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, 1, new Dimension(7, -1), new Dimension(10, -1), new Dimension(10, -1), 0, false));
         hidatoInfo = new JLabel();
         hidatoInfo.setText("Label");
         panel1.add(hidatoInfo, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

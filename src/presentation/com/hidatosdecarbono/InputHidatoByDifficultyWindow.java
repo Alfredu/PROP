@@ -30,7 +30,7 @@ public class InputHidatoByDifficultyWindow {
                 }
 
                 creadorHidatos.creaHidatoPorDificultad(dificultad);
-                presentationCTRL.cambiaVentana("JugaPartidaWindow");
+                presentationCTRL.cambiaVentana("ShowCreatedHidatoWindow");
             }
         });
         enrereButton.addActionListener(new ActionListener() {

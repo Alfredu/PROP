@@ -47,7 +47,20 @@ public class InputRandomHidatoWindow {
                         adyacencia = TipoAdyacencia.LADOYVERTICE;
                     }
                     creadorHidatos.creaHidatoAleatorio(tipoHidato, numCeldas, numFijas, numAgujeros, adyacencia);
-                    presentationCTRL.cambiaVentana("JugaPartidaWindow");
+                    presentationCTRL.cambiaVentana("ShowCreatedHidatoWindow");
+                }
+            }
+        });
+        tipusHidatoComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (tipusHidatoComboBox.getSelectedItem().toString().equals("Hexagonal")) {
+                    tipusAdjacenciaComboBox.removeItem("Costat i Vèrtex");
+                } else {
+                    //Per no fer dos ifs.
+                    if (tipusAdjacenciaComboBox.getItemCount() == 1) {
+                        tipusAdjacenciaComboBox.addItem("Costat i Vèrtex");
+                    }
                 }
             }
         });
