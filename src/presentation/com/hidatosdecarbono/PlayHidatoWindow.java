@@ -30,11 +30,15 @@ public class PlayHidatoWindow {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                i++;
-                timeElapsed.setText("" + i);
+                int temps = controladorPartida.getTiempoPartida();
+                String crono = "Temps: " + ((temps / 1000) / 60) + ":" + ((temps / 1000) % 60);
+                timeElapsed.setText(crono);
             }
         });
-        //timer.start();
+        timer.start();
+        int temps = controladorPartida.getTiempoPartida();
+        String crono = "Temps: " + ((temps / 1000) / 60) + ":" + ((temps / 1000) % 60);
+        timeElapsed.setText(crono);
         guardaPartidaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -48,8 +52,8 @@ public class PlayHidatoWindow {
             public void actionPerformed(ActionEvent actionEvent) {
                 Object[] opcionsSolució = {"Comprova el camí actual: " +
                         "Penalització: 10", "Insereix una casella fixa: " +
-                        "Penalització: 50", "Insereix la següent casella: " +
-                        "Penalització: 60"};
+                        "Penalització: 20", "Insereix la següent casella: " +
+                        "Penalització: 30"};
 
                 int res = JOptionPane.showOptionDialog(mainPanel, "Quin tipus de pista vols?",
                         "ESCULL PISTA", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -85,7 +89,9 @@ public class PlayHidatoWindow {
                     hidatoPane1.repaint();
                     Object[] opcions = {"Veure rànking", "Tornar al Menú"};
 
-                    res = JOptionPane.showOptionDialog(null, "FELICITATS!\n" +
+
+                    int temps = controladorPartida.getTiempoPartida();
+                    res = JOptionPane.showOptionDialog(null, "FELICITATS! HAS ACABAT EN " + temps / 1000 + " segons\n" +
                                     "Què vols fer ara?", "FELICITATS", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             opcions, null);
 
@@ -108,9 +114,11 @@ public class PlayHidatoWindow {
                     hidatoPane1.repaint();
                     hidatoPane1.removeMouseListener(this);
                     Object[] opcions = {"Veure Ranking", "Anar al menú"};
-                    int res = JOptionPane.showOptionDialog(null, "PARTIDA ACABADA!\nQuè vols fer a continuació?",
-                            "FELICITATS", JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE, null, opcions, null);
+                    String temps = timeElapsed.getText().split("Temps: ")[1];
+                    int res = JOptionPane.showOptionDialog(null, "FELICITATS! HAS ACABAT EN " +
+                                    temps.split(":")[0] + " MINUTS I " + temps.split(":")[1] + " SEGONS\n" +
+                                    "Què vols fer ara?", "FELICITATS", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            opcions, null);
 
                     if (res == JOptionPane.YES_OPTION) {
                         presentationCTRL.setHidatoJugadoDificultad(controladorPartida.getDificultadHidatoJugado());
